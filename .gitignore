@@ -1,0 +1,11 @@
+# .gitignore file for telegram-bot-dart
+
+*.swp*
+.DS_Store
+
+.dart_tool/
+.packages
+doc/api/
+
+# remove this if it is an application package
+pubspec.lock
