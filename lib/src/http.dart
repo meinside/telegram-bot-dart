@@ -18,7 +18,7 @@ class HttpResponse {
 
   /// Get body as a json object.
   Map<String, dynamic> toJson() {
-    return JSON.decode(body);
+    return jsonDecode(body);
   }
 }
 
