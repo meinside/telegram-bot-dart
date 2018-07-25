@@ -18,7 +18,7 @@ dependencies:
 
 ## usage
 
-See the files in `./example/`.
+See the files in [./example/](https://github.com/meinside/telegram-bot-dart/tree/master/example).
 
 ## LICENSE
 
