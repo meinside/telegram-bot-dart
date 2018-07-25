@@ -218,9 +218,6 @@ class APIResponse {
 	// constructor
 	APIResponse(this.ok, {this.description, this.parameters});
 
-	// https://github.com/dart-lang/sdk/issues/15101
-	APIResponse.workaround(this.ok, this.description, this.parameters);
-
 	factory APIResponse.fromJson(Map<String, dynamic> json) => _$APIResponseFromJson(json);
 
 	Map<String, dynamic> toJson() => _$APIResponseToJson(this);
@@ -237,8 +234,7 @@ class APIResponseWebhookInfo extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseWebhookInfo.fromJson(Map<String, dynamic> json) => _$APIResponseWebhookInfoFromJson(json);
 
@@ -256,8 +252,7 @@ class APIResponseUser extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseUser.fromJson(Map<String, dynamic> json) => _$APIResponseUserFromJson(json);
 
@@ -275,8 +270,7 @@ class APIResponseMessage extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseMessage.fromJson(Map<String, dynamic> json) => _$APIResponseMessageFromJson(json);
 
@@ -294,8 +288,7 @@ class APIResponseMessages extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseMessages.fromJson(Map<String, dynamic> json) => _$APIResponseMessagesFromJson(json);
 
@@ -313,8 +306,7 @@ class APIResponseUserProfilePhotos extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseUserProfilePhotos.fromJson(Map<String, dynamic> json) => _$APIResponseUserProfilePhotosFromJson(json);
 
@@ -332,8 +324,7 @@ class APIResponseFile extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseFile.fromJson(Map<String, dynamic> json) => _$APIResponseFileFromJson(json);
 
@@ -350,8 +341,7 @@ class APIResponseUpdates extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseUpdates.fromJson(Map<String, dynamic> json) => _$APIResponseUpdatesFromJson(json);
 
@@ -369,8 +359,7 @@ class APIResponseChat extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseChat.fromJson(Map<String, dynamic> json) => _$APIResponseChatFromJson(json);
 
@@ -388,8 +377,7 @@ class APIResponseChatAdministrators extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseChatAdministrators.fromJson(Map<String, dynamic> json) => _$APIResponseChatAdministratorsFromJson(json);
 
@@ -407,8 +395,7 @@ class APIResponseChatMember extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseChatMember.fromJson(Map<String, dynamic> json) => _$APIResponseChatMemberFromJson(json);
 
@@ -426,8 +413,7 @@ class APIResponseInt extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseInt.fromJson(Map<String, dynamic> json) => _$APIResponseIntFromJson(json);
 
@@ -445,8 +431,7 @@ class APIResponseString extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseString.fromJson(Map<String, dynamic> json) => _$APIResponseStringFromJson(json);
 
@@ -464,8 +449,7 @@ class APIResponseGameHighScores extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseGameHighScores.fromJson(Map<String, dynamic> json) => _$APIResponseGameHighScoresFromJson(json);
 
@@ -483,8 +467,7 @@ class APIResponseStickerSet extends APIResponse {
 		String description,
 		APIResponseParameters parameters,
 		this.result,
-	}) : super.workaround(ok, description, parameters);	// https://github.com/dart-lang/sdk/issues/15101
-	//}) : super(ok, description: description, parameters: parameters);
+	}) : super(ok, description: description, parameters: parameters);
 
 	factory APIResponseStickerSet.fromJson(Map<String, dynamic> json) => _$APIResponseStickerSetFromJson(json);
 
