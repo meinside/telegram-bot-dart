@@ -2,15 +2,15 @@
 
 library telegram;
 
-import 'src/types.dart';
-import 'src/http.dart';
-
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:intl/intl.dart';
+
+import 'src/types.dart';
+import 'src/http.dart';
 
 export 'src/types.dart';
 export 'src/http.dart';
