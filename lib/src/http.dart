@@ -3,8 +3,10 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
+import 'dart:mirrors';
 
 import 'package:http/http.dart' as http;
+import 'package:json_annotation/json_annotation.dart';
 
 import './types.dart';
 
@@ -117,7 +119,39 @@ abstract class HttpClient {
   Map<String, String> _convertParams(Map<String, dynamic> params) {
     Map<String, String> converted = new Map<String, String>();
     params?.forEach((key, value) {
-      converted[key] = value.toString();
+      String paramVal = null;
+
+      // check given parameter's value:
+      try {
+	InstanceMirror mirror = reflect(value);
+
+	// if it has `toJson()`, apply it
+	if (mirror.type.declarations.values.map((DeclarationMirror declaration) =>
+	      MirrorSystem.getName(declaration.simpleName)).contains("toJson")) {
+	  paramVal = jsonEncode(value.toJson());
+	} else {
+	  // if it is an enum which has @JsonValue, use it
+	  ClassMirror classMirror = reflectClass(value.runtimeType);
+	  if (classMirror.isEnum) {
+	    DeclarationMirror declaration = classMirror.declarations.values
+	      .firstWhere((DeclarationMirror declaration) =>
+		  MirrorSystem.getName(declaration.simpleName) == value.toString().split(".").last);
+	    if (declaration != null) {
+	      for (InstanceMirror meta in declaration.metadata) {
+		if (meta.hasReflectee && meta.reflectee.runtimeType == JsonValue) {
+		  paramVal = (meta.reflectee as JsonValue).value;
+		  break;
+		}
+	      }
+	    }
+	  }
+	}
+      } catch (e) {
+	print ("_convertParams exception: ${e}");
+      }
+
+      // otherwise, fallback to the string value of it
+      converted[key] = paramVal ?? value.toString();
     });
 
     return converted;

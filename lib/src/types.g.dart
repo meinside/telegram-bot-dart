@@ -13,22 +13,19 @@ APIResponseParameters _$APIResponseParametersFromJson(
       retryAfter: json['retry_after'] as int);
 }
 
-abstract class _$APIResponseParametersSerializerMixin {
-  int get migrateToChatId;
-  int get retryAfter;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$APIResponseParametersToJson(
+    APIResponseParameters instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('migrate_to_chat_id', migrateToChatId);
-    writeNotNull('retry_after', retryAfter);
-    return val;
   }
+
+  writeNotNull('migrate_to_chat_id', instance.migrateToChatId);
+  writeNotNull('retry_after', instance.retryAfter);
+  return val;
 }
 
 APIResponse _$APIResponseFromJson(Map<String, dynamic> json) {
@@ -40,25 +37,20 @@ APIResponse _$APIResponseFromJson(Map<String, dynamic> json) {
               json['parameters'] as Map<String, dynamic>));
 }
 
-abstract class _$APIResponseSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseToJson(APIResponse instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  return val;
 }
 
 APIResponseWebhookInfo _$APIResponseWebhookInfoFromJson(
@@ -74,27 +66,22 @@ APIResponseWebhookInfo _$APIResponseWebhookInfoFromJson(
           : new WebhookInfo.fromJson(json['result'] as Map<String, dynamic>));
 }
 
-abstract class _$APIResponseWebhookInfoSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  WebhookInfo get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseWebhookInfoToJson(
+    APIResponseWebhookInfo instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 APIResponseUser _$APIResponseUserFromJson(Map<String, dynamic> json) {
@@ -109,27 +96,21 @@ APIResponseUser _$APIResponseUserFromJson(Map<String, dynamic> json) {
           : new User.fromJson(json['result'] as Map<String, dynamic>));
 }
 
-abstract class _$APIResponseUserSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  User get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseUserToJson(APIResponseUser instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 APIResponseMessage _$APIResponseMessageFromJson(Map<String, dynamic> json) {
@@ -144,27 +125,21 @@ APIResponseMessage _$APIResponseMessageFromJson(Map<String, dynamic> json) {
           : new Message.fromJson(json['result'] as Map<String, dynamic>));
 }
 
-abstract class _$APIResponseMessageSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  Message get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseMessageToJson(APIResponseMessage instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 APIResponseMessages _$APIResponseMessagesFromJson(Map<String, dynamic> json) {
@@ -181,27 +156,21 @@ APIResponseMessages _$APIResponseMessagesFromJson(Map<String, dynamic> json) {
           ?.toList());
 }
 
-abstract class _$APIResponseMessagesSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  List<Message> get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseMessagesToJson(APIResponseMessages instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 APIResponseUserProfilePhotos _$APIResponseUserProfilePhotosFromJson(
@@ -218,27 +187,22 @@ APIResponseUserProfilePhotos _$APIResponseUserProfilePhotosFromJson(
               json['result'] as Map<String, dynamic>));
 }
 
-abstract class _$APIResponseUserProfilePhotosSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  UserProfilePhotos get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseUserProfilePhotosToJson(
+    APIResponseUserProfilePhotos instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 APIResponseFile _$APIResponseFileFromJson(Map<String, dynamic> json) {
@@ -253,27 +217,21 @@ APIResponseFile _$APIResponseFileFromJson(Map<String, dynamic> json) {
           : new FileObject.fromJson(json['result'] as Map<String, dynamic>));
 }
 
-abstract class _$APIResponseFileSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  FileObject get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseFileToJson(APIResponseFile instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 APIResponseUpdates _$APIResponseUpdatesFromJson(Map<String, dynamic> json) {
@@ -289,27 +247,21 @@ APIResponseUpdates _$APIResponseUpdatesFromJson(Map<String, dynamic> json) {
           ?.toList());
 }
 
-abstract class _$APIResponseUpdatesSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  List<Update> get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseUpdatesToJson(APIResponseUpdates instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    val['result'] = result;
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  val['result'] = instance.result;
+  return val;
 }
 
 APIResponseChat _$APIResponseChatFromJson(Map<String, dynamic> json) {
@@ -324,27 +276,21 @@ APIResponseChat _$APIResponseChatFromJson(Map<String, dynamic> json) {
           : new Chat.fromJson(json['result'] as Map<String, dynamic>));
 }
 
-abstract class _$APIResponseChatSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  Chat get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseChatToJson(APIResponseChat instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 APIResponseChatAdministrators _$APIResponseChatAdministratorsFromJson(
@@ -362,27 +308,22 @@ APIResponseChatAdministrators _$APIResponseChatAdministratorsFromJson(
           ?.toList());
 }
 
-abstract class _$APIResponseChatAdministratorsSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  List<ChatMember> get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseChatAdministratorsToJson(
+    APIResponseChatAdministrators instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 APIResponseChatMember _$APIResponseChatMemberFromJson(
@@ -398,27 +339,22 @@ APIResponseChatMember _$APIResponseChatMemberFromJson(
           : new ChatMember.fromJson(json['result'] as Map<String, dynamic>));
 }
 
-abstract class _$APIResponseChatMemberSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  ChatMember get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseChatMemberToJson(
+    APIResponseChatMember instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 APIResponseInt _$APIResponseIntFromJson(Map<String, dynamic> json) {
@@ -431,27 +367,21 @@ APIResponseInt _$APIResponseIntFromJson(Map<String, dynamic> json) {
       result: json['result'] as int);
 }
 
-abstract class _$APIResponseIntSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  int get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseIntToJson(APIResponseInt instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 APIResponseString _$APIResponseStringFromJson(Map<String, dynamic> json) {
@@ -464,27 +394,21 @@ APIResponseString _$APIResponseStringFromJson(Map<String, dynamic> json) {
       result: json['result'] as String);
 }
 
-abstract class _$APIResponseStringSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  String get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseStringToJson(APIResponseString instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 APIResponseGameHighScores _$APIResponseGameHighScoresFromJson(
@@ -502,27 +426,22 @@ APIResponseGameHighScores _$APIResponseGameHighScoresFromJson(
           ?.toList());
 }
 
-abstract class _$APIResponseGameHighScoresSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  List<GameHighScore> get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseGameHighScoresToJson(
+    APIResponseGameHighScores instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 APIResponseStickerSet _$APIResponseStickerSetFromJson(
@@ -538,27 +457,22 @@ APIResponseStickerSet _$APIResponseStickerSetFromJson(
           : new StickerSet.fromJson(json['result'] as Map<String, dynamic>));
 }
 
-abstract class _$APIResponseStickerSetSerializerMixin {
-  bool get ok;
-  String get description;
-  APIResponseParameters get parameters;
-  StickerSet get result;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'ok': ok,
-    };
+Map<String, dynamic> _$APIResponseStickerSetToJson(
+    APIResponseStickerSet instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('parameters', parameters);
-    writeNotNull('result', result);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
 }
 
 WebhookInfo _$WebhookInfoFromJson(Map<String, dynamic> json) {
@@ -570,40 +484,60 @@ WebhookInfo _$WebhookInfoFromJson(Map<String, dynamic> json) {
       lastErrorMessage: json['last_error_message'] as String,
       maxConnections: json['max_connections'] as int,
       allowedUpdates: (json['allowed_updates'] as List)
-          ?.map((e) =>
-              $enumDecodeNullable('UpdateType', UpdateType.values, e as String))
+          ?.map((e) => _$enumDecodeNullable(_$UpdateTypeEnumMap, e))
           ?.toList());
 }
 
-abstract class _$WebhookInfoSerializerMixin {
-  String get url;
-  bool get hasCustomCertificate;
-  int get pendingUpdateCount;
-  int get lastErrorDate;
-  String get lastErrorMessage;
-  int get maxConnections;
-  List<UpdateType> get allowedUpdates;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'url': url,
-      'has_custom_certificate': hasCustomCertificate,
-      'pending_update_count': pendingUpdateCount,
-    };
+Map<String, dynamic> _$WebhookInfoToJson(WebhookInfo instance) {
+  var val = <String, dynamic>{
+    'url': instance.url,
+    'has_custom_certificate': instance.hasCustomCertificate,
+    'pending_update_count': instance.pendingUpdateCount,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('last_error_date', lastErrorDate);
-    writeNotNull('last_error_message', lastErrorMessage);
-    writeNotNull('max_connections', maxConnections);
-    writeNotNull('allowed_updates',
-        allowedUpdates?.map((e) => e?.toString()?.split('.')?.last)?.toList());
-    return val;
   }
+
+  writeNotNull('last_error_date', instance.lastErrorDate);
+  writeNotNull('last_error_message', instance.lastErrorMessage);
+  writeNotNull('max_connections', instance.maxConnections);
+  writeNotNull('allowed_updates',
+      instance.allowedUpdates?.map((e) => _$UpdateTypeEnumMap[e])?.toList());
+  return val;
 }
+
+T _$enumDecode<T>(Map<T, dynamic> enumValues, dynamic source) {
+  if (source == null) {
+    throw new ArgumentError('A value must be provided. Supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+  return enumValues.entries
+      .singleWhere((e) => e.value == source,
+          orElse: () => throw new ArgumentError(
+              '`$source` is not one of the supported values: '
+              '${enumValues.values.join(', ')}'))
+      .key;
+}
+
+T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues, dynamic source) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source);
+}
+
+const _$UpdateTypeEnumMap = const <UpdateType, dynamic>{
+  UpdateType.Message: 'message',
+  UpdateType.EditedMessage: 'edited_message',
+  UpdateType.ChannelPost: 'channel_post',
+  UpdateType.EditedChannelPost: 'edited_channel_post',
+  UpdateType.InlineQuery: 'inline_query',
+  UpdateType.ChosenInlineResult: 'chosen_inline_result',
+  UpdateType.CallbackQuery: 'callback_query'
+};
 
 Update _$UpdateFromJson(Map<String, dynamic> json) {
   return new Update(json['update_id'] as int,
@@ -643,39 +577,27 @@ Update _$UpdateFromJson(Map<String, dynamic> json) {
               json['pre_checkout_query'] as Map<String, dynamic>));
 }
 
-abstract class _$UpdateSerializerMixin {
-  int get updateId;
-  Message get message;
-  Message get editedMessage;
-  Message get channelPost;
-  Message get editedChannelPost;
-  InlineQuery get inlineQuery;
-  ChosenInlineResult get chosenInlineResult;
-  CallbackQuery get callbackQuery;
-  ShippingQuery get shippingQuery;
-  PreCheckoutQuery get preCheckoutQuery;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'update_id': updateId,
-    };
+Map<String, dynamic> _$UpdateToJson(Update instance) {
+  var val = <String, dynamic>{
+    'update_id': instance.updateId,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('message', message);
-    writeNotNull('edited_message', editedMessage);
-    writeNotNull('channel_post', channelPost);
-    writeNotNull('edited_channel_post', editedChannelPost);
-    writeNotNull('inline_query', inlineQuery);
-    writeNotNull('chosen_inline_result', chosenInlineResult);
-    writeNotNull('callback_query', callbackQuery);
-    writeNotNull('shipping_query', shippingQuery);
-    writeNotNull('pre_checkout_query', preCheckoutQuery);
-    return val;
   }
+
+  writeNotNull('message', instance.message);
+  writeNotNull('edited_message', instance.editedMessage);
+  writeNotNull('channel_post', instance.channelPost);
+  writeNotNull('edited_channel_post', instance.editedChannelPost);
+  writeNotNull('inline_query', instance.inlineQuery);
+  writeNotNull('chosen_inline_result', instance.chosenInlineResult);
+  writeNotNull('callback_query', instance.callbackQuery);
+  writeNotNull('shipping_query', instance.shippingQuery);
+  writeNotNull('pre_checkout_query', instance.preCheckoutQuery);
+  return val;
 }
 
 User _$UserFromJson(Map<String, dynamic> json) {
@@ -686,36 +608,28 @@ User _$UserFromJson(Map<String, dynamic> json) {
     ..firstName = json['first_name'] as String;
 }
 
-abstract class _$UserSerializerMixin {
-  int get id;
-  bool get isBot;
-  String get firstName;
-  String get lastName;
-  String get username;
-  String get languageCode;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'id': id,
-      'is_bot': isBot,
-      'first_name': firstName,
-    };
+Map<String, dynamic> _$UserToJson(User instance) {
+  var val = <String, dynamic>{
+    'id': instance.id,
+    'is_bot': instance.isBot,
+    'first_name': instance.firstName,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('last_name', lastName);
-    writeNotNull('username', username);
-    writeNotNull('language_code', languageCode);
-    return val;
   }
+
+  writeNotNull('last_name', instance.lastName);
+  writeNotNull('username', instance.username);
+  writeNotNull('language_code', instance.languageCode);
+  return val;
 }
 
 Chat _$ChatFromJson(Map<String, dynamic> json) {
-  return new Chat(json['id'] as int,
-      $enumDecodeNullable('ChatType', ChatType.values, json['type'] as String),
+  return new Chat(
+      json['id'] as int, _$enumDecodeNullable(_$ChatTypeEnumMap, json['type']),
       title: json['title'] as String,
       username: json['username'] as String,
       firstName: json['first_name'] as String,
@@ -735,91 +649,81 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
       canSetStickerSet: json['can_set_sticker_set'] as bool);
 }
 
-abstract class _$ChatSerializerMixin {
-  int get id;
-  ChatType get type;
-  String get title;
-  String get username;
-  String get firstName;
-  String get lastName;
-  bool get allMembersAreAdministrators;
-  ChatPhoto get photo;
-  String get description;
-  String get inviteLink;
-  Message get pinnedMessage;
-  String get stickerSetName;
-  bool get canSetStickerSet;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'id': id,
-      'type': type?.toString()?.split('.')?.last,
-    };
+Map<String, dynamic> _$ChatToJson(Chat instance) {
+  var val = <String, dynamic>{
+    'id': instance.id,
+    'type': _$ChatTypeEnumMap[instance.type],
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('title', title);
-    writeNotNull('username', username);
-    writeNotNull('first_name', firstName);
-    writeNotNull('last_name', lastName);
-    writeNotNull('all_members_are_administrators', allMembersAreAdministrators);
-    writeNotNull('photo', photo);
-    writeNotNull('description', description);
-    writeNotNull('invite_link', inviteLink);
-    writeNotNull('pinned_message', pinnedMessage);
-    writeNotNull('sticker_set_name', stickerSetName);
-    writeNotNull('can_set_sticker_set', canSetStickerSet);
-    return val;
   }
+
+  writeNotNull('title', instance.title);
+  writeNotNull('username', instance.username);
+  writeNotNull('first_name', instance.firstName);
+  writeNotNull('last_name', instance.lastName);
+  writeNotNull(
+      'all_members_are_administrators', instance.allMembersAreAdministrators);
+  writeNotNull('photo', instance.photo);
+  writeNotNull('description', instance.description);
+  writeNotNull('invite_link', instance.inviteLink);
+  writeNotNull('pinned_message', instance.pinnedMessage);
+  writeNotNull('sticker_set_name', instance.stickerSetName);
+  writeNotNull('can_set_sticker_set', instance.canSetStickerSet);
+  return val;
 }
+
+const _$ChatTypeEnumMap = const <ChatType, dynamic>{
+  ChatType.Private: 'private',
+  ChatType.Group: 'group',
+  ChatType.Channel: 'channel'
+};
 
 InputMedia _$InputMediaFromJson(Map<String, dynamic> json) {
   return new InputMedia(
-      $enumDecodeNullable(
-          'InputMediaType', InputMediaType.values, json['type'] as String),
+      _$enumDecodeNullable(_$InputMediaTypeEnumMap, json['type']),
       json['media'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       width: json['width'] as int,
       height: json['height'] as int,
       duration: json['duration'] as int,
       supportsStreaming: json['supports_streaming'] as bool);
 }
 
-abstract class _$InputMediaSerializerMixin {
-  InputMediaType get type;
-  String get media;
-  String get caption;
-  ParseMode get parseMode;
-  int get width;
-  int get height;
-  int get duration;
-  bool get supportsStreaming;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'media': media,
-    };
+Map<String, dynamic> _$InputMediaToJson(InputMedia instance) {
+  var val = <String, dynamic>{
+    'type': _$InputMediaTypeEnumMap[instance.type],
+    'media': instance.media,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('width', width);
-    writeNotNull('height', height);
-    writeNotNull('duration', duration);
-    writeNotNull('supports_streaming', supportsStreaming);
-    return val;
   }
+
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
+  writeNotNull('duration', instance.duration);
+  writeNotNull('supports_streaming', instance.supportsStreaming);
+  return val;
 }
+
+const _$InputMediaTypeEnumMap = const <InputMediaType, dynamic>{
+  InputMediaType.Photo: 'photo',
+  InputMediaType.Video: 'video'
+};
+
+const _$ParseModeEnumMap = const <ParseMode, dynamic>{
+  ParseMode.Markdown: 'Markdown',
+  ParseMode.Html: 'HTML'
+};
 
 InputFile _$InputFileFromJson(Map<String, dynamic> json) {
   return new InputFile(
@@ -829,18 +733,12 @@ InputFile _$InputFileFromJson(Map<String, dynamic> json) {
       fileId: json['file_id'] as String);
 }
 
-abstract class _$InputFileSerializerMixin {
-  String get filepath;
-  String get url;
-  List<int> get bytes;
-  String get fileId;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'filepath': filepath,
-        'url': url,
-        'bytes': bytes,
-        'file_id': fileId
-      };
-}
+Map<String, dynamic> _$InputFileToJson(InputFile instance) => <String, dynamic>{
+      'filepath': instance.filepath,
+      'url': instance.url,
+      'bytes': instance.bytes,
+      'file_id': instance.fileId
+    };
 
 Audio _$AudioFromJson(Map<String, dynamic> json) {
   return new Audio(json['file_id'] as String, json['duration'] as int,
@@ -850,37 +748,28 @@ Audio _$AudioFromJson(Map<String, dynamic> json) {
       fileSize: json['file_size'] as int);
 }
 
-abstract class _$AudioSerializerMixin {
-  String get fileId;
-  int get duration;
-  String get performer;
-  String get title;
-  String get mimeType;
-  int get fileSize;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'file_id': fileId,
-      'duration': duration,
-    };
+Map<String, dynamic> _$AudioToJson(Audio instance) {
+  var val = <String, dynamic>{
+    'file_id': instance.fileId,
+    'duration': instance.duration,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('performer', performer);
-    writeNotNull('title', title);
-    writeNotNull('mime_type', mimeType);
-    writeNotNull('file_size', fileSize);
-    return val;
   }
+
+  writeNotNull('performer', instance.performer);
+  writeNotNull('title', instance.title);
+  writeNotNull('mime_type', instance.mimeType);
+  writeNotNull('file_size', instance.fileSize);
+  return val;
 }
 
 MessageEntity _$MessageEntityFromJson(Map<String, dynamic> json) {
   return new MessageEntity(
-      $enumDecodeNullable('MessageEntityType', MessageEntityType.values,
-          json['type'] as String),
+      _$enumDecodeNullable(_$MessageEntityTypeEnumMap, json['type']),
       json['offset'] as int,
       json['length'] as int,
       url: json['url'] as String,
@@ -889,30 +778,38 @@ MessageEntity _$MessageEntityFromJson(Map<String, dynamic> json) {
           : new User.fromJson(json['user'] as Map<String, dynamic>));
 }
 
-abstract class _$MessageEntitySerializerMixin {
-  MessageEntityType get type;
-  int get offset;
-  int get length;
-  String get url;
-  User get user;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'offset': offset,
-      'length': length,
-    };
+Map<String, dynamic> _$MessageEntityToJson(MessageEntity instance) {
+  var val = <String, dynamic>{
+    'type': _$MessageEntityTypeEnumMap[instance.type],
+    'offset': instance.offset,
+    'length': instance.length,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('url', url);
-    writeNotNull('user', user);
-    return val;
   }
+
+  writeNotNull('url', instance.url);
+  writeNotNull('user', instance.user);
+  return val;
 }
+
+const _$MessageEntityTypeEnumMap = const <MessageEntityType, dynamic>{
+  MessageEntityType.Mention: 'mention',
+  MessageEntityType.Hashtag: 'hashtag',
+  MessageEntityType.BotCommand: 'bot_command',
+  MessageEntityType.Url: 'url',
+  MessageEntityType.Email: 'email',
+  MessageEntityType.Bold: 'bold',
+  MessageEntityType.Italic: 'italic',
+  MessageEntityType.Code: 'code',
+  MessageEntityType.Pre: 'pre',
+  MessageEntityType.TextLink: 'text_link',
+  MessageEntityType.TextMention: 'text_mention',
+  MessageEntityType.PhoneNumber: 'phone_number'
+};
 
 PhotoSize _$PhotoSizeFromJson(Map<String, dynamic> json) {
   return new PhotoSize(
@@ -920,27 +817,21 @@ PhotoSize _$PhotoSizeFromJson(Map<String, dynamic> json) {
       fileSize: json['file_size'] as int);
 }
 
-abstract class _$PhotoSizeSerializerMixin {
-  String get fileId;
-  int get width;
-  int get height;
-  int get fileSize;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'file_id': fileId,
-      'width': width,
-      'height': height,
-    };
+Map<String, dynamic> _$PhotoSizeToJson(PhotoSize instance) {
+  var val = <String, dynamic>{
+    'file_id': instance.fileId,
+    'width': instance.width,
+    'height': instance.height,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('file_size', fileSize);
-    return val;
   }
+
+  writeNotNull('file_size', instance.fileSize);
+  return val;
 }
 
 Document _$DocumentFromJson(Map<String, dynamic> json) {
@@ -953,29 +844,22 @@ Document _$DocumentFromJson(Map<String, dynamic> json) {
       fileSize: json['file_size'] as int);
 }
 
-abstract class _$DocumentSerializerMixin {
-  String get fileId;
-  PhotoSize get thumb;
-  String get fileName;
-  String get mimeType;
-  int get fileSize;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'file_id': fileId,
-    };
+Map<String, dynamic> _$DocumentToJson(Document instance) {
+  var val = <String, dynamic>{
+    'file_id': instance.fileId,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('thumb', thumb);
-    writeNotNull('file_name', fileName);
-    writeNotNull('mime_type', mimeType);
-    writeNotNull('file_size', fileSize);
-    return val;
   }
+
+  writeNotNull('thumb', instance.thumb);
+  writeNotNull('file_name', instance.fileName);
+  writeNotNull('mime_type', instance.mimeType);
+  writeNotNull('file_size', instance.fileSize);
+  return val;
 }
 
 Sticker _$StickerFromJson(Map<String, dynamic> json) {
@@ -993,35 +877,25 @@ Sticker _$StickerFromJson(Map<String, dynamic> json) {
       fileSize: json['file_size'] as int);
 }
 
-abstract class _$StickerSerializerMixin {
-  String get fileId;
-  int get width;
-  int get height;
-  PhotoSize get thumb;
-  String get emoji;
-  String get setName;
-  MaskPosition get maskPosition;
-  int get fileSize;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'file_id': fileId,
-      'width': width,
-      'height': height,
-    };
+Map<String, dynamic> _$StickerToJson(Sticker instance) {
+  var val = <String, dynamic>{
+    'file_id': instance.fileId,
+    'width': instance.width,
+    'height': instance.height,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('thumb', thumb);
-    writeNotNull('emoji', emoji);
-    writeNotNull('set_name', setName);
-    writeNotNull('mask_position', maskPosition);
-    writeNotNull('file_size', fileSize);
-    return val;
   }
+
+  writeNotNull('thumb', instance.thumb);
+  writeNotNull('emoji', instance.emoji);
+  writeNotNull('set_name', instance.setName);
+  writeNotNull('mask_position', instance.maskPosition);
+  writeNotNull('file_size', instance.fileSize);
+  return val;
 }
 
 StickerSet _$StickerSetFromJson(Map<String, dynamic> json) {
@@ -1036,40 +910,36 @@ StickerSet _$StickerSetFromJson(Map<String, dynamic> json) {
           ?.toList());
 }
 
-abstract class _$StickerSetSerializerMixin {
-  String get name;
-  String get title;
-  bool get containsMasks;
-  List<Sticker> get stickers;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'name': name,
-        'title': title,
-        'contains_masks': containsMasks,
-        'stickers': stickers
-      };
-}
+Map<String, dynamic> _$StickerSetToJson(StickerSet instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'title': instance.title,
+      'contains_masks': instance.containsMasks,
+      'stickers': instance.stickers
+    };
 
 MaskPosition _$MaskPositionFromJson(Map<String, dynamic> json) {
   return new MaskPosition(
-      $enumDecodeNullable('MaskPositionPoint', MaskPositionPoint.values,
-          json['point'] as String),
+      _$enumDecodeNullable(_$MaskPositionPointEnumMap, json['point']),
       (json['x_shift'] as num)?.toDouble(),
       (json['y_shift'] as num)?.toDouble(),
       (json['scale'] as num)?.toDouble());
 }
 
-abstract class _$MaskPositionSerializerMixin {
-  MaskPositionPoint get point;
-  double get xShift;
-  double get yShift;
-  double get scale;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'point': point?.toString()?.split('.')?.last,
-        'x_shift': xShift,
-        'y_shift': yShift,
-        'scale': scale
-      };
-}
+Map<String, dynamic> _$MaskPositionToJson(MaskPosition instance) =>
+    <String, dynamic>{
+      'point': _$MaskPositionPointEnumMap[instance.point],
+      'x_shift': instance.xShift,
+      'y_shift': instance.yShift,
+      'scale': instance.scale
+    };
+
+const _$MaskPositionPointEnumMap = const <MaskPositionPoint, dynamic>{
+  MaskPositionPoint.Forehead: 'forehead',
+  MaskPositionPoint.Eyes: 'eyes',
+  MaskPositionPoint.Mouth: 'mouth',
+  MaskPositionPoint.Chin: 'chin'
+};
 
 Video _$VideoFromJson(Map<String, dynamic> json) {
   return new Video(json['file_id'] as String, json['width'] as int,
@@ -1081,33 +951,24 @@ Video _$VideoFromJson(Map<String, dynamic> json) {
       fileSize: json['file_size'] as int);
 }
 
-abstract class _$VideoSerializerMixin {
-  String get fileId;
-  int get width;
-  int get height;
-  int get duration;
-  PhotoSize get thumb;
-  String get mimeType;
-  int get fileSize;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'file_id': fileId,
-      'width': width,
-      'height': height,
-      'duration': duration,
-    };
+Map<String, dynamic> _$VideoToJson(Video instance) {
+  var val = <String, dynamic>{
+    'file_id': instance.fileId,
+    'width': instance.width,
+    'height': instance.height,
+    'duration': instance.duration,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('thumb', thumb);
-    writeNotNull('mime_type', mimeType);
-    writeNotNull('file_size', fileSize);
-    return val;
   }
+
+  writeNotNull('thumb', instance.thumb);
+  writeNotNull('mime_type', instance.mimeType);
+  writeNotNull('file_size', instance.fileSize);
+  return val;
 }
 
 Voice _$VoiceFromJson(Map<String, dynamic> json) {
@@ -1116,27 +977,21 @@ Voice _$VoiceFromJson(Map<String, dynamic> json) {
       fileSize: json['file_size'] as int);
 }
 
-abstract class _$VoiceSerializerMixin {
-  String get fileId;
-  int get duration;
-  String get mimeType;
-  int get fileSize;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'file_id': fileId,
-      'duration': duration,
-    };
+Map<String, dynamic> _$VoiceToJson(Voice instance) {
+  var val = <String, dynamic>{
+    'file_id': instance.fileId,
+    'duration': instance.duration,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('mime_type', mimeType);
-    writeNotNull('file_size', fileSize);
-    return val;
   }
+
+  writeNotNull('mime_type', instance.mimeType);
+  writeNotNull('file_size', instance.fileSize);
+  return val;
 }
 
 VideoNote _$VideoNoteFromJson(Map<String, dynamic> json) {
@@ -1148,29 +1003,22 @@ VideoNote _$VideoNoteFromJson(Map<String, dynamic> json) {
       fileSize: json['file_size'] as int);
 }
 
-abstract class _$VideoNoteSerializerMixin {
-  String get fileId;
-  int get length;
-  int get duration;
-  PhotoSize get thumb;
-  int get fileSize;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'file_id': fileId,
-      'length': length,
-      'duration': duration,
-    };
+Map<String, dynamic> _$VideoNoteToJson(VideoNote instance) {
+  var val = <String, dynamic>{
+    'file_id': instance.fileId,
+    'length': instance.length,
+    'duration': instance.duration,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('thumb', thumb);
-    writeNotNull('file_size', fileSize);
-    return val;
   }
+
+  writeNotNull('thumb', instance.thumb);
+  writeNotNull('file_size', instance.fileSize);
+  return val;
 }
 
 Contact _$ContactFromJson(Map<String, dynamic> json) {
@@ -1179,27 +1027,21 @@ Contact _$ContactFromJson(Map<String, dynamic> json) {
       lastName: json['last_name'] as String, userId: json['user_id'] as int);
 }
 
-abstract class _$ContactSerializerMixin {
-  String get phoneNumber;
-  String get firstName;
-  String get lastName;
-  int get userId;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'phone_number': phoneNumber,
-      'first_name': firstName,
-    };
+Map<String, dynamic> _$ContactToJson(Contact instance) {
+  var val = <String, dynamic>{
+    'phone_number': instance.phoneNumber,
+    'first_name': instance.firstName,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('last_name', lastName);
-    writeNotNull('user_id', userId);
-    return val;
   }
+
+  writeNotNull('last_name', instance.lastName);
+  writeNotNull('user_id', instance.userId);
+  return val;
 }
 
 Location _$LocationFromJson(Map<String, dynamic> json) {
@@ -1207,12 +1049,10 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
       (json['latitude'] as num)?.toDouble());
 }
 
-abstract class _$LocationSerializerMixin {
-  double get longitude;
-  double get latitude;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'longitude': longitude, 'latitude': latitude};
-}
+Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
+      'longitude': instance.longitude,
+      'latitude': instance.latitude
+    };
 
 Venue _$VenueFromJson(Map<String, dynamic> json) {
   return new Venue(
@@ -1224,27 +1064,21 @@ Venue _$VenueFromJson(Map<String, dynamic> json) {
       foursquareId: json['foursquare_id'] as String);
 }
 
-abstract class _$VenueSerializerMixin {
-  Location get location;
-  String get title;
-  String get address;
-  String get foursquareId;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'location': location,
-      'title': title,
-      'address': address,
-    };
+Map<String, dynamic> _$VenueToJson(Venue instance) {
+  var val = <String, dynamic>{
+    'location': instance.location,
+    'title': instance.title,
+    'address': instance.address,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('foursquare_id', foursquareId);
-    return val;
   }
+
+  writeNotNull('foursquare_id', instance.foursquareId);
+  return val;
 }
 
 UserProfilePhotos _$UserProfilePhotosFromJson(Map<String, dynamic> json) {
@@ -1259,12 +1093,11 @@ UserProfilePhotos _$UserProfilePhotosFromJson(Map<String, dynamic> json) {
           ?.toList());
 }
 
-abstract class _$UserProfilePhotosSerializerMixin {
-  int get totalCount;
-  List<List<PhotoSize>> get photos;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'total_count': totalCount, 'photos': photos};
-}
+Map<String, dynamic> _$UserProfilePhotosToJson(UserProfilePhotos instance) =>
+    <String, dynamic>{
+      'total_count': instance.totalCount,
+      'photos': instance.photos
+    };
 
 FileObject _$FileObjectFromJson(Map<String, dynamic> json) {
   return new FileObject(json['file_id'] as String,
@@ -1272,34 +1105,28 @@ FileObject _$FileObjectFromJson(Map<String, dynamic> json) {
       filePath: json['file_path'] as String);
 }
 
-abstract class _$FileObjectSerializerMixin {
-  String get fileId;
-  int get fileSize;
-  String get filePath;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'file_id': fileId,
-    };
+Map<String, dynamic> _$FileObjectToJson(FileObject instance) {
+  var val = <String, dynamic>{
+    'file_id': instance.fileId,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('file_size', fileSize);
-    writeNotNull('file_path', filePath);
-    return val;
   }
+
+  writeNotNull('file_size', instance.fileSize);
+  writeNotNull('file_path', instance.filePath);
+  return val;
 }
 
 ReplyMarkup _$ReplyMarkupFromJson(Map<String, dynamic> json) {
   return new ReplyMarkup();
 }
 
-abstract class _$ReplyMarkupSerializerMixin {
-  Map<String, dynamic> toJson() => <String, dynamic>{};
-}
+Map<String, dynamic> _$ReplyMarkupToJson(ReplyMarkup instance) =>
+    <String, dynamic>{};
 
 ReplyKeyboardMarkup _$ReplyKeyboardMarkupFromJson(Map<String, dynamic> json) {
   return new ReplyKeyboardMarkup(
@@ -1315,27 +1142,21 @@ ReplyKeyboardMarkup _$ReplyKeyboardMarkupFromJson(Map<String, dynamic> json) {
       selective: json['selective'] as bool);
 }
 
-abstract class _$ReplyKeyboardMarkupSerializerMixin {
-  List<List<KeyboardButton>> get keyboard;
-  bool get resizeKeyboard;
-  bool get oneTimeKeyboard;
-  bool get selective;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'keyboard': keyboard,
-    };
+Map<String, dynamic> _$ReplyKeyboardMarkupToJson(ReplyKeyboardMarkup instance) {
+  var val = <String, dynamic>{
+    'keyboard': instance.keyboard,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('resize_keyboard', resizeKeyboard);
-    writeNotNull('one_time_keyboard', oneTimeKeyboard);
-    writeNotNull('selective', selective);
-    return val;
   }
+
+  writeNotNull('resize_keyboard', instance.resizeKeyboard);
+  writeNotNull('one_time_keyboard', instance.oneTimeKeyboard);
+  writeNotNull('selective', instance.selective);
+  return val;
 }
 
 KeyboardButton _$KeyboardButtonFromJson(Map<String, dynamic> json) {
@@ -1344,25 +1165,20 @@ KeyboardButton _$KeyboardButtonFromJson(Map<String, dynamic> json) {
       requestLocation: json['request_location'] as bool);
 }
 
-abstract class _$KeyboardButtonSerializerMixin {
-  String get text;
-  bool get requestContact;
-  bool get requestLocation;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'text': text,
-    };
+Map<String, dynamic> _$KeyboardButtonToJson(KeyboardButton instance) {
+  var val = <String, dynamic>{
+    'text': instance.text,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('request_contact', requestContact);
-    writeNotNull('request_location', requestLocation);
-    return val;
   }
+
+  writeNotNull('request_contact', instance.requestContact);
+  writeNotNull('request_location', instance.requestLocation);
+  return val;
 }
 
 ReplyKeyboardRemove _$ReplyKeyboardRemoveFromJson(Map<String, dynamic> json) {
@@ -1370,23 +1186,19 @@ ReplyKeyboardRemove _$ReplyKeyboardRemoveFromJson(Map<String, dynamic> json) {
       selective: json['selective'] as bool);
 }
 
-abstract class _$ReplyKeyboardRemoveSerializerMixin {
-  bool get removeKeyboard;
-  bool get selective;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'remove_keyboard': removeKeyboard,
-    };
+Map<String, dynamic> _$ReplyKeyboardRemoveToJson(ReplyKeyboardRemove instance) {
+  var val = <String, dynamic>{
+    'remove_keyboard': instance.removeKeyboard,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('selective', selective);
-    return val;
   }
+
+  writeNotNull('selective', instance.selective);
+  return val;
 }
 
 InlineKeyboardMarkup _$InlineKeyboardMarkupFromJson(Map<String, dynamic> json) {
@@ -1399,11 +1211,9 @@ InlineKeyboardMarkup _$InlineKeyboardMarkupFromJson(Map<String, dynamic> json) {
       ?.toList());
 }
 
-abstract class _$InlineKeyboardMarkupSerializerMixin {
-  List<List<InlineKeyboardButton>> get inlineKeyboard;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'inline_keyboard': inlineKeyboard};
-}
+Map<String, dynamic> _$InlineKeyboardMarkupToJson(
+        InlineKeyboardMarkup instance) =>
+    <String, dynamic>{'inline_keyboard': instance.inlineKeyboard};
 
 InlineKeyboardButton _$InlineKeyboardButtonFromJson(Map<String, dynamic> json) {
   return new InlineKeyboardButton(json['text'] as String,
@@ -1419,34 +1229,26 @@ InlineKeyboardButton _$InlineKeyboardButtonFromJson(Map<String, dynamic> json) {
       pay: json['pay'] as bool);
 }
 
-abstract class _$InlineKeyboardButtonSerializerMixin {
-  String get text;
-  String get url;
-  String get callbackData;
-  String get switchInlineQuery;
-  String get switchInlineQueryCurrentChat;
-  CallbackGame get callbackGame;
-  bool get pay;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'text': text,
-    };
+Map<String, dynamic> _$InlineKeyboardButtonToJson(
+    InlineKeyboardButton instance) {
+  var val = <String, dynamic>{
+    'text': instance.text,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('url', url);
-    writeNotNull('callback_data', callbackData);
-    writeNotNull('switch_inline_query', switchInlineQuery);
-    writeNotNull(
-        'switch_inline_query_current_chat', switchInlineQueryCurrentChat);
-    writeNotNull('callback_game', callbackGame);
-    writeNotNull('pay', pay);
-    return val;
   }
+
+  writeNotNull('url', instance.url);
+  writeNotNull('callback_data', instance.callbackData);
+  writeNotNull('switch_inline_query', instance.switchInlineQuery);
+  writeNotNull('switch_inline_query_current_chat',
+      instance.switchInlineQueryCurrentChat);
+  writeNotNull('callback_game', instance.callbackGame);
+  writeNotNull('pay', instance.pay);
+  return val;
 }
 
 CallbackQuery _$CallbackQueryFromJson(Map<String, dynamic> json) {
@@ -1464,33 +1266,24 @@ CallbackQuery _$CallbackQueryFromJson(Map<String, dynamic> json) {
       gameShortName: json['game_short_name'] as String);
 }
 
-abstract class _$CallbackQuerySerializerMixin {
-  String get id;
-  User get from;
-  Message get message;
-  String get inlineMessageId;
-  String get chatInstance;
-  String get data;
-  String get gameShortName;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'id': id,
-      'from': from,
-    };
+Map<String, dynamic> _$CallbackQueryToJson(CallbackQuery instance) {
+  var val = <String, dynamic>{
+    'id': instance.id,
+    'from': instance.from,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('message', message);
-    writeNotNull('inline_message_id', inlineMessageId);
-    writeNotNull('chat_instance', chatInstance);
-    writeNotNull('data', data);
-    writeNotNull('game_short_name', gameShortName);
-    return val;
   }
+
+  writeNotNull('message', instance.message);
+  writeNotNull('inline_message_id', instance.inlineMessageId);
+  writeNotNull('chat_instance', instance.chatInstance);
+  writeNotNull('data', instance.data);
+  writeNotNull('game_short_name', instance.gameShortName);
+  return val;
 }
 
 ShippingQuery _$ShippingQueryFromJson(Map<String, dynamic> json) {
@@ -1506,18 +1299,13 @@ ShippingQuery _$ShippingQueryFromJson(Map<String, dynamic> json) {
               json['shipping_address'] as Map<String, dynamic>));
 }
 
-abstract class _$ShippingQuerySerializerMixin {
-  String get id;
-  User get from;
-  String get invoicePayload;
-  ShippingAddress get shippingAddress;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'id': id,
-        'from': from,
-        'invoice_payload': invoicePayload,
-        'shipping_address': shippingAddress
-      };
-}
+Map<String, dynamic> _$ShippingQueryToJson(ShippingQuery instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'from': instance.from,
+      'invoice_payload': instance.invoicePayload,
+      'shipping_address': instance.shippingAddress
+    };
 
 PreCheckoutQuery _$PreCheckoutQueryFromJson(Map<String, dynamic> json) {
   return new PreCheckoutQuery(
@@ -1534,33 +1322,24 @@ PreCheckoutQuery _$PreCheckoutQueryFromJson(Map<String, dynamic> json) {
           : new OrderInfo.fromJson(json['order_info'] as Map<String, dynamic>));
 }
 
-abstract class _$PreCheckoutQuerySerializerMixin {
-  String get id;
-  User get from;
-  String get currency;
-  int get totalAmount;
-  String get invoicePayload;
-  String get shippingOptionId;
-  OrderInfo get orderInfo;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'id': id,
-      'from': from,
-      'currency': currency,
-      'total_amount': totalAmount,
-      'invoice_payload': invoicePayload,
-    };
+Map<String, dynamic> _$PreCheckoutQueryToJson(PreCheckoutQuery instance) {
+  var val = <String, dynamic>{
+    'id': instance.id,
+    'from': instance.from,
+    'currency': instance.currency,
+    'total_amount': instance.totalAmount,
+    'invoice_payload': instance.invoicePayload,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('shipping_option_id', shippingOptionId);
-    writeNotNull('order_info', orderInfo);
-    return val;
   }
+
+  writeNotNull('shipping_option_id', instance.shippingOptionId);
+  writeNotNull('order_info', instance.orderInfo);
+  return val;
 }
 
 ForceReply _$ForceReplyFromJson(Map<String, dynamic> json) {
@@ -1568,23 +1347,19 @@ ForceReply _$ForceReplyFromJson(Map<String, dynamic> json) {
       selective: json['selective'] as bool);
 }
 
-abstract class _$ForceReplySerializerMixin {
-  bool get forceReply;
-  bool get selective;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'force_reply': forceReply,
-    };
+Map<String, dynamic> _$ForceReplyToJson(ForceReply instance) {
+  var val = <String, dynamic>{
+    'force_reply': instance.forceReply,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('selective', selective);
-    return val;
   }
+
+  writeNotNull('selective', instance.selective);
+  return val;
 }
 
 ChatPhoto _$ChatPhotoFromJson(Map<String, dynamic> json) {
@@ -1592,20 +1367,17 @@ ChatPhoto _$ChatPhotoFromJson(Map<String, dynamic> json) {
       json['small_file_id'] as String, json['big_file_id'] as String);
 }
 
-abstract class _$ChatPhotoSerializerMixin {
-  String get smallFileId;
-  String get bigFileId;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'small_file_id': smallFileId, 'big_file_id': bigFileId};
-}
+Map<String, dynamic> _$ChatPhotoToJson(ChatPhoto instance) => <String, dynamic>{
+      'small_file_id': instance.smallFileId,
+      'big_file_id': instance.bigFileId
+    };
 
 ChatMember _$ChatMemberFromJson(Map<String, dynamic> json) {
   return new ChatMember(
       json['user'] == null
           ? null
           : new User.fromJson(json['user'] as Map<String, dynamic>),
-      $enumDecodeNullable('ChatMemberStatus', ChatMemberStatus.values,
-          json['status'] as String),
+      _$enumDecodeNullable(_$ChatMemberStatusEnumMap, json['status']),
       untilDate: json['until_date'] as int,
       canBeEdited: json['can_be_edited'] as bool,
       canChangeInfo: json['can_change_info'] as bool,
@@ -1622,52 +1394,42 @@ ChatMember _$ChatMemberFromJson(Map<String, dynamic> json) {
       canAddWebPagePreviews: json['can_add_web_page_previews'] as bool);
 }
 
-abstract class _$ChatMemberSerializerMixin {
-  User get user;
-  ChatMemberStatus get status;
-  int get untilDate;
-  bool get canBeEdited;
-  bool get canChangeInfo;
-  bool get canPostMessages;
-  bool get canEditMessages;
-  bool get canDeleteMessages;
-  bool get canInviteUsers;
-  bool get canRestrictMembers;
-  bool get canPinMessages;
-  bool get canPromoteMembers;
-  bool get canSendMessages;
-  bool get canSendMediaMessages;
-  bool get canSendOtherMessages;
-  bool get canAddWebPagePreviews;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'user': user,
-      'status': status?.toString()?.split('.')?.last,
-    };
+Map<String, dynamic> _$ChatMemberToJson(ChatMember instance) {
+  var val = <String, dynamic>{
+    'user': instance.user,
+    'status': _$ChatMemberStatusEnumMap[instance.status],
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('until_date', untilDate);
-    writeNotNull('can_be_edited', canBeEdited);
-    writeNotNull('can_change_info', canChangeInfo);
-    writeNotNull('can_post_messages', canPostMessages);
-    writeNotNull('can_edit_messages', canEditMessages);
-    writeNotNull('can_delete_messages', canDeleteMessages);
-    writeNotNull('can_invite_users', canInviteUsers);
-    writeNotNull('can_restrict_members', canRestrictMembers);
-    writeNotNull('can_pin_messages', canPinMessages);
-    writeNotNull('can_promote_members', canPromoteMembers);
-    writeNotNull('can_send_messages', canSendMessages);
-    writeNotNull('can_send_media_messages', canSendMediaMessages);
-    writeNotNull('can_send_other_messages', canSendOtherMessages);
-    writeNotNull('can_add_web_page_previews', canAddWebPagePreviews);
-    return val;
   }
+
+  writeNotNull('until_date', instance.untilDate);
+  writeNotNull('can_be_edited', instance.canBeEdited);
+  writeNotNull('can_change_info', instance.canChangeInfo);
+  writeNotNull('can_post_messages', instance.canPostMessages);
+  writeNotNull('can_edit_messages', instance.canEditMessages);
+  writeNotNull('can_delete_messages', instance.canDeleteMessages);
+  writeNotNull('can_invite_users', instance.canInviteUsers);
+  writeNotNull('can_restrict_members', instance.canRestrictMembers);
+  writeNotNull('can_pin_messages', instance.canPinMessages);
+  writeNotNull('can_promote_members', instance.canPromoteMembers);
+  writeNotNull('can_send_messages', instance.canSendMessages);
+  writeNotNull('can_send_media_messages', instance.canSendMediaMessages);
+  writeNotNull('can_send_other_messages', instance.canSendOtherMessages);
+  writeNotNull('can_add_web_page_previews', instance.canAddWebPagePreviews);
+  return val;
 }
+
+const _$ChatMemberStatusEnumMap = const <ChatMemberStatus, dynamic>{
+  ChatMemberStatus.Creator: 'creator',
+  ChatMemberStatus.Administrator: 'administrator',
+  ChatMemberStatus.Member: 'member',
+  ChatMemberStatus.Left: 'left',
+  ChatMemberStatus.Kicked: 'kicked'
+};
 
 Message _$MessageFromJson(Map<String, dynamic> json) {
   return new Message(json['message_id'] as int, json['date'] as int,
@@ -1736,101 +1498,58 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
       connectedWebsite: json['connected_website'] as String);
 }
 
-abstract class _$MessageSerializerMixin {
-  int get messageId;
-  User get from;
-  int get date;
-  Chat get chat;
-  User get forwardFrom;
-  Chat get forwardFromChat;
-  int get forwardFromMessageId;
-  String get forwardSignature;
-  int get forwardDate;
-  Message get replyToMessage;
-  int get editDate;
-  String get authorSignature;
-  String get text;
-  List<MessageEntity> get entities;
-  List<MessageEntity> get captionEntities;
-  Audio get audio;
-  Document get document;
-  Game get game;
-  List<PhotoSize> get photo;
-  Sticker get sticker;
-  Video get video;
-  Voice get voice;
-  VideoNote get videoNote;
-  String get caption;
-  Contact get contact;
-  Location get location;
-  Venue get venue;
-  List<User> get newChatMembers;
-  User get leftChatMember;
-  String get newChatTitle;
-  List<PhotoSize> get newChatPhoto;
-  bool get deleteChatPhoto;
-  bool get groupChatCreated;
-  bool get supergroupChatCreated;
-  bool get channelChatCreated;
-  int get migrateToChatId;
-  int get migrateFromChatId;
-  Message get pinnedMessage;
-  Invoice get invoice;
-  SuccessfulPayment get successfulPayment;
-  String get connectedWebsite;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'message_id': messageId,
-    };
+Map<String, dynamic> _$MessageToJson(Message instance) {
+  var val = <String, dynamic>{
+    'message_id': instance.messageId,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('from', from);
-    val['date'] = date;
-    val['chat'] = chat;
-    writeNotNull('forward_from', forwardFrom);
-    writeNotNull('forward_from_chat', forwardFromChat);
-    writeNotNull('forward_from_message_id', forwardFromMessageId);
-    writeNotNull('forward_signature', forwardSignature);
-    writeNotNull('forward_date', forwardDate);
-    writeNotNull('reply_to_message', replyToMessage);
-    writeNotNull('edit_date', editDate);
-    writeNotNull('author_signature', authorSignature);
-    writeNotNull('text', text);
-    writeNotNull('entities', entities);
-    writeNotNull('caption_entities', captionEntities);
-    writeNotNull('audio', audio);
-    writeNotNull('document', document);
-    writeNotNull('game', game);
-    writeNotNull('photo', photo);
-    writeNotNull('sticker', sticker);
-    writeNotNull('video', video);
-    writeNotNull('voice', voice);
-    writeNotNull('video_note', videoNote);
-    writeNotNull('caption', caption);
-    writeNotNull('contact', contact);
-    writeNotNull('location', location);
-    writeNotNull('venue', venue);
-    writeNotNull('new_chat_members', newChatMembers);
-    writeNotNull('left_chat_member', leftChatMember);
-    writeNotNull('new_chat_title', newChatTitle);
-    writeNotNull('new_chat_photo', newChatPhoto);
-    writeNotNull('delete_chat_photo', deleteChatPhoto);
-    writeNotNull('group_chat_created', groupChatCreated);
-    writeNotNull('supergroup_chat_created', supergroupChatCreated);
-    writeNotNull('channel_chat_created', channelChatCreated);
-    writeNotNull('migrate_to_chat_id', migrateToChatId);
-    writeNotNull('migrate_from_chat_id', migrateFromChatId);
-    writeNotNull('pinned_message', pinnedMessage);
-    writeNotNull('invoice', invoice);
-    writeNotNull('successful_payment', successfulPayment);
-    writeNotNull('connected_website', connectedWebsite);
-    return val;
   }
+
+  writeNotNull('from', instance.from);
+  val['date'] = instance.date;
+  val['chat'] = instance.chat;
+  writeNotNull('forward_from', instance.forwardFrom);
+  writeNotNull('forward_from_chat', instance.forwardFromChat);
+  writeNotNull('forward_from_message_id', instance.forwardFromMessageId);
+  writeNotNull('forward_signature', instance.forwardSignature);
+  writeNotNull('forward_date', instance.forwardDate);
+  writeNotNull('reply_to_message', instance.replyToMessage);
+  writeNotNull('edit_date', instance.editDate);
+  writeNotNull('author_signature', instance.authorSignature);
+  writeNotNull('text', instance.text);
+  writeNotNull('entities', instance.entities);
+  writeNotNull('caption_entities', instance.captionEntities);
+  writeNotNull('audio', instance.audio);
+  writeNotNull('document', instance.document);
+  writeNotNull('game', instance.game);
+  writeNotNull('photo', instance.photo);
+  writeNotNull('sticker', instance.sticker);
+  writeNotNull('video', instance.video);
+  writeNotNull('voice', instance.voice);
+  writeNotNull('video_note', instance.videoNote);
+  writeNotNull('caption', instance.caption);
+  writeNotNull('contact', instance.contact);
+  writeNotNull('location', instance.location);
+  writeNotNull('venue', instance.venue);
+  writeNotNull('new_chat_members', instance.newChatMembers);
+  writeNotNull('left_chat_member', instance.leftChatMember);
+  writeNotNull('new_chat_title', instance.newChatTitle);
+  writeNotNull('new_chat_photo', instance.newChatPhoto);
+  writeNotNull('delete_chat_photo', instance.deleteChatPhoto);
+  writeNotNull('group_chat_created', instance.groupChatCreated);
+  writeNotNull('supergroup_chat_created', instance.supergroupChatCreated);
+  writeNotNull('channel_chat_created', instance.channelChatCreated);
+  writeNotNull('migrate_to_chat_id', instance.migrateToChatId);
+  writeNotNull('migrate_from_chat_id', instance.migrateFromChatId);
+  writeNotNull('pinned_message', instance.pinnedMessage);
+  writeNotNull('invoice', instance.invoice);
+  writeNotNull('successful_payment', instance.successfulPayment);
+  writeNotNull('connected_website', instance.connectedWebsite);
+  return val;
 }
 
 InlineQuery _$InlineQueryFromJson(Map<String, dynamic> json) {
@@ -1846,29 +1565,22 @@ InlineQuery _$InlineQueryFromJson(Map<String, dynamic> json) {
           : new Location.fromJson(json['location'] as Map<String, dynamic>));
 }
 
-abstract class _$InlineQuerySerializerMixin {
-  String get id;
-  User get from;
-  Location get location;
-  String get query;
-  String get offset;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'id': id,
-      'from': from,
-    };
+Map<String, dynamic> _$InlineQueryToJson(InlineQuery instance) {
+  var val = <String, dynamic>{
+    'id': instance.id,
+    'from': instance.from,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('location', location);
-    val['query'] = query;
-    val['offset'] = offset;
-    return val;
   }
+
+  writeNotNull('location', instance.location);
+  val['query'] = instance.query;
+  val['offset'] = instance.offset;
+  return val;
 }
 
 ChosenInlineResult _$ChosenInlineResultFromJson(Map<String, dynamic> json) {
@@ -1884,44 +1596,51 @@ ChosenInlineResult _$ChosenInlineResultFromJson(Map<String, dynamic> json) {
       inlineMessageId: json['inline_message_id'] as String);
 }
 
-abstract class _$ChosenInlineResultSerializerMixin {
-  String get resultId;
-  User get from;
-  Location get location;
-  String get inlineMessageId;
-  String get query;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'result_id': resultId,
-      'from': from,
-    };
+Map<String, dynamic> _$ChosenInlineResultToJson(ChosenInlineResult instance) {
+  var val = <String, dynamic>{
+    'result_id': instance.resultId,
+    'from': instance.from,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('location', location);
-    writeNotNull('inline_message_id', inlineMessageId);
-    val['query'] = query;
-    return val;
   }
+
+  writeNotNull('location', instance.location);
+  writeNotNull('inline_message_id', instance.inlineMessageId);
+  val['query'] = instance.query;
+  return val;
 }
 
 InlineQueryResult _$InlineQueryResultFromJson(Map<String, dynamic> json) {
   return new InlineQueryResult(
-      $enumDecodeNullable('InlineQueryResultType', InlineQueryResultType.values,
-          json['type'] as String),
+      _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type']),
       json['id'] as String);
 }
 
-abstract class _$InlineQueryResultSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'type': type?.toString()?.split('.')?.last, 'id': id};
-}
+Map<String, dynamic> _$InlineQueryResultToJson(InlineQueryResult instance) =>
+    <String, dynamic>{
+      'type': _$InlineQueryResultTypeEnumMap[instance.type],
+      'id': instance.id
+    };
+
+const _$InlineQueryResultTypeEnumMap = const <InlineQueryResultType, dynamic>{
+  InlineQueryResultType.Article: 'article',
+  InlineQueryResultType.Photo: 'photo',
+  InlineQueryResultType.Gif: 'gif',
+  InlineQueryResultType.Mpeg4Gif: 'mpeg4_gif',
+  InlineQueryResultType.Video: 'video',
+  InlineQueryResultType.Audio: 'audio',
+  InlineQueryResultType.Voice: 'voice',
+  InlineQueryResultType.Document: 'document',
+  InlineQueryResultType.Location: 'location',
+  InlineQueryResultType.Venue: 'venue',
+  InlineQueryResultType.Contact: 'contact',
+  InlineQueryResultType.Sticker: 'sticker',
+  InlineQueryResultType.Game: 'game'
+};
 
 InlineQueryResultArticle _$InlineQueryResultArticleFromJson(
     Map<String, dynamic> json) {
@@ -1937,8 +1656,7 @@ InlineQueryResultArticle _$InlineQueryResultArticleFromJson(
       thumbUrl: json['thumb_url'] as String,
       thumbWidth: json['thumb_width'] as int,
       thumbHeight: json['thumb_height'] as int)
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String
     ..replyMarkup = json['reply_markup'] == null
         ? null
@@ -1946,41 +1664,29 @@ InlineQueryResultArticle _$InlineQueryResultArticleFromJson(
             json['reply_markup'] as Map<String, dynamic>);
 }
 
-abstract class _$InlineQueryResultArticleSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get title;
-  InputMessageContent get inputMessageContent;
-  InlineKeyboardMarkup get replyMarkup;
-  String get url;
-  bool get hideUrl;
-  String get description;
-  String get thumbUrl;
-  int get thumbWidth;
-  int get thumbHeight;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'title': title,
-      'input_message_content': inputMessageContent,
-    };
+Map<String, dynamic> _$InlineQueryResultArticleToJson(
+    InlineQueryResultArticle instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'title': instance.title,
+    'input_message_content': instance.inputMessageContent,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('url', url);
-    writeNotNull('hide_url', hideUrl);
-    writeNotNull('description', description);
-    writeNotNull('thumb_url', thumbUrl);
-    writeNotNull('thumb_width', thumbWidth);
-    writeNotNull('thumb_height', thumbHeight);
-    return val;
   }
+
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('url', instance.url);
+  writeNotNull('hide_url', instance.hideUrl);
+  writeNotNull('description', instance.description);
+  writeNotNull('thumb_url', instance.thumbUrl);
+  writeNotNull('thumb_width', instance.thumbWidth);
+  writeNotNull('thumb_height', instance.thumbHeight);
+  return val;
 }
 
 InlineQueryResultPhoto _$InlineQueryResultPhotoFromJson(
@@ -1992,8 +1698,7 @@ InlineQueryResultPhoto _$InlineQueryResultPhotoFromJson(
       title: json['title'] as String,
       description: json['description'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       replyMarkup: json['reply_markup'] == null
           ? null
           : new InlineKeyboardMarkup.fromJson(
@@ -2002,48 +1707,34 @@ InlineQueryResultPhoto _$InlineQueryResultPhotoFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultPhotoSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get photoUrl;
-  int get photoWidth;
-  int get photoHeight;
-  String get thumbUrl;
-  String get title;
-  String get description;
-  String get caption;
-  ParseMode get parseMode;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'photo_url': photoUrl,
-    };
+Map<String, dynamic> _$InlineQueryResultPhotoToJson(
+    InlineQueryResultPhoto instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'photo_url': instance.photoUrl,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('photo_width', photoWidth);
-    writeNotNull('photo_height', photoHeight);
-    val['thumb_url'] = thumbUrl;
-    writeNotNull('title', title);
-    writeNotNull('description', description);
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('photo_width', instance.photoWidth);
+  writeNotNull('photo_height', instance.photoHeight);
+  val['thumb_url'] = instance.thumbUrl;
+  writeNotNull('title', instance.title);
+  writeNotNull('description', instance.description);
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InlineQueryResultGif _$InlineQueryResultGifFromJson(Map<String, dynamic> json) {
@@ -2054,8 +1745,7 @@ InlineQueryResultGif _$InlineQueryResultGifFromJson(Map<String, dynamic> json) {
       gifDuration: json['gif_duration'] as int,
       title: json['title'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       replyMarkup: json['reply_markup'] == null
           ? null
           : new InlineKeyboardMarkup.fromJson(
@@ -2064,48 +1754,34 @@ InlineQueryResultGif _$InlineQueryResultGifFromJson(Map<String, dynamic> json) {
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultGifSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get gifUrl;
-  int get gifWidth;
-  int get gifHeight;
-  int get gifDuration;
-  String get thumbUrl;
-  String get title;
-  String get caption;
-  ParseMode get parseMode;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'gif_url': gifUrl,
-    };
+Map<String, dynamic> _$InlineQueryResultGifToJson(
+    InlineQueryResultGif instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'gif_url': instance.gifUrl,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('gif_width', gifWidth);
-    writeNotNull('gif_height', gifHeight);
-    writeNotNull('gif_duration', gifDuration);
-    val['thumb_url'] = thumbUrl;
-    writeNotNull('title', title);
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('gif_width', instance.gifWidth);
+  writeNotNull('gif_height', instance.gifHeight);
+  writeNotNull('gif_duration', instance.gifDuration);
+  val['thumb_url'] = instance.thumbUrl;
+  writeNotNull('title', instance.title);
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InlineQueryResultMpeg4Gif _$InlineQueryResultMpeg4GifFromJson(
@@ -2117,8 +1793,7 @@ InlineQueryResultMpeg4Gif _$InlineQueryResultMpeg4GifFromJson(
       mpeg4Duration: json['mpeg4_duration'] as int,
       title: json['title'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       replyMarkup: json['reply_markup'] == null
           ? null
           : new InlineKeyboardMarkup.fromJson(
@@ -2127,61 +1802,45 @@ InlineQueryResultMpeg4Gif _$InlineQueryResultMpeg4GifFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultMpeg4GifSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get mpeg4Url;
-  int get mpeg4Width;
-  int get mpeg4Height;
-  int get mpeg4Duration;
-  String get thumbUrl;
-  String get title;
-  String get caption;
-  ParseMode get parseMode;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'mpeg4_url': mpeg4Url,
-    };
+Map<String, dynamic> _$InlineQueryResultMpeg4GifToJson(
+    InlineQueryResultMpeg4Gif instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'mpeg4_url': instance.mpeg4Url,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('mpeg4_width', mpeg4Width);
-    writeNotNull('mpeg4_height', mpeg4Height);
-    writeNotNull('mpeg4_duration', mpeg4Duration);
-    val['thumb_url'] = thumbUrl;
-    writeNotNull('title', title);
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('mpeg4_width', instance.mpeg4Width);
+  writeNotNull('mpeg4_height', instance.mpeg4Height);
+  writeNotNull('mpeg4_duration', instance.mpeg4Duration);
+  val['thumb_url'] = instance.thumbUrl;
+  writeNotNull('title', instance.title);
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InlineQueryResultVideo _$InlineQueryResultVideoFromJson(
     Map<String, dynamic> json) {
   return new InlineQueryResultVideo(
       json['video_url'] as String,
-      $enumDecodeNullable(
-          'VideoMimeType', VideoMimeType.values, json['mime_type'] as String),
+      _$enumDecodeNullable(_$VideoMimeTypeEnumMap, json['mime_type']),
       json['thumb_url'] as String,
       json['title'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       videoWidth: json['video_width'] as int,
       videoHeight: json['video_height'] as int,
       videoDuration: json['video_duration'] as int,
@@ -2194,61 +1853,49 @@ InlineQueryResultVideo _$InlineQueryResultVideoFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultVideoSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get videoUrl;
-  VideoMimeType get mimeType;
-  String get thumbUrl;
-  String get title;
-  String get caption;
-  ParseMode get parseMode;
-  int get videoWidth;
-  int get videoHeight;
-  int get videoDuration;
-  String get description;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'video_url': videoUrl,
-      'mime_type': mimeType?.toString()?.split('.')?.last,
-      'thumb_url': thumbUrl,
-      'title': title,
-    };
+Map<String, dynamic> _$InlineQueryResultVideoToJson(
+    InlineQueryResultVideo instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'video_url': instance.videoUrl,
+    'mime_type': _$VideoMimeTypeEnumMap[instance.mimeType],
+    'thumb_url': instance.thumbUrl,
+    'title': instance.title,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('video_width', videoWidth);
-    writeNotNull('video_height', videoHeight);
-    writeNotNull('video_duration', videoDuration);
-    writeNotNull('description', description);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('video_width', instance.videoWidth);
+  writeNotNull('video_height', instance.videoHeight);
+  writeNotNull('video_duration', instance.videoDuration);
+  writeNotNull('description', instance.description);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
+
+const _$VideoMimeTypeEnumMap = const <VideoMimeType, dynamic>{
+  VideoMimeType.TextHtml: 'text/html',
+  VideoMimeType.VideoMp4: 'video/mp4'
+};
 
 InlineQueryResultAudio _$InlineQueryResultAudioFromJson(
     Map<String, dynamic> json) {
   return new InlineQueryResultAudio(
       json['audio_url'] as String, json['title'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       performer: json['performer'] as String,
       audioDuration: json['audio_duration'] as int,
       replyMarkup: json['reply_markup'] == null
@@ -2259,44 +1906,32 @@ InlineQueryResultAudio _$InlineQueryResultAudioFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultAudioSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get audioUrl;
-  String get title;
-  String get caption;
-  ParseMode get parseMode;
-  String get performer;
-  int get audioDuration;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'audio_url': audioUrl,
-      'title': title,
-    };
+Map<String, dynamic> _$InlineQueryResultAudioToJson(
+    InlineQueryResultAudio instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'audio_url': instance.audioUrl,
+    'title': instance.title,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('performer', performer);
-    writeNotNull('audio_duration', audioDuration);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('performer', instance.performer);
+  writeNotNull('audio_duration', instance.audioDuration);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InlineQueryResultVoice _$InlineQueryResultVoiceFromJson(
@@ -2304,8 +1939,7 @@ InlineQueryResultVoice _$InlineQueryResultVoiceFromJson(
   return new InlineQueryResultVoice(
       json['voice_url'] as String, json['title'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       voiceDuration: json['voice_duration'] as int,
       replyMarkup: json['reply_markup'] == null
           ? null
@@ -2315,42 +1949,31 @@ InlineQueryResultVoice _$InlineQueryResultVoiceFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultVoiceSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get voiceUrl;
-  String get title;
-  String get caption;
-  ParseMode get parseMode;
-  int get voiceDuration;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'voice_url': voiceUrl,
-      'title': title,
-    };
+Map<String, dynamic> _$InlineQueryResultVoiceToJson(
+    InlineQueryResultVoice instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'voice_url': instance.voiceUrl,
+    'title': instance.title,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('voice_duration', voiceDuration);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('voice_duration', instance.voiceDuration);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InlineQueryResultDocument _$InlineQueryResultDocumentFromJson(
@@ -2358,11 +1981,9 @@ InlineQueryResultDocument _$InlineQueryResultDocumentFromJson(
   return new InlineQueryResultDocument(
       json['title'] as String,
       json['document_url'] as String,
-      $enumDecodeNullable('DocumentMimeType', DocumentMimeType.values,
-          json['mime_type'] as String),
+      _$enumDecodeNullable(_$DocumentMimeTypeEnumMap, json['mime_type']),
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       description: json['description'] as String,
       replyMarkup: json['reply_markup'] == null
           ? null
@@ -2375,51 +1996,41 @@ InlineQueryResultDocument _$InlineQueryResultDocumentFromJson(
       thumbUrl: json['thumb_url'] as String,
       thumbWidth: json['thumb_width'] as int,
       thumbHeight: json['thumb_height'] as int)
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultDocumentSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get title;
-  String get caption;
-  ParseMode get parseMode;
-  String get documentUrl;
-  DocumentMimeType get mimeType;
-  String get description;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  String get thumbUrl;
-  int get thumbWidth;
-  int get thumbHeight;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'title': title,
-    };
+Map<String, dynamic> _$InlineQueryResultDocumentToJson(
+    InlineQueryResultDocument instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'title': instance.title,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    val['document_url'] = documentUrl;
-    val['mime_type'] = mimeType?.toString()?.split('.')?.last;
-    writeNotNull('description', description);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    writeNotNull('thumb_url', thumbUrl);
-    writeNotNull('thumb_width', thumbWidth);
-    writeNotNull('thumb_height', thumbHeight);
-    return val;
   }
+
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  val['document_url'] = instance.documentUrl;
+  val['mime_type'] = _$DocumentMimeTypeEnumMap[instance.mimeType];
+  writeNotNull('description', instance.description);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  writeNotNull('thumb_url', instance.thumbUrl);
+  writeNotNull('thumb_width', instance.thumbWidth);
+  writeNotNull('thumb_height', instance.thumbHeight);
+  return val;
 }
+
+const _$DocumentMimeTypeEnumMap = const <DocumentMimeType, dynamic>{
+  DocumentMimeType.ApplicationPdf: 'application/pdf',
+  DocumentMimeType.ApplicationZip: 'application/zip'
+};
 
 InlineQueryResultLocation _$InlineQueryResultLocationFromJson(
     Map<String, dynamic> json) {
@@ -2436,44 +2047,32 @@ InlineQueryResultLocation _$InlineQueryResultLocationFromJson(
       thumbUrl: json['thumb_url'] as String,
       thumbWidth: json['thumb_width'] as int,
       thumbHeight: json['thumb_height'] as int)
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultLocationSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  double get latitude;
-  double get longitude;
-  String get title;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  String get thumbUrl;
-  int get thumbWidth;
-  int get thumbHeight;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'latitude': latitude,
-      'longitude': longitude,
-      'title': title,
-    };
+Map<String, dynamic> _$InlineQueryResultLocationToJson(
+    InlineQueryResultLocation instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'latitude': instance.latitude,
+    'longitude': instance.longitude,
+    'title': instance.title,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    writeNotNull('thumb_url', thumbUrl);
-    writeNotNull('thumb_width', thumbWidth);
-    writeNotNull('thumb_height', thumbHeight);
-    return val;
   }
+
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  writeNotNull('thumb_url', instance.thumbUrl);
+  writeNotNull('thumb_width', instance.thumbWidth);
+  writeNotNull('thumb_height', instance.thumbHeight);
+  return val;
 }
 
 InlineQueryResultVenue _$InlineQueryResultVenueFromJson(
@@ -2495,48 +2094,34 @@ InlineQueryResultVenue _$InlineQueryResultVenueFromJson(
       thumbUrl: json['thumb_url'] as String,
       thumbWidth: json['thumb_width'] as int,
       thumbHeight: json['thumb_height'] as int)
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultVenueSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  double get latitude;
-  double get longitude;
-  String get title;
-  String get address;
-  String get foursquareId;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  String get thumbUrl;
-  int get thumbWidth;
-  int get thumbHeight;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'latitude': latitude,
-      'longitude': longitude,
-      'title': title,
-      'address': address,
-    };
+Map<String, dynamic> _$InlineQueryResultVenueToJson(
+    InlineQueryResultVenue instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'latitude': instance.latitude,
+    'longitude': instance.longitude,
+    'title': instance.title,
+    'address': instance.address,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('foursquare_id', foursquareId);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    writeNotNull('thumb_url', thumbUrl);
-    writeNotNull('thumb_width', thumbWidth);
-    writeNotNull('thumb_height', thumbHeight);
-    return val;
   }
+
+  writeNotNull('foursquare_id', instance.foursquareId);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  writeNotNull('thumb_url', instance.thumbUrl);
+  writeNotNull('thumb_width', instance.thumbWidth);
+  writeNotNull('thumb_height', instance.thumbHeight);
+  return val;
 }
 
 InlineQueryResultContact _$InlineQueryResultContactFromJson(
@@ -2555,44 +2140,32 @@ InlineQueryResultContact _$InlineQueryResultContactFromJson(
       thumbUrl: json['thumb_url'] as String,
       thumbWidth: json['thumb_width'] as int,
       thumbHeight: json['thumb_height'] as int)
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultContactSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get phoneNumber;
-  String get firstName;
-  String get lastName;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  String get thumbUrl;
-  int get thumbWidth;
-  int get thumbHeight;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'phone_number': phoneNumber,
-      'first_name': firstName,
-    };
+Map<String, dynamic> _$InlineQueryResultContactToJson(
+    InlineQueryResultContact instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'phone_number': instance.phoneNumber,
+    'first_name': instance.firstName,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('last_name', lastName);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    writeNotNull('thumb_url', thumbUrl);
-    writeNotNull('thumb_width', thumbWidth);
-    writeNotNull('thumb_height', thumbHeight);
-    return val;
   }
+
+  writeNotNull('last_name', instance.lastName);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  writeNotNull('thumb_url', instance.thumbUrl);
+  writeNotNull('thumb_width', instance.thumbWidth);
+  writeNotNull('thumb_height', instance.thumbHeight);
+  return val;
 }
 
 InlineQueryResultGame _$InlineQueryResultGameFromJson(
@@ -2602,32 +2175,26 @@ InlineQueryResultGame _$InlineQueryResultGameFromJson(
           ? null
           : new InlineKeyboardMarkup.fromJson(
               json['reply_markup'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultGameSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get gameShortName;
-  InlineKeyboardMarkup get replyMarkup;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'game_short_name': gameShortName,
-    };
+Map<String, dynamic> _$InlineQueryResultGameToJson(
+    InlineQueryResultGame instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'game_short_name': instance.gameShortName,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('reply_markup', replyMarkup);
-    return val;
   }
+
+  writeNotNull('reply_markup', instance.replyMarkup);
+  return val;
 }
 
 InlineQueryResultCachedPhoto _$InlineQueryResultCachedPhotoFromJson(
@@ -2636,8 +2203,7 @@ InlineQueryResultCachedPhoto _$InlineQueryResultCachedPhotoFromJson(
       title: json['title'] as String,
       description: json['description'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       replyMarkup: json['reply_markup'] == null
           ? null
           : new InlineKeyboardMarkup.fromJson(
@@ -2646,42 +2212,31 @@ InlineQueryResultCachedPhoto _$InlineQueryResultCachedPhotoFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultCachedPhotoSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get photoFileId;
-  String get title;
-  String get description;
-  String get caption;
-  ParseMode get parseMode;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'photo_file_id': photoFileId,
-    };
+Map<String, dynamic> _$InlineQueryResultCachedPhotoToJson(
+    InlineQueryResultCachedPhoto instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'photo_file_id': instance.photoFileId,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('title', title);
-    writeNotNull('description', description);
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('title', instance.title);
+  writeNotNull('description', instance.description);
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InlineQueryResultCachedGif _$InlineQueryResultCachedGifFromJson(
@@ -2689,8 +2244,7 @@ InlineQueryResultCachedGif _$InlineQueryResultCachedGifFromJson(
   return new InlineQueryResultCachedGif(json['gif_file_id'] as String,
       title: json['title'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       replyMarkup: json['reply_markup'] == null
           ? null
           : new InlineKeyboardMarkup.fromJson(
@@ -2699,40 +2253,30 @@ InlineQueryResultCachedGif _$InlineQueryResultCachedGifFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultCachedGifSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get gifFileId;
-  String get title;
-  String get caption;
-  ParseMode get parseMode;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'gif_file_id': gifFileId,
-    };
+Map<String, dynamic> _$InlineQueryResultCachedGifToJson(
+    InlineQueryResultCachedGif instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'gif_file_id': instance.gifFileId,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('title', title);
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('title', instance.title);
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InlineQueryResultCachedMpeg4Gif _$InlineQueryResultCachedMpeg4GifFromJson(
@@ -2740,8 +2284,7 @@ InlineQueryResultCachedMpeg4Gif _$InlineQueryResultCachedMpeg4GifFromJson(
   return new InlineQueryResultCachedMpeg4Gif(json['mpeg4_file_id'] as String,
       title: json['title'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       replyMarkup: json['reply_markup'] == null
           ? null
           : new InlineKeyboardMarkup.fromJson(
@@ -2750,40 +2293,30 @@ InlineQueryResultCachedMpeg4Gif _$InlineQueryResultCachedMpeg4GifFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultCachedMpeg4GifSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get mpeg4FileId;
-  String get title;
-  String get caption;
-  ParseMode get parseMode;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'mpeg4_file_id': mpeg4FileId,
-    };
+Map<String, dynamic> _$InlineQueryResultCachedMpeg4GifToJson(
+    InlineQueryResultCachedMpeg4Gif instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'mpeg4_file_id': instance.mpeg4FileId,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('title', title);
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('title', instance.title);
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InlineQueryResultCachedSticker _$InlineQueryResultCachedStickerFromJson(
@@ -2797,34 +2330,27 @@ InlineQueryResultCachedSticker _$InlineQueryResultCachedStickerFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultCachedStickerSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get stickerFileId;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'sticker_file_id': stickerFileId,
-    };
+Map<String, dynamic> _$InlineQueryResultCachedStickerToJson(
+    InlineQueryResultCachedSticker instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'sticker_file_id': instance.stickerFileId,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InlineQueryResultCachedDocument _$InlineQueryResultCachedDocumentFromJson(
@@ -2833,8 +2359,7 @@ InlineQueryResultCachedDocument _$InlineQueryResultCachedDocumentFromJson(
       json['document_file_id'] as String, json['title'] as String,
       description: json['description'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       replyMarkup: json['reply_markup'] == null
           ? null
           : new InlineKeyboardMarkup.fromJson(
@@ -2843,42 +2368,31 @@ InlineQueryResultCachedDocument _$InlineQueryResultCachedDocumentFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultCachedDocumentSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get documentFileId;
-  String get title;
-  String get description;
-  String get caption;
-  ParseMode get parseMode;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'document_file_id': documentFileId,
-      'title': title,
-    };
+Map<String, dynamic> _$InlineQueryResultCachedDocumentToJson(
+    InlineQueryResultCachedDocument instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'document_file_id': instance.documentFileId,
+    'title': instance.title,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InlineQueryResultCachedVideo _$InlineQueryResultCachedVideoFromJson(
@@ -2887,8 +2401,7 @@ InlineQueryResultCachedVideo _$InlineQueryResultCachedVideoFromJson(
       json['video_file_id'] as String, json['title'] as String,
       description: json['description'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       replyMarkup: json['reply_markup'] == null
           ? null
           : new InlineKeyboardMarkup.fromJson(
@@ -2897,42 +2410,31 @@ InlineQueryResultCachedVideo _$InlineQueryResultCachedVideoFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultCachedVideoSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get videoFileId;
-  String get title;
-  String get description;
-  String get caption;
-  ParseMode get parseMode;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'video_file_id': videoFileId,
-      'title': title,
-    };
+Map<String, dynamic> _$InlineQueryResultCachedVideoToJson(
+    InlineQueryResultCachedVideo instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'video_file_id': instance.videoFileId,
+    'title': instance.title,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('description', description);
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InlineQueryResultCachedVoice _$InlineQueryResultCachedVoiceFromJson(
@@ -2940,8 +2442,7 @@ InlineQueryResultCachedVoice _$InlineQueryResultCachedVoiceFromJson(
   return new InlineQueryResultCachedVoice(
       json['voice_file_id'] as String, json['title'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       replyMarkup: json['reply_markup'] == null
           ? null
           : new InlineKeyboardMarkup.fromJson(
@@ -2950,48 +2451,37 @@ InlineQueryResultCachedVoice _$InlineQueryResultCachedVoiceFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultCachedVoiceSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get voiceFileId;
-  String get title;
-  String get caption;
-  ParseMode get parseMode;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'voice_file_id': voiceFileId,
-      'title': title,
-    };
+Map<String, dynamic> _$InlineQueryResultCachedVoiceToJson(
+    InlineQueryResultCachedVoice instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'voice_file_id': instance.voiceFileId,
+    'title': instance.title,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InlineQueryResultCachedAudio _$InlineQueryResultCachedAudioFromJson(
     Map<String, dynamic> json) {
   return new InlineQueryResultCachedAudio(json['audio_file_id'] as String,
       caption: json['caption'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       replyMarkup: json['reply_markup'] == null
           ? null
           : new InlineKeyboardMarkup.fromJson(
@@ -3000,75 +2490,61 @@ InlineQueryResultCachedAudio _$InlineQueryResultCachedAudioFromJson(
           ? null
           : new InputMessageContent.fromJson(
               json['input_message_content'] as Map<String, dynamic>))
-    ..type = $enumDecodeNullable('InlineQueryResultType',
-        InlineQueryResultType.values, json['type'] as String)
+    ..type = _$enumDecodeNullable(_$InlineQueryResultTypeEnumMap, json['type'])
     ..id = json['id'] as String;
 }
 
-abstract class _$InlineQueryResultCachedAudioSerializerMixin {
-  InlineQueryResultType get type;
-  String get id;
-  String get audioFileId;
-  String get caption;
-  ParseMode get parseMode;
-  InlineKeyboardMarkup get replyMarkup;
-  InputMessageContent get inputMessageContent;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'type': type?.toString()?.split('.')?.last,
-      'id': id,
-      'audio_file_id': audioFileId,
-    };
+Map<String, dynamic> _$InlineQueryResultCachedAudioToJson(
+    InlineQueryResultCachedAudio instance) {
+  var val = <String, dynamic>{
+    'type': _$InlineQueryResultTypeEnumMap[instance.type],
+    'id': instance.id,
+    'audio_file_id': instance.audioFileId,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('caption', caption);
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('reply_markup', replyMarkup);
-    writeNotNull('input_message_content', inputMessageContent);
-    return val;
   }
+
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('reply_markup', instance.replyMarkup);
+  writeNotNull('input_message_content', instance.inputMessageContent);
+  return val;
 }
 
 InputMessageContent _$InputMessageContentFromJson(Map<String, dynamic> json) {
   return new InputMessageContent();
 }
 
-abstract class _$InputMessageContentSerializerMixin {
-  Map<String, dynamic> toJson() => <String, dynamic>{};
-}
+Map<String, dynamic> _$InputMessageContentToJson(
+        InputMessageContent instance) =>
+    <String, dynamic>{};
 
 InputTextMessageContent _$InputTextMessageContentFromJson(
     Map<String, dynamic> json) {
   return new InputTextMessageContent(json['message_text'] as String,
-      parseMode: $enumDecodeNullable(
-          'ParseMode', ParseMode.values, json['parse_mode'] as String),
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
       disableWebPagePreview: json['disable_web_page_preview'] as bool);
 }
 
-abstract class _$InputTextMessageContentSerializerMixin {
-  String get messageText;
-  ParseMode get parseMode;
-  bool get disableWebPagePreview;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'message_text': messageText,
-    };
+Map<String, dynamic> _$InputTextMessageContentToJson(
+    InputTextMessageContent instance) {
+  var val = <String, dynamic>{
+    'message_text': instance.messageText,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('parse_mode', parseMode?.toString()?.split('.')?.last);
-    writeNotNull('disable_web_page_preview', disableWebPagePreview);
-    return val;
   }
+
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('disable_web_page_preview', instance.disableWebPagePreview);
+  return val;
 }
 
 InputLocationMessageContent _$InputLocationMessageContentFromJson(
@@ -3077,12 +2553,12 @@ InputLocationMessageContent _$InputLocationMessageContentFromJson(
       (json['longitude'] as num)?.toDouble());
 }
 
-abstract class _$InputLocationMessageContentSerializerMixin {
-  double get latitude;
-  double get longitude;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'latitude': latitude, 'longitude': longitude};
-}
+Map<String, dynamic> _$InputLocationMessageContentToJson(
+        InputLocationMessageContent instance) =>
+    <String, dynamic>{
+      'latitude': instance.latitude,
+      'longitude': instance.longitude
+    };
 
 InputVenueMessageContent _$InputVenueMessageContentFromJson(
     Map<String, dynamic> json) {
@@ -3094,29 +2570,23 @@ InputVenueMessageContent _$InputVenueMessageContentFromJson(
       foursquareId: json['foursquare_id'] as String);
 }
 
-abstract class _$InputVenueMessageContentSerializerMixin {
-  double get latitude;
-  double get longitude;
-  String get title;
-  String get address;
-  String get foursquareId;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'latitude': latitude,
-      'longitude': longitude,
-      'title': title,
-      'address': address,
-    };
+Map<String, dynamic> _$InputVenueMessageContentToJson(
+    InputVenueMessageContent instance) {
+  var val = <String, dynamic>{
+    'latitude': instance.latitude,
+    'longitude': instance.longitude,
+    'title': instance.title,
+    'address': instance.address,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('foursquare_id', foursquareId);
-    return val;
   }
+
+  writeNotNull('foursquare_id', instance.foursquareId);
+  return val;
 }
 
 InputContactMessageContent _$InputContactMessageContentFromJson(
@@ -3126,34 +2596,29 @@ InputContactMessageContent _$InputContactMessageContentFromJson(
       lastName: json['last_name'] as String);
 }
 
-abstract class _$InputContactMessageContentSerializerMixin {
-  String get phoneNumber;
-  String get firstName;
-  String get lastName;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'phone_number': phoneNumber,
-      'first_name': firstName,
-    };
+Map<String, dynamic> _$InputContactMessageContentToJson(
+    InputContactMessageContent instance) {
+  var val = <String, dynamic>{
+    'phone_number': instance.phoneNumber,
+    'first_name': instance.firstName,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('last_name', lastName);
-    return val;
   }
+
+  writeNotNull('last_name', instance.lastName);
+  return val;
 }
 
 CallbackGame _$CallbackGameFromJson(Map<String, dynamic> json) {
   return new CallbackGame();
 }
 
-abstract class _$CallbackGameSerializerMixin {
-  Map<String, dynamic> toJson() => <String, dynamic>{};
-}
+Map<String, dynamic> _$CallbackGameToJson(CallbackGame instance) =>
+    <String, dynamic>{};
 
 Game _$GameFromJson(Map<String, dynamic> json) {
   return new Game(
@@ -3175,31 +2640,23 @@ Game _$GameFromJson(Map<String, dynamic> json) {
           : new Animation.fromJson(json['animation'] as Map<String, dynamic>));
 }
 
-abstract class _$GameSerializerMixin {
-  String get title;
-  String get description;
-  List<PhotoSize> get photo;
-  String get text;
-  List<MessageEntity> get textEntities;
-  Animation get animation;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'title': title,
-      'description': description,
-      'photo': photo,
-    };
+Map<String, dynamic> _$GameToJson(Game instance) {
+  var val = <String, dynamic>{
+    'title': instance.title,
+    'description': instance.description,
+    'photo': instance.photo,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('text', text);
-    writeNotNull('text_entities', textEntities);
-    writeNotNull('animation', animation);
-    return val;
   }
+
+  writeNotNull('text', instance.text);
+  writeNotNull('text_entities', instance.textEntities);
+  writeNotNull('animation', instance.animation);
+  return val;
 }
 
 Animation _$AnimationFromJson(Map<String, dynamic> json) {
@@ -3212,29 +2669,22 @@ Animation _$AnimationFromJson(Map<String, dynamic> json) {
       fileSize: json['file_size'] as int);
 }
 
-abstract class _$AnimationSerializerMixin {
-  String get fileId;
-  PhotoSize get thumb;
-  String get fileName;
-  String get mimeType;
-  int get fileSize;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'file_id': fileId,
-    };
+Map<String, dynamic> _$AnimationToJson(Animation instance) {
+  var val = <String, dynamic>{
+    'file_id': instance.fileId,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('thumb', thumb);
-    writeNotNull('file_name', fileName);
-    writeNotNull('mime_type', mimeType);
-    writeNotNull('file_size', fileSize);
-    return val;
   }
+
+  writeNotNull('thumb', instance.thumb);
+  writeNotNull('file_name', instance.fileName);
+  writeNotNull('mime_type', instance.mimeType);
+  writeNotNull('file_size', instance.fileSize);
+  return val;
 }
 
 GameHighScore _$GameHighScoreFromJson(Map<String, dynamic> json) {
@@ -3246,13 +2696,12 @@ GameHighScore _$GameHighScoreFromJson(Map<String, dynamic> json) {
       json['score'] as int);
 }
 
-abstract class _$GameHighScoreSerializerMixin {
-  int get position;
-  User get user;
-  int get score;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'position': position, 'user': user, 'score': score};
-}
+Map<String, dynamic> _$GameHighScoreToJson(GameHighScore instance) =>
+    <String, dynamic>{
+      'position': instance.position,
+      'user': instance.user,
+      'score': instance.score
+    };
 
 Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
   return new Invoice(
@@ -3263,20 +2712,13 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
       json['total_amount'] as int);
 }
 
-abstract class _$InvoiceSerializerMixin {
-  String get title;
-  String get description;
-  String get startParameter;
-  String get currency;
-  int get totalAmount;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'title': title,
-        'description': description,
-        'start_parameter': startParameter,
-        'currency': currency,
-        'total_amount': totalAmount
-      };
-}
+Map<String, dynamic> _$InvoiceToJson(Invoice instance) => <String, dynamic>{
+      'title': instance.title,
+      'description': instance.description,
+      'start_parameter': instance.startParameter,
+      'currency': instance.currency,
+      'total_amount': instance.totalAmount
+    };
 
 SuccessfulPayment _$SuccessfulPaymentFromJson(Map<String, dynamic> json) {
   return new SuccessfulPayment(
@@ -3291,33 +2733,24 @@ SuccessfulPayment _$SuccessfulPaymentFromJson(Map<String, dynamic> json) {
           : new OrderInfo.fromJson(json['order_info'] as Map<String, dynamic>));
 }
 
-abstract class _$SuccessfulPaymentSerializerMixin {
-  String get currency;
-  int get totalAmount;
-  String get invoicePayload;
-  String get shippingOptionId;
-  OrderInfo get orderInfo;
-  String get telegramPaymentChargeId;
-  String get providerPaymentChargeId;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{
-      'currency': currency,
-      'total_amount': totalAmount,
-      'invoice_payload': invoicePayload,
-    };
+Map<String, dynamic> _$SuccessfulPaymentToJson(SuccessfulPayment instance) {
+  var val = <String, dynamic>{
+    'currency': instance.currency,
+    'total_amount': instance.totalAmount,
+    'invoice_payload': instance.invoicePayload,
+  };
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('shipping_option_id', shippingOptionId);
-    writeNotNull('order_info', orderInfo);
-    val['telegram_payment_charge_id'] = telegramPaymentChargeId;
-    val['provider_payment_charge_id'] = providerPaymentChargeId;
-    return val;
   }
+
+  writeNotNull('shipping_option_id', instance.shippingOptionId);
+  writeNotNull('order_info', instance.orderInfo);
+  val['telegram_payment_charge_id'] = instance.telegramPaymentChargeId;
+  val['provider_payment_charge_id'] = instance.providerPaymentChargeId;
+  return val;
 }
 
 OrderInfo _$OrderInfoFromJson(Map<String, dynamic> json) {
@@ -3331,26 +2764,20 @@ OrderInfo _$OrderInfoFromJson(Map<String, dynamic> json) {
               json['shipping_address'] as Map<String, dynamic>));
 }
 
-abstract class _$OrderInfoSerializerMixin {
-  String get name;
-  String get phoneNumber;
-  String get email;
-  ShippingAddress get shippingAddress;
-  Map<String, dynamic> toJson() {
-    var val = <String, dynamic>{};
+Map<String, dynamic> _$OrderInfoToJson(OrderInfo instance) {
+  var val = <String, dynamic>{};
 
-    void writeNotNull(String key, dynamic value) {
-      if (value != null) {
-        val[key] = value;
-      }
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
     }
-
-    writeNotNull('name', name);
-    writeNotNull('phone_number', phoneNumber);
-    writeNotNull('email', email);
-    writeNotNull('shipping_address', shippingAddress);
-    return val;
   }
+
+  writeNotNull('name', instance.name);
+  writeNotNull('phone_number', instance.phoneNumber);
+  writeNotNull('email', instance.email);
+  writeNotNull('shipping_address', instance.shippingAddress);
+  return val;
 }
 
 ShippingOption _$ShippingOptionFromJson(Map<String, dynamic> json) {
@@ -3364,24 +2791,19 @@ ShippingOption _$ShippingOptionFromJson(Map<String, dynamic> json) {
           ?.toList());
 }
 
-abstract class _$ShippingOptionSerializerMixin {
-  String get id;
-  String get title;
-  List<LabeledPrice> get prices;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'id': id, 'title': title, 'prices': prices};
-}
+Map<String, dynamic> _$ShippingOptionToJson(ShippingOption instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'prices': instance.prices
+    };
 
 LabeledPrice _$LabeledPriceFromJson(Map<String, dynamic> json) {
   return new LabeledPrice(json['label'] as String, json['amount'] as int);
 }
 
-abstract class _$LabeledPriceSerializerMixin {
-  String get label;
-  int get amount;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'label': label, 'amount': amount};
-}
+Map<String, dynamic> _$LabeledPriceToJson(LabeledPrice instance) =>
+    <String, dynamic>{'label': instance.label, 'amount': instance.amount};
 
 ShippingAddress _$ShippingAddressFromJson(Map<String, dynamic> json) {
   return new ShippingAddress(
@@ -3393,19 +2815,12 @@ ShippingAddress _$ShippingAddressFromJson(Map<String, dynamic> json) {
       json['post_code'] as String);
 }
 
-abstract class _$ShippingAddressSerializerMixin {
-  String get countryCode;
-  String get state;
-  String get city;
-  String get streetLine1;
-  String get streetLine2;
-  String get postCode;
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'country_code': countryCode,
-        'state': state,
-        'city': city,
-        'street_line1': streetLine1,
-        'street_line2': streetLine2,
-        'post_code': postCode
-      };
-}
+Map<String, dynamic> _$ShippingAddressToJson(ShippingAddress instance) =>
+    <String, dynamic>{
+      'country_code': instance.countryCode,
+      'state': instance.state,
+      'city': instance.city,
+      'street_line1': instance.streetLine1,
+      'street_line2': instance.streetLine2,
+      'post_code': instance.postCode
+    };

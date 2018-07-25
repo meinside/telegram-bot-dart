@@ -32,16 +32,22 @@ main() async {
         print(">> received text: '${message.text}'");
 
         try {
-          // echo received message back
-          var response = await bot.sendMessage(
+          // send 'typing...'
+          var actRes = await bot.sendChatAction(message.chat.id, ChatAction.Typing);
+          if (!actRes.ok) {
+            print("** sendChatAction failed: ${actRes.description}");
+          }
+
+          // echo received message back (synchronously)
+          var msgRes = await bot.sendMessage(
               message.chat.id,
               message.text,
               replyToMessageId: message.messageId);
 
-          if (response.ok) {
+          if (msgRes.ok) {
             print("<< echoed back: '${message.text}'");
           } else {
-            print("** sendMessage failed: ${response.description}");
+            print("** sendMessage failed: ${msgRes.description}");
           }
         } catch (e, stackTrace) {
           print("** exception while sendMessage: ${e}\n${stackTrace}");
@@ -50,16 +56,22 @@ main() async {
         print(">> received photo: ${message.photo}");
 
         try {
+          // send 'uploading photo...'
+          var actRes = await bot.sendChatAction(message.chat.id, ChatAction.UploadPhoto);
+          if (!actRes.ok) {
+            print("** sendChatAction failed: ${actRes.description}");
+          }
+
           // echo received photo back
-          var response = await bot.sendPhoto(
+          var photoRes = await bot.sendPhoto(
               message.chat.id,
               InputFile.createFromFileId(message.largestPhoto().fileId),
               replyToMessageId: message.messageId);
 
-          if (response.ok) {
+          if (photoRes.ok) {
             print("<< echoed back: '${message.photo}'");
           } else {
-            print("** sendPhoto failed: ${response.description}");
+            print("** sendPhoto failed: ${photoRes.description}");
           }
         } catch (e, stackTrace) {
           print("** exception while sendPhoto with fileId: ${e}\n${stackTrace}");
@@ -68,16 +80,22 @@ main() async {
         print(">> TODO: implement more cases");
 
         try {
-          var response = await bot.sendPhoto(
+          // send 'uploading photo...'
+          var actRes = await bot.sendChatAction(message.chat.id, ChatAction.UploadPhoto);
+          if (!actRes.ok) {
+            print("** sendChatAction failed: ${actRes.description}");
+          }
+
+          var photoRes = await bot.sendPhoto(
               message.chat.id,
               InputFile.createFromFilepath(_imageFilepath),
               replyToMessageId: message.messageId,
-              caption: "Not implemented for this kind of message yet.");
+              caption: "Not implemented for this kind of file or message yet.");
 
-          if (response.ok) {
+          if (photoRes.ok) {
             print("<< echoed back: '${_imageFilepath}'");
           } else {
-            print("** sendPhoto failed: ${response.description}");
+            print("** sendPhoto failed: ${photoRes.description}");
           }
         } catch (e, stackTrace) {
           print("** exception while sendPhoto with filepath: ${e}\n${stackTrace}");
