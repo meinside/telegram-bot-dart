@@ -6,7 +6,15 @@ Ported from [this Go version of Telegram Bot API](https://github.com/meinside/te
 
 ## how to get
 
-TODO
+### from github
+
+Add dependencies to the `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  telegram:
+    git: https://github.com/meinside/telegram-bot-dart
+```
 
 ## usage
 
