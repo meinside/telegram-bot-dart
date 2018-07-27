@@ -34,7 +34,8 @@ APIResponse _$APIResponseFromJson(Map<String, dynamic> json) {
       parameters: json['parameters'] == null
           ? null
           : new APIResponseParameters.fromJson(
-              json['parameters'] as Map<String, dynamic>));
+              json['parameters'] as Map<String, dynamic>))
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseToJson(APIResponse instance) {
@@ -48,6 +49,7 @@ Map<String, dynamic> _$APIResponseToJson(APIResponse instance) {
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   return val;
@@ -63,7 +65,8 @@ APIResponseWebhookInfo _$APIResponseWebhookInfoFromJson(
               json['parameters'] as Map<String, dynamic>),
       result: json['result'] == null
           ? null
-          : new WebhookInfo.fromJson(json['result'] as Map<String, dynamic>));
+          : new WebhookInfo.fromJson(json['result'] as Map<String, dynamic>))
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseWebhookInfoToJson(
@@ -78,6 +81,7 @@ Map<String, dynamic> _$APIResponseWebhookInfoToJson(
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);
@@ -93,7 +97,8 @@ APIResponseUser _$APIResponseUserFromJson(Map<String, dynamic> json) {
               json['parameters'] as Map<String, dynamic>),
       result: json['result'] == null
           ? null
-          : new User.fromJson(json['result'] as Map<String, dynamic>));
+          : new User.fromJson(json['result'] as Map<String, dynamic>))
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseUserToJson(APIResponseUser instance) {
@@ -107,6 +112,7 @@ Map<String, dynamic> _$APIResponseUserToJson(APIResponseUser instance) {
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);
@@ -122,7 +128,8 @@ APIResponseMessage _$APIResponseMessageFromJson(Map<String, dynamic> json) {
               json['parameters'] as Map<String, dynamic>),
       result: json['result'] == null
           ? null
-          : new Message.fromJson(json['result'] as Map<String, dynamic>));
+          : new Message.fromJson(json['result'] as Map<String, dynamic>))
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseMessageToJson(APIResponseMessage instance) {
@@ -136,6 +143,7 @@ Map<String, dynamic> _$APIResponseMessageToJson(APIResponseMessage instance) {
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);
@@ -153,7 +161,8 @@ APIResponseMessages _$APIResponseMessagesFromJson(Map<String, dynamic> json) {
           ?.map((e) => e == null
               ? null
               : new Message.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+          ?.toList())
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseMessagesToJson(APIResponseMessages instance) {
@@ -167,6 +176,7 @@ Map<String, dynamic> _$APIResponseMessagesToJson(APIResponseMessages instance) {
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);
@@ -184,7 +194,8 @@ APIResponseUserProfilePhotos _$APIResponseUserProfilePhotosFromJson(
       result: json['result'] == null
           ? null
           : new UserProfilePhotos.fromJson(
-              json['result'] as Map<String, dynamic>));
+              json['result'] as Map<String, dynamic>))
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseUserProfilePhotosToJson(
@@ -199,6 +210,7 @@ Map<String, dynamic> _$APIResponseUserProfilePhotosToJson(
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);
@@ -214,7 +226,8 @@ APIResponseFile _$APIResponseFileFromJson(Map<String, dynamic> json) {
               json['parameters'] as Map<String, dynamic>),
       result: json['result'] == null
           ? null
-          : new FileObject.fromJson(json['result'] as Map<String, dynamic>));
+          : new FileObject.fromJson(json['result'] as Map<String, dynamic>))
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseFileToJson(APIResponseFile instance) {
@@ -228,6 +241,7 @@ Map<String, dynamic> _$APIResponseFileToJson(APIResponseFile instance) {
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);
@@ -244,7 +258,8 @@ APIResponseUpdates _$APIResponseUpdatesFromJson(Map<String, dynamic> json) {
       result: (json['result'] as List)
           ?.map((e) =>
               e == null ? null : new Update.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+          ?.toList())
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseUpdatesToJson(APIResponseUpdates instance) {
@@ -258,6 +273,7 @@ Map<String, dynamic> _$APIResponseUpdatesToJson(APIResponseUpdates instance) {
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   val['result'] = instance.result;
@@ -273,7 +289,8 @@ APIResponseChat _$APIResponseChatFromJson(Map<String, dynamic> json) {
               json['parameters'] as Map<String, dynamic>),
       result: json['result'] == null
           ? null
-          : new Chat.fromJson(json['result'] as Map<String, dynamic>));
+          : new Chat.fromJson(json['result'] as Map<String, dynamic>))
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseChatToJson(APIResponseChat instance) {
@@ -287,6 +304,7 @@ Map<String, dynamic> _$APIResponseChatToJson(APIResponseChat instance) {
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);
@@ -305,7 +323,8 @@ APIResponseChatAdministrators _$APIResponseChatAdministratorsFromJson(
           ?.map((e) => e == null
               ? null
               : new ChatMember.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+          ?.toList())
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseChatAdministratorsToJson(
@@ -320,6 +339,7 @@ Map<String, dynamic> _$APIResponseChatAdministratorsToJson(
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);
@@ -336,7 +356,8 @@ APIResponseChatMember _$APIResponseChatMemberFromJson(
               json['parameters'] as Map<String, dynamic>),
       result: json['result'] == null
           ? null
-          : new ChatMember.fromJson(json['result'] as Map<String, dynamic>));
+          : new ChatMember.fromJson(json['result'] as Map<String, dynamic>))
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseChatMemberToJson(
@@ -351,6 +372,7 @@ Map<String, dynamic> _$APIResponseChatMemberToJson(
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);
@@ -364,7 +386,8 @@ APIResponseInt _$APIResponseIntFromJson(Map<String, dynamic> json) {
           ? null
           : new APIResponseParameters.fromJson(
               json['parameters'] as Map<String, dynamic>),
-      result: json['result'] as int);
+      result: json['result'] as int)
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseIntToJson(APIResponseInt instance) {
@@ -378,6 +401,7 @@ Map<String, dynamic> _$APIResponseIntToJson(APIResponseInt instance) {
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);
@@ -391,7 +415,8 @@ APIResponseString _$APIResponseStringFromJson(Map<String, dynamic> json) {
           ? null
           : new APIResponseParameters.fromJson(
               json['parameters'] as Map<String, dynamic>),
-      result: json['result'] as String);
+      result: json['result'] as String)
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseStringToJson(APIResponseString instance) {
@@ -405,6 +430,7 @@ Map<String, dynamic> _$APIResponseStringToJson(APIResponseString instance) {
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);
@@ -423,7 +449,8 @@ APIResponseGameHighScores _$APIResponseGameHighScoresFromJson(
           ?.map((e) => e == null
               ? null
               : new GameHighScore.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+          ?.toList())
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseGameHighScoresToJson(
@@ -438,6 +465,7 @@ Map<String, dynamic> _$APIResponseGameHighScoresToJson(
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);
@@ -454,7 +482,8 @@ APIResponseStickerSet _$APIResponseStickerSetFromJson(
               json['parameters'] as Map<String, dynamic>),
       result: json['result'] == null
           ? null
-          : new StickerSet.fromJson(json['result'] as Map<String, dynamic>));
+          : new StickerSet.fromJson(json['result'] as Map<String, dynamic>))
+    ..errorCode = json['error_code'] as int;
 }
 
 Map<String, dynamic> _$APIResponseStickerSetToJson(
@@ -469,6 +498,7 @@ Map<String, dynamic> _$APIResponseStickerSetToJson(
     }
   }
 
+  writeNotNull('error_code', instance.errorCode);
   writeNotNull('description', instance.description);
   writeNotNull('parameters', instance.parameters);
   writeNotNull('result', instance.result);

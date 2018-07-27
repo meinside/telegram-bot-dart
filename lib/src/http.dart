@@ -40,12 +40,12 @@ abstract class HttpClient {
 
     params ??= new Map<String, dynamic>();
 
-    logVerbose("sending request to api url: ${apiUrl}, params: ${params}");
-
     String body, reason;
     int statusCode;
 
     if (_checkIfFileParamExists(params)) {  // multipart form data
+      logVerbose("sending multipart form data request to api url: ${apiUrl}, params: ${params}");
+
       try {
 	var response = await _newMultipartRequest(apiUrl, params).send();
 	statusCode = response.statusCode;
@@ -60,8 +60,12 @@ abstract class HttpClient {
 	logError("failed to send multipart form data request: ${e}");
       }
     } else {  // www-form urlencoded
+      Map<String, String> convertedParams = _convertParams(params);
+
+      logVerbose("sending www-form urlencoded data request to api url: ${apiUrl}, params: ${convertedParams}");
+
       await http
-	.post(apiUrl, body: _convertParams(params))
+	.post(apiUrl, body: convertedParams)
 	.then((response) {
 	  statusCode = response.statusCode;
 	  body = response.body;
@@ -90,6 +94,12 @@ abstract class HttpClient {
       // if it is a file, or a bytes array,
       if (params[key] is File || params[key] is List<int>) {
 	return true;
+      } else if (params[key] is InputFile) {
+	// if it is an InputFile of filepath or bytes array,
+	if (params[key].filepath != null ||
+	    (params[key].bytes != null && params[key].bytes.length > 0)) {
+	  return true;
+	}
       }
     }
 
@@ -107,6 +117,19 @@ abstract class HttpClient {
       } else if (value is List<int>) {	// bytes array
 	req.files.add(
 	    new http.MultipartFile.fromBytes(key, value, filename: "${key}.file"));
+      } else if (value is InputFile) {	// InputFile
+	if (value.filepath != null) {
+	  // read from filepath
+	  File file = new File(value.filepath);
+	  req.files.add(
+	      new http.MultipartFile.fromBytes(key, file.readAsBytesSync(), filename: file.uri.pathSegments.last));
+	} else if (value.bytes != null && value.bytes.length > 0) {
+	  // read from bytes
+	  req.files.add(
+	    new http.MultipartFile.fromBytes(key, value.bytes, filename: "${key}.file"));
+	} else {
+	  req.fields[key] = value.toString();
+	}
       } else {
 	req.fields[key] = value.toString();
       }
@@ -115,39 +138,43 @@ abstract class HttpClient {
     return req;
   }
 
-  /// Convert given Map<String, dynamic> [params] to Map<String, String> type.
+  /// Convert given Map<String, dynamic> [params] to Map<String, String> type for www-form data.
   Map<String, String> _convertParams(Map<String, dynamic> params) {
     Map<String, String> converted = new Map<String, String>();
     params?.forEach((key, value) {
       String paramVal = null;
 
       // check given parameter's value:
-      try {
-	InstanceMirror mirror = reflect(value);
+      if (value is InputFile) {
+	converted[key] = value.toString();
+      } else {
+	try {
+	  InstanceMirror mirror = reflect(value);
 
-	// if it has `toJson()`, apply it
-	if (mirror.type.declarations.values.map((DeclarationMirror declaration) =>
-	      MirrorSystem.getName(declaration.simpleName)).contains("toJson")) {
-	  paramVal = jsonEncode(value.toJson());
-	} else {
-	  // if it is an enum which has @JsonValue, use it
-	  ClassMirror classMirror = reflectClass(value.runtimeType);
-	  if (classMirror.isEnum) {
-	    DeclarationMirror declaration = classMirror.declarations.values
-	      .firstWhere((DeclarationMirror declaration) =>
-		  MirrorSystem.getName(declaration.simpleName) == value.toString().split(".").last);
-	    if (declaration != null) {
-	      for (InstanceMirror meta in declaration.metadata) {
-		if (meta.hasReflectee && meta.reflectee.runtimeType == JsonValue) {
-		  paramVal = (meta.reflectee as JsonValue).value;
-		  break;
+	  // if it has `toJson()`, apply it
+	  if (mirror.type.declarations.values.map((DeclarationMirror declaration) =>
+		MirrorSystem.getName(declaration.simpleName)).contains("toJson")) {
+	    paramVal = jsonEncode(value.toJson());
+	  } else {
+	    // if it is an enum which has @JsonValue, use it
+	    ClassMirror classMirror = reflectClass(value.runtimeType);
+	    if (classMirror.isEnum) {
+	      DeclarationMirror declaration = classMirror.declarations.values
+		.firstWhere((DeclarationMirror declaration) =>
+		    MirrorSystem.getName(declaration.simpleName) == value.toString().split(".").last);
+	      if (declaration != null) {
+		for (InstanceMirror meta in declaration.metadata) {
+		  if (meta.hasReflectee && meta.reflectee.runtimeType == JsonValue) {
+		    paramVal = (meta.reflectee as JsonValue).value.toString();
+		    break;
+		  }
 		}
 	      }
 	    }
 	  }
+	} catch (e) {
+	  print ("_convertParams exception: ${e}");
 	}
-      } catch (e) {
-	print ("_convertParams exception: ${e}");
       }
 
       // otherwise, fallback to the string value of it
@@ -157,12 +184,16 @@ abstract class HttpClient {
     return converted;
   }
 
-  /// Check if given [path] is http/s url
-  bool _isHttpUrl(String path) {
-    if (path.startsWith("http://") || path.startsWith("https://")) {
-      return true;
+  /// Extract error description from given [HttpResponse].
+  String _errorDescriptionFrom(String method, HttpResponse response) {
+    try {
+      APIResponse res = APIResponse.fromJson(response.toJson());
+      return "${method} failed with error: ${res.description}";
+    } catch(e) {
+      logVerbose("failed to extract error description from http response: ${e} | ${response.body}");
+
+      return "${method} failed with error: ${response.reason}";
     }
-    return false;
   }
 
   /// Send request for [APIResponse] and fetch its result.
@@ -177,7 +208,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -198,7 +229,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -238,7 +269,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -258,7 +289,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -278,7 +309,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -298,7 +329,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -318,7 +349,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -338,7 +369,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -358,7 +389,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -378,7 +409,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -398,7 +429,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -418,7 +449,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -438,7 +469,7 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
@@ -458,121 +489,12 @@ abstract class HttpClient {
 	errStr = "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with error: ${response.reason}";
+      errStr = _errorDescriptionFrom(method, response);
     }
 
     logError(errStr);
 
     return new APIResponseStickerSet(false, description: errStr);
-  }
-
-  /// Send file
-  Future<APIResponseMessage> _sendFile(Object chatId, String apiName, paramKey, filepath, Map<String, dynamic> options) async {
-    Map<String, dynamic> params = new Map<String, dynamic>();
-
-    // essential param
-    params["chat_id"] = chatId;
-
-    // optional params
-    options.forEach((key, value) {
-      params[key] = value;
-    });
-
-    // file param
-    if (_isHttpUrl(filepath)) {
-      params[paramKey] = filepath;
-    } else {
-      params[paramKey] = new File(filepath);
-    }
-
-    return _fetchMessage(apiName, params);
-  }
-
-  /// Send bytes
-  Future<APIResponseMessage> _sendBytes(Object chatId, String apiName, paramKey, List<int> bytes, Map<String, dynamic> options) async {
-    Map<String, dynamic> params = new Map<String, dynamic>();
-
-    // essential param
-    params["chat_id"] = chatId;
-    params[paramKey] = bytes;
-
-    // optional params
-    options.forEach((key, value) {
-      params[key] = value;
-    });
-
-    return _fetchMessage(apiName, params);
-  }
-
-  /// Send file with file id (which is already uploaded to Telegram server)
-  Future<APIResponseMessage> _sendFileId(Object chatId, String apiName, paramKey, fileId, Map<String, dynamic> options) async {
-    Map<String, dynamic> params = new Map<String, dynamic>();
-
-    // essential param
-    params["chat_id"] = chatId;
-    params[paramKey] = fileId;
-
-    // optional params
-    options.forEach((key, value) {
-      params[key] = value;
-    });
-
-    return _fetchMessage(apiName, params);
-  }
-
-  /// Send object (in bytes, filepath, http url, or file id) and return as [APIResponse]
-  Future<APIResponse> _sendObject(String apiName, paramKey, InputFile obj, Map<String, dynamic> options) async {
-    Map<String, dynamic> params = options;
-
-    if (obj.filepath != null) {
-      params[paramKey] = new File(obj.filepath);
-    } else if (obj.url != null) {
-      params[paramKey] = obj.url;
-    } else if (obj.fileId != null) {
-      params[paramKey] = obj.fileId;
-    } else if (obj.bytes.length > 0) {
-      params[paramKey] = obj.bytes;
-    } else {
-      return new APIResponse(false, description: "_sendObject - failed to process param '${paramKey}': ${obj}");
-    }
-
-    return _fetchResponse(apiName, params);
-  }
-
-  /// Send object (in bytes, filepath, http url, or file id) and return as [APIResponseMessage]
-  Future<APIResponseMessage> _sendObjectMessage(Object chatId, String apiName, paramKey, InputFile obj, Map<String, dynamic> options) async {
-    if (obj.bytes != null) {
-      return _sendBytes(chatId, apiName, paramKey, obj.bytes, options);
-    } else if (obj.filepath != null) {
-      return _sendFile(chatId, apiName, paramKey, obj.filepath, options);
-    } else if (obj.url != null) {
-      return _sendFile(chatId, apiName, paramKey, obj.url, options);
-    } else if (obj.fileId != null) {
-      return _sendFileId(chatId, apiName, paramKey, obj.fileId, options);
-    }
-
-    String errStr = "_sendObjectMessage - failed to process param '${paramKey}': ${obj}";
-
-    return APIResponseMessage(false, description: errStr);
-  }
-
-  /// Send object (in bytes, filepath, http url, or file id) and return as [APIResponseFile]
-  Future<APIResponseFile> _sendObjectFile(String apiName, paramKey, InputFile obj, Map<String, dynamic> options) async {
-    Map<String, dynamic> params = options;
-
-    if (obj.bytes.length > 0) {
-      params[paramKey] = obj.bytes;
-    } else if (obj.filepath != null) {
-      params[paramKey] = new File(obj.filepath);
-    } else if (obj.url != null) {
-      params[paramKey] = obj.url;
-    } else if (obj.fileId != null) {
-      params[paramKey] = obj.fileId;
-    } else {
-      return new APIResponseFile(false, description: "_sendObjectFile - failed to process param '${paramKey}': ${obj}");
-    }
-
-    return _fetchFile(apiName, params);
   }
 
   //////////////////////////////////////////////////
@@ -703,8 +625,12 @@ abstract class HttpClient {
     int replyToMessageId,
     ReplyMarkup replyMarkup,
   }) {
-    // optionl params
+    // essential params
     Map<String, dynamic> params = new Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["photo"] = photo;
+
+    // optionl params
     if (caption != null) {
       params["caption"] = caption;
     }
@@ -721,7 +647,7 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _sendObjectMessage(chatId, "sendPhoto", "photo", photo, params);
+    return _fetchMessage("sendPhoto", params);
   }
 
   /// Send an audio file. (.mp3 format only, will be played with external players)
@@ -740,8 +666,12 @@ abstract class HttpClient {
     int replyToMessageId,
     ReplyMarkup replyMarkup,
   }) {
-    // optionl params
+    // essential params
     Map<String, dynamic> params = new Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["audio"] = audio;
+
+    // optionl params
     if (caption != null) {
       params["caption"] = caption;
     }
@@ -767,7 +697,7 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _sendObjectMessage(chatId, "sendAudio", "audio", audio, params);
+    return _fetchMessage("sendAudio", params);
   }
 
   /// Send a general file.
@@ -783,8 +713,12 @@ abstract class HttpClient {
     int replyToMessageId,
     ReplyMarkup replyMarkup,
   }) {
+    // essential params
+    params ??= new Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["document"] = document;
+
     // optionl params
-    Map<String, dynamic> params = new Map<String, dynamic>();
     if (caption != null) {
       params["caption"] = caption;
     }
@@ -801,7 +735,7 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _sendObjectMessage(chatId, "sendDocument", "document", document, params);
+    return _fetchMessage("sendDocument", params);
   }
 
   /// Send a sticker.
@@ -815,8 +749,12 @@ abstract class HttpClient {
     int replyToMessageId,
     ReplyMarkup replyMarkup,
   }) {
-    // optionl params
+    // essential params
     Map<String, dynamic> params = new Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["sticker"] = sticker;
+
+    // optionl params
     if (disableNotification != null) {
       params["disable_notification"] = disableNotification;
     }
@@ -827,7 +765,7 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _sendObjectMessage(chatId, "sendSticker", "sticker", sticker, params);
+    return _fetchMessage("sendSticker", params);
   }
 
   /// Get a sticker set.
@@ -848,8 +786,9 @@ abstract class HttpClient {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["user_id"] = userId;
+    params["png_sticker"] = sticker;
 
-    return _sendObjectFile("uploadStickerFile", "png_sticker", sticker, params);
+    return _fetchFile("uploadStickerFile", params);
   }
 
   /// Create a new sticker set.
@@ -864,6 +803,7 @@ abstract class HttpClient {
     params["user_id"] = userId;
     params["name"] = name;
     params["title"] = title;
+    params["png_sticker"] = sticker;
     params["emojis"] = emojis;
 
     // optional params
@@ -874,7 +814,7 @@ abstract class HttpClient {
       params["mask_position"] = maskPosition;
     }
 
-    return _sendObject("createNewStickerSet", "png_sticker", sticker, params);
+    return _fetchResponse("createNewStickerSet", params);
   }
 
   /// Add a sticker to set.
@@ -883,13 +823,16 @@ abstract class HttpClient {
   Future<APIResponse> addStickerToSet(int userId, String name, InputFile sticker, String emojis, {
     MaskPosition maskPosition,
   }) {
-    // optional params
+    // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
+    params["png_sticker"] = sticker;
+
+    // optional params
     if (maskPosition != null) {
       params["mask_position"] = maskPosition;
     }
 
-    return _sendObject("addStickerToSet", "png_sticker", sticker, params);
+    return _fetchResponse("addStickerToSet", params);
   }
 
   /// Set sticker position in set.
@@ -930,8 +873,12 @@ abstract class HttpClient {
     int replyToMessageId,
     ReplyMarkup replyMarkup,
   }) {
-    // optional params
+    // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["video"] = video;
+
+    // optional params
     if (duration != null) {
       params["duration"] = duration;
     }
@@ -954,7 +901,7 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _sendObjectMessage(chatId, "sendVideo", "video", video, params);
+    return _fetchMessage("sendVideo", params);
   }
 
   /// Send a voice file. (.ogg format only, will be played with Telegram itself))
@@ -971,8 +918,12 @@ abstract class HttpClient {
     int replyToMessageId,
     ReplyMarkup replyMarkup,
   }) {
+    // essential params
+    params ??= new Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["voice"] = voice;
+
     // optional params
-    Map<String, dynamic> params = Map<String, dynamic>();
     if (caption != null) {
       params["caption"] = caption;
     }
@@ -992,7 +943,7 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _sendObjectMessage(chatId, "sendVoice", "voice", voice, params);
+    return _fetchMessage("sendVoice", params);
   }
 
   /// Send a video note.
@@ -1012,8 +963,12 @@ abstract class HttpClient {
     int replyToMessageId,
     ReplyMarkup replyMarkup,
   }) {
-    // optional params
+    // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["video_note"] = videoNote;
+
+    // optional params
     if (duration != null) {
       params["duration"] = duration;
     }
@@ -1030,7 +985,7 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _sendObjectMessage(chatId, "sendVideoNote", "video_note", videoNote, params);
+    return _fetchMessage("sendVideoNote", params);
   }
 
   /// Send a group of photos or videos as an album.
@@ -1371,8 +1326,9 @@ abstract class HttpClient {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
+    params["photo"] = photo;
 
-    return _sendObject("setChatPhoto", "photo", photo, params);
+    return _fetchResponse("setChatPhoto", params);
   }
 
   /// Delete a chat photo.

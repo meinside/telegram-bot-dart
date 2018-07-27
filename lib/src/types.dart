@@ -209,6 +209,9 @@ class APIResponseParameters {
 class APIResponse {
 	bool ok;	// 'ok'
 
+	@JsonKey(name: 'error_code', includeIfNull: false)
+	int errorCode;	// 'error_code' (optional)
+
 	@JsonKey(includeIfNull: false)
 	String description;	// 'description' (optional)
 
@@ -767,23 +770,34 @@ class InputFile {
 	});
 
 	/// generate an [InputFile] from given [filepath].
-	static InputFile createFromFilepath(String filepath) {
+	static InputFile fromFilepath(String filepath) {
 		return new InputFile(filepath: filepath);
 	}
 
 	/// generate an [InputFile] from given [url].
-	static InputFile createFromUrl(String url) {
+	static InputFile fromUrl(String url) {
 		return new InputFile(url: url);
 	}
 
 	/// generate an [InputFile] from given [bytes]
-	static InputFile createFromBytes(List<int> bytes) {
+	static InputFile fromBytes(List<int> bytes) {
 		return new InputFile(bytes: bytes);
 	}
 
 	/// generate an [InputFile] from given [fileId]
-	static InputFile createFromFileId(String fileId) {
+	static InputFile fromFileId(String fileId) {
 		return new InputFile(fileId: fileId);
+	}
+
+	@override
+	String toString() {
+		if (url != null) {
+			return url;
+		} else if (fileId != null) {
+			return fileId;
+		}
+
+		return "InputFile{filepath: ${filepath}, url: ${url}, bytes: ${bytes}, fileId: ${fileId}}";
 	}
 
 	factory InputFile.fromJson(Map<String, dynamic> json) => _$InputFileFromJson(json);

@@ -65,7 +65,7 @@ main() async {
           // echo received photo back
           var photoRes = await bot.sendPhoto(
               message.chat.id,
-              InputFile.createFromFileId(message.largestPhoto().fileId),
+              InputFile.fromFileId(message.largestPhoto().fileId),
               replyToMessageId: message.messageId);
 
           if (photoRes.ok) {
@@ -88,7 +88,7 @@ main() async {
 
           var photoRes = await bot.sendPhoto(
               message.chat.id,
-              InputFile.createFromFilepath(_imageFilepath),
+              InputFile.fromFilepath(_imageFilepath),
               replyToMessageId: message.messageId,
               caption: "Not implemented for this kind of file or message yet.");
 
