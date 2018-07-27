@@ -426,6 +426,24 @@ class APIResponseInt extends APIResponse {
 	Map<String, dynamic> toJson() => _$APIResponseIntToJson(this);
 }
 
+/// APIResponseBool is an API response with result type: bool
+@JsonSerializable()
+class APIResponseBool extends APIResponse {
+	@JsonKey(includeIfNull: false)
+	bool result;	// 'result' (optional)
+
+	// constructor
+	APIResponseBool(bool ok, {
+		String description,
+		APIResponseParameters parameters,
+		this.result,
+	}) : super(ok, description: description, parameters: parameters);
+
+	factory APIResponseBool.fromJson(Map<String, dynamic> json) => _$APIResponseBoolFromJson(json);
+
+	Map<String, dynamic> toJson() => _$APIResponseBoolToJson(this);
+}
+
 /// APIResponseString is an API response with result type: String
 @JsonSerializable()
 class APIResponseString extends APIResponse {

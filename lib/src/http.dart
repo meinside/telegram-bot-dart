@@ -277,6 +277,32 @@ abstract class HttpClient {
     return new APIResponseMessage(false, description: errStr);
   }
 
+  /// Send request for [APIResponseMessage] or [APIResponseBool] and fetch its result.
+  Future<APIResponse> _fetchMessageOrBool(String method, Map<String, dynamic> params) async {
+    String errStr;
+
+    HttpResponse response = await _request(method, params);
+    if (response.statusCode == 200) {
+      try {
+	// try APIResponseMessage
+	return APIResponseMessage.fromJson(response.toJson());
+      } catch(e) {
+	try {
+	  // try APIResponseBool
+	  return APIResponseBool.fromJson(response.toJson());
+	} catch(e) {
+	  errStr = "${method} failed with json parse error: ${e} (${response.body})";
+	}
+      }
+    } else {
+      errStr = _errorDescriptionFrom(method, response);
+    }
+
+    logError(errStr);
+
+    return new APIResponseMessage(false, description: errStr);
+  }
+
   /// Send request for [APIResponseMessages] and fetch its result.
   Future<APIResponseMessages> _fetchMessages(String method, Map<String, dynamic> params) async {
     String errStr;
@@ -1624,6 +1650,8 @@ abstract class HttpClient {
 
   /// Edit text of a message.
   ///
+  /// Returned type is [APIResponseMessage] or [APIResponseBool].
+  ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
@@ -1632,9 +1660,7 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagetext
-  //
-  // TODO: FIX: "On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned."
-  Future<APIResponseMessage> editMessageText(String text, {
+  Future<APIResponse> editMessageText(String text, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1666,10 +1692,12 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _fetchMessage("editMessageText", params);
+    return _fetchMessageOrBool("editMessageText", params);
   }
 
   /// Edit caption of a message.
+  ///
+  /// Returned type is [APIResponseMessage] or [APIResponseBool].
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
@@ -1679,9 +1707,7 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagecaption
-  //
-  // TODO: FIX: "On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned."
-  Future<APIResponseMessage> editMessageCaption(String caption, {
+  Future<APIResponse> editMessageCaption(String caption, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1709,10 +1735,12 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _fetchMessage("editMessageCaption", params);
+    return _fetchMessageOrBool("editMessageCaption", params);
   }
 
   /// Edit media of a message.
+  ///
+  /// Returned type is [APIResponseMessage] or [APIResponseBool].
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
@@ -1722,9 +1750,7 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagemedia
-  //
-  // TODO: FIX: "On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned."
-  Future<APIResponseMessage> editMessageMedia(InputMedia media, {
+  Future<APIResponse> editMessageMedia(InputMedia media, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1752,10 +1778,12 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _fetchMessage("editMessageMedia", params);
+    return _fetchMessageOrBool("editMessageMedia", params);
   }
 
   /// Edit reply markup of a message.
+  ///
+  /// Returned type is [APIResponseMessage] or [APIResponseBool].
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
@@ -1765,9 +1793,7 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagereplymarkup
-  //
-  // TODO: FIX: "On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned."
-  Future<APIResponseMessage> editMessageReplyMarkup({
+  Future<APIResponse> editMessageReplyMarkup({
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1788,10 +1814,12 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _fetchMessage("editMessageReplyMarkup", params);
+    return _fetchMessageOrBool("editMessageReplyMarkup", params);
   }
 
   /// Edit live location of a message.
+  ///
+  /// Returned type is [APIResponseMessage] or [APIResponseBool].
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
@@ -1801,9 +1829,7 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagelivelocation
-  //
-  // TODO: FIX: "On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned."
-  Future<APIResponseMessage> editMessageLiveLocation(double latitude, longitude, {
+  Future<APIResponse> editMessageLiveLocation(double latitude, longitude, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1828,10 +1854,12 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _fetchMessage("editMessageLiveLocation", params);
+    return _fetchMessageOrBool("editMessageLiveLocation", params);
   }
 
   /// Stop live location of a message.
+  ///
+  /// Returned type is [APIResponseMessage] or [APIResponseBool].
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
@@ -1841,9 +1869,7 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#stopmessagelivelocation
-  //
-  // TODO: FIX: On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned.
-  Future<APIResponseMessage> stopMessageLiveLocation({
+  Future<APIResponse> stopMessageLiveLocation({
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1864,7 +1890,7 @@ abstract class HttpClient {
       params["reply_markup"] = replyMarkup;
     }
 
-    return _fetchMessage("stopMessageLiveLocation", params);
+    return _fetchMessageOrBool("stopMessageLiveLocation", params);
   }
 
   /// Delete a message.
@@ -2071,6 +2097,8 @@ abstract class HttpClient {
 
   /// Set score of a game.
   ///
+  /// Returned type is [APIResponseMessage] or [APIResponseBool].
+  ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
@@ -2078,9 +2106,7 @@ abstract class HttpClient {
   /// other options: force, and disable_edit_message
   ///
   /// https://core.telegram.org/bots/api#setgamescore
-  //
-  // TODO: FIX: "On success, if the message was sent by the bot, returns the edited Message, otherwise returns True."
-  Future<APIResponseMessage> setGameScore(int userId, int score, {
+  Future<APIResponse> setGameScore(int userId, int score, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -2109,7 +2135,7 @@ abstract class HttpClient {
       params["disable_edit_message"] = disableEditMessage;
     }
 
-    return _fetchMessage("setGameScore", params);
+    return _fetchMessageOrBool("setGameScore", params);
   }
 
   /// Get high scores of a game.

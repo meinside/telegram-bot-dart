@@ -408,6 +408,35 @@ Map<String, dynamic> _$APIResponseIntToJson(APIResponseInt instance) {
   return val;
 }
 
+APIResponseBool _$APIResponseBoolFromJson(Map<String, dynamic> json) {
+  return new APIResponseBool(json['ok'] as bool,
+      description: json['description'] as String,
+      parameters: json['parameters'] == null
+          ? null
+          : new APIResponseParameters.fromJson(
+              json['parameters'] as Map<String, dynamic>),
+      result: json['result'] as bool)
+    ..errorCode = json['error_code'] as int;
+}
+
+Map<String, dynamic> _$APIResponseBoolToJson(APIResponseBool instance) {
+  var val = <String, dynamic>{
+    'ok': instance.ok,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('error_code', instance.errorCode);
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
+}
+
 APIResponseString _$APIResponseStringFromJson(Map<String, dynamic> json) {
   return new APIResponseString(json['ok'] as bool,
       description: json['description'] as String,
