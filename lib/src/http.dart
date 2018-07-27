@@ -662,6 +662,7 @@ abstract class HttpClient {
     int duration,
     String performer,
     String title,
+    InputFile thumb,
     bool disableNotification,
     int replyToMessageId,
     ReplyMarkup replyMarkup,
@@ -687,6 +688,12 @@ abstract class HttpClient {
     if (title != null) {
       params["title"] = title;
     }
+    if (thumb != null) {
+      // attach://xxxx
+      const String _key = "thumb_attachment";
+      params["thumb"] = "attach://${_key}";
+      params[_key] = thumb;
+    }
     if (disableNotification != null) {
       params["disable_notification"] = disableNotification;
     }
@@ -707,6 +714,7 @@ abstract class HttpClient {
   ///
   /// https://core.telegram.org/bots/api#senddocument
   Future<APIResponseMessage> sendDocument(Object chatId, InputFile document, Map<String, dynamic> params, {
+    InputFile thumb,
     String caption,
     ParseMode parseMode,
     bool disableNotification,
@@ -719,6 +727,12 @@ abstract class HttpClient {
     params["document"] = document;
 
     // optionl params
+    if (thumb != null) {
+      // attach://xxxx
+      const String _key = "thumb_attachment";
+      params["thumb"] = "attach://${_key}";
+      params[_key] = thumb;
+    }
     if (caption != null) {
       params["caption"] = caption;
     }
@@ -866,6 +880,9 @@ abstract class HttpClient {
   /// https://core.telegram.org/bots/api#sendvideo
   Future<APIResponseMessage> sendVideo(Object chatId, InputFile video, {
     int duration,
+    int width,
+    int height,
+    InputFile thumb,
     String caption,
     ParseMode parseMode,
     bool supportsStreaming,
@@ -882,6 +899,18 @@ abstract class HttpClient {
     if (duration != null) {
       params["duration"] = duration;
     }
+    if (width != null) {
+      params["width"] = width;
+    }
+    if (height != null) {
+      params["height"] = height;
+    }
+    if (thumb != null) {
+      // attach://xxxx
+      const String _key = "thumb_attachment";
+      params["thumb"] = "attach://${_key}";
+      params[_key] = thumb;
+    }
     if (caption != null) {
       params["caption"] = caption;
     }
@@ -890,6 +919,63 @@ abstract class HttpClient {
     }
     if (supportsStreaming != null) {
       params["supports_streaming"] = supportsStreaming;
+    }
+    if (disableNotification != null) {
+      params["disable_notification"] = disableNotification;
+    }
+    if (replyToMessageId != null) {
+      params["reply_to_message_id"] = replyToMessageId;
+    }
+    if (replyMarkup != null) {
+      params["reply_markup"] = replyMarkup;
+    }
+
+    return _fetchMessage("sendVideo", params);
+  }
+
+  /// Send an animation file.
+  ///
+  /// - [chatId] can be one of [int](chat id) or [String](channel name).
+  /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
+  ///
+  /// https://core.telegram.org/bots/api#sendanimation
+  Future<APIResponseMessage> sendAnimation(Object chatId, InputFile animation, {
+    int duration,
+    int width,
+    int height,
+    InputFile thumb,
+    String caption,
+    ParseMode parseMode,
+    bool disableNotification,
+    int replyToMessageId,
+    ReplyMarkup replyMarkup,
+  }) {
+    // essential params
+    Map<String, dynamic> params = Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["animation"] = animation;
+
+    // optional params
+    if (duration != null) {
+      params["duration"] = duration;
+    }
+    if (width != null) {
+      params["width"] = width;
+    }
+    if (height != null) {
+      params["height"] = height;
+    }
+    if (thumb != null) {
+      // attach://xxxx
+      const String _key = "thumb_attachment";
+      params["thumb"] = "attach://${_key}";
+      params[_key] = thumb;
+    }
+    if (caption != null) {
+      params["caption"] = caption;
+    }
+    if (parseMode != null) {
+      params["parse_mode"] = parseMode;
     }
     if (disableNotification != null) {
       params["disable_notification"] = disableNotification;
@@ -959,6 +1045,7 @@ abstract class HttpClient {
   Future<APIResponseMessage> sendVideoNote(Object chatId, InputFile videoNote, {
     int duration,
     int length,
+    InputFile thumb,
     bool disableNotification,
     int replyToMessageId,
     ReplyMarkup replyMarkup,
@@ -974,6 +1061,12 @@ abstract class HttpClient {
     }
     if (length != null) {
       params["length"] = length;
+    }
+    if (thumb != null) {
+      // attach://xxxx
+      const String _key = "thumb_attachment";
+      params["thumb"] = "attach://${_key}";
+      params[_key] = thumb;
     }
     if (disableNotification != null) {
       params["disable_notification"] = disableNotification;
@@ -1052,6 +1145,7 @@ abstract class HttpClient {
   /// https://core.telegram.org/bots/api#sendvenue
   Future<APIResponseMessage> sendVenue(Object chatId, double latitude, longitude, String title, address, {
     String foursquareId,
+    String foursquareType,
     bool disableNotification,
     int replyToMessageId,
     ReplyMarkup replyMarkup,
@@ -1067,6 +1161,9 @@ abstract class HttpClient {
     // optional params
     if (foursquareId != null) {
       params["foursquare_id"] = foursquareId;
+    }
+    if (foursquareType != null) {
+      params["foursquare_type"] = foursquareType;
     }
     if (disableNotification != null) {
       params["disable_notification"] = disableNotification;
@@ -1089,6 +1186,7 @@ abstract class HttpClient {
   /// https://core.telegram.org/bots/api#sendcontact
   Future<APIResponseMessage> sendContact(Object chatId, String phoneNumber, firstName, {
     String lastName,
+    String vCard,
     bool disableNotification,
     int replyToMessageId,
     ReplyMarkup replyMarkup,
@@ -1102,6 +1200,9 @@ abstract class HttpClient {
     // optional params
     if (lastName != null) {
       params["last_name"] = lastName;
+    }
+    if (vCard != null) {
+      params["vcard"] = vCard;
     }
     if (disableNotification != null) {
       params["disable_notification"] = disableNotification;
@@ -1605,6 +1706,47 @@ abstract class HttpClient {
     }
 
     return _fetchMessage("editMessageCaption", params);
+  }
+
+  /// Edit media of a message.
+  ///
+  /// - [chatId] can be one of [int](chat id) or [String](channel name).
+  /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
+  ///
+  /// NOTE:
+  ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
+  ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
+  ///
+  /// https://core.telegram.org/bots/api#editmessagemedia
+  Future<APIResponseMessage> editMessageMedia(InputMedia media, {
+    Object chatId,
+    int messageId,
+    int inlineMessageId,
+    ReplyMarkup replyMarkup,
+  }) {
+    // essential params
+    Map<String, dynamic> params = Map<String, dynamic>();
+    params["media"] = media;
+    if (media.mediaAttachment != null) {
+      // attach://xxxx
+      params[media.mediaAttachmentKey] = media.mediaAttachment;
+    }
+
+    // optional params
+    if (chatId != null) {
+      params["chat_id"] = chatId;
+    }
+    if (messageId != null) {
+      params["message_id"] = messageId;
+    }
+    if (inlineMessageId != null) {
+      params["inline_message_id"] = inlineMessageId;
+    }
+    if (replyMarkup != null) {
+      params["reply_markup"] = replyMarkup;
+    }
+
+    return _fetchMessage("editMessageMedia", params);
   }
 
   /// Edit reply markup of a message.

@@ -715,16 +715,31 @@ const _$ChatTypeEnumMap = const <ChatType, dynamic>{
 InputMedia _$InputMediaFromJson(Map<String, dynamic> json) {
   return new InputMedia(
       _$enumDecodeNullable(_$InputMediaTypeEnumMap, json['type']),
-      json['media'] as String,
-      caption: json['caption'] as String,
-      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
-      width: json['width'] as int,
-      height: json['height'] as int,
-      duration: json['duration'] as int,
-      supportsStreaming: json['supports_streaming'] as bool);
+      json['media'] as String);
 }
 
-Map<String, dynamic> _$InputMediaToJson(InputMedia instance) {
+Map<String, dynamic> _$InputMediaToJson(InputMedia instance) =>
+    <String, dynamic>{
+      'type': _$InputMediaTypeEnumMap[instance.type],
+      'media': instance.media
+    };
+
+const _$InputMediaTypeEnumMap = const <InputMediaType, dynamic>{
+  InputMediaType.Animation: 'animation',
+  InputMediaType.Document: 'document',
+  InputMediaType.Audio: 'audio',
+  InputMediaType.Photo: 'photo',
+  InputMediaType.Video: 'video'
+};
+
+InputMediaAnimation _$InputMediaAnimationFromJson(Map<String, dynamic> json) {
+  return new InputMediaAnimation(json['media'] as String,
+      caption: json['caption'] as String,
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']))
+    ..type = _$enumDecodeNullable(_$InputMediaTypeEnumMap, json['type']);
+}
+
+Map<String, dynamic> _$InputMediaAnimationToJson(InputMediaAnimation instance) {
   var val = <String, dynamic>{
     'type': _$InputMediaTypeEnumMap[instance.type],
     'media': instance.media,
@@ -738,22 +753,135 @@ Map<String, dynamic> _$InputMediaToJson(InputMedia instance) {
 
   writeNotNull('caption', instance.caption);
   writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  return val;
+}
+
+const _$ParseModeEnumMap = const <ParseMode, dynamic>{
+  ParseMode.Markdown: 'Markdown',
+  ParseMode.Html: 'HTML'
+};
+
+InputMediaDocument _$InputMediaDocumentFromJson(Map<String, dynamic> json) {
+  return new InputMediaDocument(json['media'] as String,
+      thumb: json['thumb'] == null
+          ? null
+          : new InputFile.fromJson(json['thumb'] as Map<String, dynamic>),
+      caption: json['caption'] as String,
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']))
+    ..type = _$enumDecodeNullable(_$InputMediaTypeEnumMap, json['type']);
+}
+
+Map<String, dynamic> _$InputMediaDocumentToJson(InputMediaDocument instance) {
+  var val = <String, dynamic>{
+    'type': _$InputMediaTypeEnumMap[instance.type],
+    'media': instance.media,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('thumb', instance.thumb);
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  return val;
+}
+
+InputMediaAudio _$InputMediaAudioFromJson(Map<String, dynamic> json) {
+  return new InputMediaAudio(json['media'] as String,
+      thumb: json['thumb'] == null
+          ? null
+          : new InputFile.fromJson(json['thumb'] as Map<String, dynamic>),
+      caption: json['caption'] as String,
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
+      duration: json['duration'] as int,
+      performer: json['performer'] as String,
+      title: json['title'] as String)
+    ..type = _$enumDecodeNullable(_$InputMediaTypeEnumMap, json['type']);
+}
+
+Map<String, dynamic> _$InputMediaAudioToJson(InputMediaAudio instance) {
+  var val = <String, dynamic>{
+    'type': _$InputMediaTypeEnumMap[instance.type],
+    'media': instance.media,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('thumb', instance.thumb);
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  writeNotNull('duration', instance.duration);
+  writeNotNull('performer', instance.performer);
+  writeNotNull('title', instance.title);
+  return val;
+}
+
+InputMediaPhoto _$InputMediaPhotoFromJson(Map<String, dynamic> json) {
+  return new InputMediaPhoto(json['media'] as String,
+      caption: json['caption'] as String,
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']))
+    ..type = _$enumDecodeNullable(_$InputMediaTypeEnumMap, json['type']);
+}
+
+Map<String, dynamic> _$InputMediaPhotoToJson(InputMediaPhoto instance) {
+  var val = <String, dynamic>{
+    'type': _$InputMediaTypeEnumMap[instance.type],
+    'media': instance.media,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
+  return val;
+}
+
+InputMediaVideo _$InputMediaVideoFromJson(Map<String, dynamic> json) {
+  return new InputMediaVideo(json['media'] as String,
+      thumb: json['thumb'] == null
+          ? null
+          : new InputFile.fromJson(json['thumb'] as Map<String, dynamic>),
+      caption: json['caption'] as String,
+      parseMode: _$enumDecodeNullable(_$ParseModeEnumMap, json['parse_mode']),
+      width: json['width'] as int,
+      height: json['height'] as int,
+      duration: json['duration'] as int,
+      supportsStreaming: json['supports_streaming'] as bool)
+    ..type = _$enumDecodeNullable(_$InputMediaTypeEnumMap, json['type']);
+}
+
+Map<String, dynamic> _$InputMediaVideoToJson(InputMediaVideo instance) {
+  var val = <String, dynamic>{
+    'type': _$InputMediaTypeEnumMap[instance.type],
+    'media': instance.media,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('thumb', instance.thumb);
+  writeNotNull('caption', instance.caption);
+  writeNotNull('parse_mode', _$ParseModeEnumMap[instance.parseMode]);
   writeNotNull('width', instance.width);
   writeNotNull('height', instance.height);
   writeNotNull('duration', instance.duration);
   writeNotNull('supports_streaming', instance.supportsStreaming);
   return val;
 }
-
-const _$InputMediaTypeEnumMap = const <InputMediaType, dynamic>{
-  InputMediaType.Photo: 'photo',
-  InputMediaType.Video: 'video'
-};
-
-const _$ParseModeEnumMap = const <ParseMode, dynamic>{
-  ParseMode.Markdown: 'Markdown',
-  ParseMode.Html: 'HTML'
-};
 
 InputFile _$InputFileFromJson(Map<String, dynamic> json) {
   return new InputFile(
@@ -775,7 +903,10 @@ Audio _$AudioFromJson(Map<String, dynamic> json) {
       performer: json['performer'] as String,
       title: json['title'] as String,
       mimeType: json['mime_type'] as String,
-      fileSize: json['file_size'] as int);
+      fileSize: json['file_size'] as int,
+      thumb: json['thumb'] == null
+          ? null
+          : new PhotoSize.fromJson(json['thumb'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$AudioToJson(Audio instance) {
@@ -794,6 +925,7 @@ Map<String, dynamic> _$AudioToJson(Audio instance) {
   writeNotNull('title', instance.title);
   writeNotNull('mime_type', instance.mimeType);
   writeNotNull('file_size', instance.fileSize);
+  writeNotNull('thumb', instance.thumb);
   return val;
 }
 
@@ -829,16 +961,17 @@ Map<String, dynamic> _$MessageEntityToJson(MessageEntity instance) {
 const _$MessageEntityTypeEnumMap = const <MessageEntityType, dynamic>{
   MessageEntityType.Mention: 'mention',
   MessageEntityType.Hashtag: 'hashtag',
+  MessageEntityType.Cashtag: 'cashtag',
   MessageEntityType.BotCommand: 'bot_command',
   MessageEntityType.Url: 'url',
   MessageEntityType.Email: 'email',
+  MessageEntityType.PhoneNumber: 'phone_number',
   MessageEntityType.Bold: 'bold',
   MessageEntityType.Italic: 'italic',
   MessageEntityType.Code: 'code',
   MessageEntityType.Pre: 'pre',
   MessageEntityType.TextLink: 'text_link',
-  MessageEntityType.TextMention: 'text_mention',
-  MessageEntityType.PhoneNumber: 'phone_number'
+  MessageEntityType.TextMention: 'text_mention'
 };
 
 PhotoSize _$PhotoSizeFromJson(Map<String, dynamic> json) {
@@ -1054,7 +1187,9 @@ Map<String, dynamic> _$VideoNoteToJson(VideoNote instance) {
 Contact _$ContactFromJson(Map<String, dynamic> json) {
   return new Contact(
       json['phone_number'] as String, json['first_name'] as String,
-      lastName: json['last_name'] as String, userId: json['user_id'] as int);
+      lastName: json['last_name'] as String,
+      userId: json['user_id'] as int,
+      vCard: json['vcard'] as String);
 }
 
 Map<String, dynamic> _$ContactToJson(Contact instance) {
@@ -1071,6 +1206,7 @@ Map<String, dynamic> _$ContactToJson(Contact instance) {
 
   writeNotNull('last_name', instance.lastName);
   writeNotNull('user_id', instance.userId);
+  writeNotNull('vcard', instance.vCard);
   return val;
 }
 
@@ -1091,7 +1227,8 @@ Venue _$VenueFromJson(Map<String, dynamic> json) {
           : new Location.fromJson(json['location'] as Map<String, dynamic>),
       json['title'] as String,
       json['address'] as String,
-      foursquareId: json['foursquare_id'] as String);
+      foursquareId: json['foursquare_id'] as String,
+      foursquareType: json['foursquare_type'] as String);
 }
 
 Map<String, dynamic> _$VenueToJson(Venue instance) {
@@ -1108,6 +1245,7 @@ Map<String, dynamic> _$VenueToJson(Venue instance) {
   }
 
   writeNotNull('foursquare_id', instance.foursquareId);
+  writeNotNull('foursquare_type', instance.foursquareType);
   return val;
 }
 
@@ -1525,7 +1663,8 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
       pinnedMessage: json['pinned_message'] == null ? null : new Message.fromJson(json['pinned_message'] as Map<String, dynamic>),
       invoice: json['invoice'] == null ? null : new Invoice.fromJson(json['invoice'] as Map<String, dynamic>),
       successfulPayment: json['successful_payment'] == null ? null : new SuccessfulPayment.fromJson(json['successful_payment'] as Map<String, dynamic>),
-      connectedWebsite: json['connected_website'] as String);
+      connectedWebsite: json['connected_website'] as String)
+    ..animation = json['animation'] == null ? null : new Animation.fromJson(json['animation'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$MessageToJson(Message instance) {
@@ -1555,6 +1694,7 @@ Map<String, dynamic> _$MessageToJson(Message instance) {
   writeNotNull('caption_entities', instance.captionEntities);
   writeNotNull('audio', instance.audio);
   writeNotNull('document', instance.document);
+  writeNotNull('animation', instance.animation);
   writeNotNull('game', instance.game);
   writeNotNull('photo', instance.photo);
   writeNotNull('sticker', instance.sticker);
@@ -2113,6 +2253,7 @@ InlineQueryResultVenue _$InlineQueryResultVenueFromJson(
       json['title'] as String,
       json['address'] as String,
       foursquareId: json['foursquare_id'] as String,
+      foursquareType: json['foursquare_type'] as String,
       replyMarkup: json['reply_markup'] == null
           ? null
           : new InlineKeyboardMarkup.fromJson(
@@ -2146,6 +2287,7 @@ Map<String, dynamic> _$InlineQueryResultVenueToJson(
   }
 
   writeNotNull('foursquare_id', instance.foursquareId);
+  writeNotNull('foursquare_type', instance.foursquareType);
   writeNotNull('reply_markup', instance.replyMarkup);
   writeNotNull('input_message_content', instance.inputMessageContent);
   writeNotNull('thumb_url', instance.thumbUrl);
@@ -2159,6 +2301,7 @@ InlineQueryResultContact _$InlineQueryResultContactFromJson(
   return new InlineQueryResultContact(
       json['phone_number'] as String, json['first_name'] as String,
       lastName: json['last_name'] as String,
+      vCard: json['vcard'] as String,
       replyMarkup: json['reply_markup'] == null
           ? null
           : new InlineKeyboardMarkup.fromJson(
@@ -2190,6 +2333,7 @@ Map<String, dynamic> _$InlineQueryResultContactToJson(
   }
 
   writeNotNull('last_name', instance.lastName);
+  writeNotNull('vcard', instance.vCard);
   writeNotNull('reply_markup', instance.replyMarkup);
   writeNotNull('input_message_content', instance.inputMessageContent);
   writeNotNull('thumb_url', instance.thumbUrl);
@@ -2597,7 +2741,8 @@ InputVenueMessageContent _$InputVenueMessageContentFromJson(
       (json['longitude'] as num)?.toDouble(),
       json['title'] as String,
       json['address'] as String,
-      foursquareId: json['foursquare_id'] as String);
+      foursquareId: json['foursquare_id'] as String,
+      foursquareType: json['foursquare_type'] as String);
 }
 
 Map<String, dynamic> _$InputVenueMessageContentToJson(
@@ -2616,6 +2761,7 @@ Map<String, dynamic> _$InputVenueMessageContentToJson(
   }
 
   writeNotNull('foursquare_id', instance.foursquareId);
+  writeNotNull('foursquare_type', instance.foursquareType);
   return val;
 }
 
@@ -2623,7 +2769,7 @@ InputContactMessageContent _$InputContactMessageContentFromJson(
     Map<String, dynamic> json) {
   return new InputContactMessageContent(
       json['phone_number'] as String, json['first_name'] as String,
-      lastName: json['last_name'] as String);
+      lastName: json['last_name'] as String, vCard: json['vcard'] as String);
 }
 
 Map<String, dynamic> _$InputContactMessageContentToJson(
@@ -2640,6 +2786,7 @@ Map<String, dynamic> _$InputContactMessageContentToJson(
   }
 
   writeNotNull('last_name', instance.lastName);
+  writeNotNull('vcard', instance.vCard);
   return val;
 }
 

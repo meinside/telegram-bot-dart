@@ -117,6 +117,9 @@ enum MessageEntityType {
 	@JsonValue('hashtag')
 	Hashtag,	// 'hashtag'
 
+	@JsonValue('cashtag')
+	Cashtag,	// 'cashtag'
+
 	@JsonValue('bot_command')
 	BotCommand,	// 'bot_command'
 
@@ -125,6 +128,9 @@ enum MessageEntityType {
 
 	@JsonValue('email')
 	Email,	// 'email'
+
+	@JsonValue('phone_number')
+	PhoneNumber,	// 'phone_number'
 
 	@JsonValue('bold')
 	Bold,	// 'bold'
@@ -143,9 +149,6 @@ enum MessageEntityType {
 
 	@JsonValue('text_mention')
 	TextMention,	// 'text_mention'
-
-	@JsonValue('phone_number')
-	PhoneNumber,	// 'phone_number'
 }
 
 /// ChatMemberStatus is a status of chat member
@@ -698,6 +701,15 @@ class Chat {
 
 /// InputMediaType is a type of InputMedia
 enum InputMediaType {
+	@JsonValue('animation')
+	Animation,
+
+	@JsonValue('document')
+	Document,
+
+	@JsonValue('audio')
+	Audio,
+
 	@JsonValue('photo')
 	Photo,
 
@@ -707,12 +719,113 @@ enum InputMediaType {
 
 /// InputMedia represents the content of a media message to be sent.
 ///
+/// It is a base struct of [InputMediaAnimation], [InputMediaDocument], [InputMediaAudio], [InputMediaPhoto], and [InputMediaVideo].
+///
 /// https://core.telegram.org/bots/api#inputmedia
 @JsonSerializable()
 class InputMedia {
 	InputMediaType type;	// 'type'
 
+	// url or file_id
 	String media;	// 'media'
+
+	@JsonKey(ignore: true)
+	InputFile mediaAttachment;	// actual attachment for `media`
+
+	@JsonKey(ignore: true)
+	String mediaAttachmentKey;	// parameter key for the attachment
+
+	// constructors
+	InputMedia(this.type, this.media);
+	InputMedia.fromFilepath(this.type, String filepath) {
+		mediaAttachmentKey = "media_attachment_filepath";
+		media = "attach://${mediaAttachmentKey}";
+		mediaAttachment = InputFile.fromFilepath(filepath);
+	}
+	InputMedia.fromBytes(this.type, List<int> bytes) {
+		mediaAttachmentKey = "media_attachment_bytes";
+		media = "attach://${mediaAttachmentKey}";
+		mediaAttachment = InputFile.fromBytes(bytes);
+	}
+
+	factory InputMedia.fromJson(Map<String, dynamic> json) => _$InputMediaFromJson(json);
+
+	Map<String, dynamic> toJson() => _$InputMediaToJson(this);
+}
+
+/// InputMediaAnimation is an animation type of [InputMedia].
+///
+/// https://core.telegram.org/bots/api#inputmediaanimation
+@JsonSerializable()
+class InputMediaAnimation extends InputMedia {
+	@JsonKey(includeIfNull: false)
+	String caption;	// 'caption' (optional)
+
+	@JsonKey(name: 'parse_mode', includeIfNull: false)
+	ParseMode parseMode;	// 'parse_mode' (optional)
+
+	// constructors
+	InputMediaAnimation(String media, {
+		this.caption,
+		this.parseMode,
+	}): super(InputMediaType.Animation, media);
+	InputMediaAnimation.fromFilepath(String filepath, {
+		this.caption,
+		this.parseMode,
+	}): super.fromFilepath(InputMediaType.Animation, filepath);
+	InputMediaAnimation.fromBytes(List<int> bytes, {
+		this.caption,
+		this.parseMode,
+	}): super.fromBytes(InputMediaType.Animation, bytes);
+
+	factory InputMediaAnimation.fromJson(Map<String, dynamic> json) => _$InputMediaAnimationFromJson(json);
+
+	Map<String, dynamic> toJson() => _$InputMediaAnimationToJson(this);
+}
+
+/// InputMediaDocument is a document type of [InputMedia].
+///
+/// https://core.telegram.org/bots/api#inputmediadocument
+@JsonSerializable()
+class InputMediaDocument extends InputMedia {
+	@JsonKey(includeIfNull: false)
+	InputFile thumb;	// 'thumb' (optional)
+
+	@JsonKey(includeIfNull: false)
+	String caption;	// 'caption' (optional)
+
+	@JsonKey(name: 'parse_mode', includeIfNull: false)
+	ParseMode parseMode;	// 'parse_mode' (optional)
+
+	// constructors
+	InputMediaDocument(String media, {
+		this.thumb,
+		this.caption,
+		this.parseMode,
+	}): super(InputMediaType.Document, media);
+	InputMediaDocument.fromFilepath(String filepath, {
+		this.thumb,
+		this.caption,
+		this.parseMode,
+	}): super.fromFilepath(InputMediaType.Document, filepath);
+	InputMediaDocument.fromBytes(List<int> bytes, {
+		this.thumb,
+		this.caption,
+		this.parseMode,
+	}): super.fromBytes(InputMediaType.Document, bytes);
+
+	factory InputMediaDocument.fromJson(Map<String, dynamic> json) => _$InputMediaDocumentFromJson(json);
+
+	Map<String, dynamic> toJson() => _$InputMediaDocumentToJson(this);
+}
+
+/// InputMediaAudio is an audio type of [InputMedia].
+///
+/// https://core.telegram.org/bots/api#inputmediaaudio
+@JsonSerializable()
+class InputMediaAudio extends InputMedia {
+	@JsonKey(includeIfNull: false)
+	InputFile thumb;	// 'thumb' (optional)
 
 	@JsonKey(includeIfNull: false)
 	String caption;	// 'caption' (optional)
@@ -721,30 +834,133 @@ class InputMedia {
 	ParseMode parseMode;	// 'parse_mode' (optional)
 
 	@JsonKey(includeIfNull: false)
-	int width;	// 'width' (optional) - video only
+	int duration;	// 'duration' (optional)
 
 	@JsonKey(includeIfNull: false)
-	int height;	// 'height' (optional) - video only
+	String performer;	// 'performer' (optional)
 
 	@JsonKey(includeIfNull: false)
-	int duration;	// 'duration' (optional) - video only
+	String title;	// 'title' (optional)
+
+	// constructors
+	InputMediaAudio(String media, {
+		this.thumb,
+		this.caption,
+		this.parseMode,
+		this.duration,
+		this.performer,
+		this.title,
+	}): super(InputMediaType.Audio, media);
+	InputMediaAudio.fromFilepath(String filepath, {
+		this.thumb,
+		this.caption,
+		this.parseMode,
+		this.duration,
+		this.performer,
+		this.title,
+	}): super.fromFilepath(InputMediaType.Audio, filepath);
+	InputMediaAudio.fromBytes(List<int> bytes, {
+		this.thumb,
+		this.caption,
+		this.parseMode,
+		this.duration,
+		this.performer,
+		this.title,
+	}): super.fromBytes(InputMediaType.Audio, bytes);
+
+	factory InputMediaAudio.fromJson(Map<String, dynamic> json) => _$InputMediaAudioFromJson(json);
+
+	Map<String, dynamic> toJson() => _$InputMediaAudioToJson(this);
+}
+
+/// InputMediaPhoto is a photo type of [InputMedia].
+///
+/// https://core.telegram.org/bots/api#inputmediaphoto
+@JsonSerializable()
+class InputMediaPhoto extends InputMedia {
+	@JsonKey(includeIfNull: false)
+	String caption;	// 'caption' (optional)
+
+	@JsonKey(name: 'parse_mode', includeIfNull: false)
+	ParseMode parseMode;	// 'parse_mode' (optional)
+
+	// constructors
+	InputMediaPhoto(String media, {
+		this.caption,
+		this.parseMode,
+	}): super(InputMediaType.Photo, media);
+	InputMediaPhoto.fromFilepath(String filepath, {
+		this.caption,
+		this.parseMode,
+	}): super.fromFilepath(InputMediaType.Photo, filepath);
+	InputMediaPhoto.fromBytes(List<int> bytes, {
+		this.caption,
+		this.parseMode,
+	}): super.fromBytes(InputMediaType.Photo, bytes);
+
+	factory InputMediaPhoto.fromJson(Map<String, dynamic> json) => _$InputMediaPhotoFromJson(json);
+
+	Map<String, dynamic> toJson() => _$InputMediaPhotoToJson(this);
+}
+
+/// InputMediaVideo is a video type of [InputMedia].
+///
+/// https://core.telegram.org/bots/api#inputmediavideo
+@JsonSerializable()
+class InputMediaVideo extends InputMedia {
+	@JsonKey(includeIfNull: false)
+	InputFile thumb;	// 'thumb' (optional)
+
+	@JsonKey(includeIfNull: false)
+	String caption;	// 'caption' (optional)
+
+	@JsonKey(name: 'parse_mode', includeIfNull: false)
+	ParseMode parseMode;	// 'parse_mode' (optional)
+
+	@JsonKey(includeIfNull: false)
+	int width;	// 'width' (optional)
+
+	@JsonKey(includeIfNull: false)
+	int height;	// 'height' (optional)
+
+	@JsonKey(includeIfNull: false)
+	int duration;	// 'duration' (optional)
 
 	@JsonKey(name: 'supports_streaming', includeIfNull: false)
-	bool supportsStreaming;	// 'supports_streaming' (optional) - video only
+	bool supportsStreaming;
 
-	// constructor
-	InputMedia(this.type, this.media, {
+	// constructors
+	InputMediaVideo(String media, {
+		this.thumb,
 		this.caption,
 		this.parseMode,
 		this.width,
 		this.height,
 		this.duration,
 		this.supportsStreaming,
-	});
+	}): super(InputMediaType.Video, media);
+	InputMediaVideo.fromFilepath(String filepath, {
+		this.thumb,
+		this.caption,
+		this.parseMode,
+		this.width,
+		this.height,
+		this.duration,
+		this.supportsStreaming,
+	}): super.fromFilepath(InputMediaType.Video, filepath);
+	InputMediaVideo.fromBytes(List<int> bytes, {
+		this.thumb,
+		this.caption,
+		this.parseMode,
+		this.width,
+		this.height,
+		this.duration,
+		this.supportsStreaming,
+	}): super.fromBytes(InputMediaType.Video, bytes);
 
-	factory InputMedia.fromJson(Map<String, dynamic> json) => _$InputMediaFromJson(json);
+	factory InputMediaVideo.fromJson(Map<String, dynamic> json) => _$InputMediaVideoFromJson(json);
 
-	Map<String, dynamic> toJson() => _$InputMediaToJson(this);
+	Map<String, dynamic> toJson() => _$InputMediaVideoToJson(this);
 }
 
 /// InputFile represents contents of a file to be uploaded.
@@ -827,12 +1043,16 @@ class Audio {
 	@JsonKey(name: 'file_size', includeIfNull: false)
 	int fileSize;	// 'file_size' (optional)
 
+	@JsonKey(includeIfNull: false)
+	PhotoSize thumb;	// 'thumb' (optional)
+
 	// constructor
 	Audio(this.fileId, this.duration, {
 		this.performer,
 		this.title,
 		this.mimeType,
 		this.fileSize,
+		this.thumb,
 	});
 
 	factory Audio.fromJson(Map<String, dynamic> json) => _$AudioFromJson(json);
@@ -1120,10 +1340,14 @@ class Contact {
 	@JsonKey(name: 'user_id', includeIfNull: false)
 	int userId;	// 'user_id' (optional)
 
+	@JsonKey(name: 'vcard', includeIfNull: false)
+	String vCard;	// 'vcard' (optional)	- https://en.wikipedia.org/wiki/VCard
+
 	// constructor
 	Contact(this.phoneNumber, this.firstName, {
 		this.lastName,
 		this.userId,
+		this.vCard,
 	});
 
 	factory Contact.fromJson(Map<String, dynamic> json) => _$ContactFromJson(json);
@@ -1162,9 +1386,13 @@ class Venue {
 	@JsonKey(name: 'foursquare_id', includeIfNull: false)
 	String foursquareId;	// 'foursquare_id' (optional)
 
+	@JsonKey(name: 'foursquare_type', includeIfNull: false)
+	String foursquareType;	// 'foursquare_type' (optional)
+
 	// constructor
 	Venue(this.location, this.title, this.address, {
 		this.foursquareId,
+		this.foursquareType,
 	});
 
 	factory Venue.fromJson(Map<String, dynamic> json) => _$VenueFromJson(json);
@@ -1666,6 +1894,9 @@ class Message {
 
 	@JsonKey(includeIfNull: false)
 	Document document;	// 'document' (optional)
+
+	@JsonKey(includeIfNull: false)
+	Animation animation;	// 'animation' (optional)
 
 	@JsonKey(includeIfNull: false)
 	Game game;	// 'game' (optional)
@@ -2405,6 +2636,9 @@ class InlineQueryResultVenue extends InlineQueryResult {
 	@JsonKey(name: 'foursquare_id', includeIfNull: false)
 	String foursquareId;	// 'foursquare_id' (optional)
 
+	@JsonKey(name: 'foursquare_type', includeIfNull: false)
+	String foursquareType;	// 'foursquare_type' (optional)
+
 	@JsonKey(name: 'reply_markup', includeIfNull: false)
 	InlineKeyboardMarkup replyMarkup;	// 'reply_markup' (optional)
 
@@ -2423,6 +2657,7 @@ class InlineQueryResultVenue extends InlineQueryResult {
 	// constructor
 	InlineQueryResultVenue(this.latitude, this.longitude, this.title, this.address, {
 		this.foursquareId,
+		this.foursquareType,
 		this.replyMarkup,
 		this.inputMessageContent,
 		this.thumbUrl,
@@ -2454,6 +2689,9 @@ class InlineQueryResultContact extends InlineQueryResult {
 	@JsonKey(name: 'last_name', includeIfNull: false)
 	String lastName;	// 'last_name' (optional)
 
+	@JsonKey(name: 'vcard', includeIfNull: false)
+	String vCard;	// 'vcard' (optional)	- https://en.wikipedia.org/wiki/VCard
+
 	@JsonKey(name: 'reply_markup', includeIfNull: false)
 	InlineKeyboardMarkup replyMarkup;	// 'reply_markup' (optional)
 
@@ -2472,6 +2710,7 @@ class InlineQueryResultContact extends InlineQueryResult {
 	// constructor
 	InlineQueryResultContact(this.phoneNumber, this.firstName, {
 		this.lastName,
+		this.vCard,
 		this.replyMarkup,
 		this.inputMessageContent,
 		this.thumbUrl,
@@ -2911,9 +3150,13 @@ class InputVenueMessageContent extends InputMessageContent {
 	@JsonKey(name: 'foursquare_id', includeIfNull: false)
 	String foursquareId;	// 'foursquare_id' (optional)
 
+	@JsonKey(name: 'foursquare_type', includeIfNull: false)
+	String foursquareType;	// 'foursquare_type' (optional)
+
 	// constructor
 	InputVenueMessageContent(this.latitude, this.longitude, this.title, this.address, {
 		this.foursquareId,
+		this.foursquareType,
 	});
 
 	factory InputVenueMessageContent.fromJson(Map<String, dynamic> json) => _$InputVenueMessageContentFromJson(json);
@@ -2935,9 +3178,13 @@ class InputContactMessageContent extends InputMessageContent {
 	@JsonKey(name: 'last_name', includeIfNull: false)
 	String lastName;	// 'last_name' (optional)
 
+	@JsonKey(name: 'vcard', includeIfNull: false)
+	String vCard;	// 'vcard' (optional)	- https://en.wikipedia.org/wiki/VCard
+
 	// constructor
 	InputContactMessageContent(this.phoneNumber, this.firstName, {
 		this.lastName,
+		this.vCard,
 	});
 
 	factory InputContactMessageContent.fromJson(Map<String, dynamic> json) => _$InputContactMessageContentFromJson(json);
