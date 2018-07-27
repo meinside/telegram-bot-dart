@@ -1632,6 +1632,8 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagetext
+  //
+  // TODO: FIX: "On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned."
   Future<APIResponseMessage> editMessageText(String text, {
     Object chatId,
     int messageId,
@@ -1677,6 +1679,8 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagecaption
+  //
+  // TODO: FIX: "On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned."
   Future<APIResponseMessage> editMessageCaption(String caption, {
     Object chatId,
     int messageId,
@@ -1718,6 +1722,8 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagemedia
+  //
+  // TODO: FIX: "On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned."
   Future<APIResponseMessage> editMessageMedia(InputMedia media, {
     Object chatId,
     int messageId,
@@ -1759,6 +1765,8 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagereplymarkup
+  //
+  // TODO: FIX: "On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned."
   Future<APIResponseMessage> editMessageReplyMarkup({
     Object chatId,
     int messageId,
@@ -1793,6 +1801,8 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagelivelocation
+  //
+  // TODO: FIX: "On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned."
   Future<APIResponseMessage> editMessageLiveLocation(double latitude, longitude, {
     Object chatId,
     int messageId,
@@ -1831,6 +1841,8 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#stopmessagelivelocation
+  //
+  // TODO: FIX: On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned.
   Future<APIResponseMessage> stopMessageLiveLocation({
     Object chatId,
     int messageId,
@@ -2066,6 +2078,8 @@ abstract class HttpClient {
   /// other options: force, and disable_edit_message
   ///
   /// https://core.telegram.org/bots/api#setgamescore
+  //
+  // TODO: FIX: "On success, if the message was sent by the bot, returns the edited Message, otherwise returns True."
   Future<APIResponseMessage> setGameScore(int userId, int score, {
     Object chatId,
     int messageId,
