@@ -1,6 +1,6 @@
-/// echo.dart
-///
-/// A sample bot which echoes back all received messages.
+// echo.dart
+//
+// A sample bot which echoes back all received messages.
 
 import '../../lib/telegram.dart';
 

@@ -17,23 +17,26 @@ export 'src/http.dart';
 
 /// Bot client class
 class Bot extends HttpClient {
-  static const String _redactedString = "<REDACTED>"; // confidential info will be displayed as this
-  static const int _defaultIntervalSeconds = 10;
+  // Default interval seconds for polling (= 1 second)
+  static const int _defaultIntervalSeconds = 1;
 
-  // datetime format for logging
+  // Confidential info in the log strings will be replaced with this.
+  static const String _redactedString = "<REDACTED>";
+
+  // Datetime format for logging
   static DateFormat _dtFormat = new DateFormat('yyyy-MM-dd HH:mm:ss');
 
-  // print verbose log messages or not
+  /// print verbose log messages or not
   bool verbose;
 
   // tokens
   String _token;  // Telegram bot API's token
   String _tokenHashed;  // hashed token
 
-  // constructor
+  /// Default constructor ([verbose] is set to false)
   Bot(this._token, this._tokenHashed) : this.verbose = false;
 
-  // Create a new bot API client with given token string.
+  /// Create a new bot API client with given [token] string.
   static Bot create(String token) {
     return new Bot(token, _md5sum(token));
   }
@@ -69,14 +72,10 @@ class Bot extends HttpClient {
     return hex.encode(digest.bytes);
   }
 
-  //////////////////////////////////////////////////
-  //
-  // Useful functions
-  //
-
-  /// Retrieve updates from API server constantly.
+  /// Retrieve [Update]s from the API server constantly.
   ///
-  /// NOTE: If webhook is registered, it may not work properly. So make sure webhook is deleted, or not registered.
+  /// NOTE: If webhook is registered, it may not work properly.
+  ///       So make sure webhook is deleted, or not registered.
   Stream<Update> monitorUpdates({
     int updateOffset = 0,
     int interval = _defaultIntervalSeconds,
@@ -87,7 +86,7 @@ class Bot extends HttpClient {
       interval = 1;
     }
 
-    logVerbose("monitoring updates... (update offset: ${updateOffset}, interval seconds: ${interval})");
+    logVerbose("polling updates... (offset: ${updateOffset}, interval: ${interval} sec");
 
     APIResponseUpdates updates;
     try {
@@ -104,11 +103,12 @@ class Bot extends HttpClient {
 	  }
 	}
       } else {
-	logError("getUpdates failed while monitoring updates: ${updates.description}");
+	logError("getUpdates failed while polling updates: ${updates.description}");
       }
     } catch (e, stackTrace) {
-      logError("exception thrown while monitoring updates: ${e}\n${stackTrace}");
+      logError("exception thrown while polling updates: ${e}\n${stackTrace}");
     } finally {
+      // delay
       await new Future.delayed(new Duration(seconds: interval));
 
       yield* monitorUpdates(updateOffset: updateOffset, interval: interval);
