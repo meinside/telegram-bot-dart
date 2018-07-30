@@ -11,7 +11,7 @@ import 'package:json_annotation/json_annotation.dart';
 // $ pub run build_runner build
 part 'types.g.dart';
 
-/// ChatType enumeration
+/// Enumeration for [Chat]'s type.
 enum ChatType {
 	@JsonValue('private')
 	Private,	// 'private'
@@ -23,7 +23,7 @@ enum ChatType {
 	Channel,	// 'channel'
 }
 
-/// ParseMode enumeration
+/// Enumeration for parse modes.
 enum ParseMode {
 	@JsonValue('Markdown')
 	Markdown,	// 'Markdown'
@@ -32,7 +32,7 @@ enum ParseMode {
 	Html,	// 'HTML'
 }
 
-/// ChatAction enumeration
+/// Enumeration for chat action of [sendChatAction].
 enum ChatAction {
 	@JsonValue('typing')
 	Typing,	// 'typing'
@@ -65,7 +65,7 @@ enum ChatAction {
 	UploadVideoNote,	// 'upload_video_note'
 }
 
-/// InlineQueryResultType enumeration
+/// Enumeration for [InlineQueryResult]'s type.
 enum InlineQueryResultType {
 	@JsonValue('article')
 	Article,	// 'article'
@@ -107,7 +107,7 @@ enum InlineQueryResultType {
 	Game,	// 'game'
 }
 
-/// MessageEntityType is a type of MessageEntity
+/// Enumeration for [MessageEntity]'s type.
 ///
 /// https://core.telegram.org/bots/api#messageentity
 enum MessageEntityType {
@@ -151,7 +151,7 @@ enum MessageEntityType {
 	TextMention,	// 'text_mention'
 }
 
-/// ChatMemberStatus is a status of chat member
+/// Enumeration for [ChatMember]'s status.
 ///
 /// https://core.telegram.org/bots/api#chatmember
 enum ChatMemberStatus {
@@ -171,7 +171,7 @@ enum ChatMemberStatus {
 	Kicked,	// 'kicked'
 }
 
-/// MaskPositionPoint is a point in MaskPosition
+/// Enumeration for [MaskPosition]'s point.
 ///
 /// https://core.telegram.org/bots/api#maskposition
 enum MaskPositionPoint {
@@ -188,7 +188,7 @@ enum MaskPositionPoint {
 	Chin,	// 'chin'
 }
 
-/// APIResponseParameters is parameters in API responses
+/// Parameters for [APIResponseBase].
 ///
 /// https://core.telegram.org/bots/api#responseparameters
 @JsonSerializable()
@@ -207,7 +207,7 @@ class APIResponseParameters {
 	Map<String, dynamic> toJson() => _$APIResponseParametersToJson(this);
 }
 
-/// APIResponseBase is a base class of all API responses
+/// Base class of all API responses.
 @JsonSerializable()
 class APIResponseBase {
 	bool ok;	// 'ok'
@@ -229,7 +229,7 @@ class APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseBaseToJson(this);
 }
 
-/// APIResponseWebhookInfo is an API response with result type: [WebhookInfo]
+/// API response with result type: [WebhookInfo]
 @JsonSerializable()
 class APIResponseWebhookInfo extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -247,7 +247,7 @@ class APIResponseWebhookInfo extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseWebhookInfoToJson(this);
 }
 
-/// APIResponseUser is an API response with result type: [User]
+/// API response with result type: [User]
 @JsonSerializable()
 class APIResponseUser extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -265,7 +265,7 @@ class APIResponseUser extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseUserToJson(this);
 }
 
-/// APIResponseMessage is an API response with result type: [Message]
+/// API response with result type: [Message]
 @JsonSerializable()
 class APIResponseMessage extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -283,7 +283,7 @@ class APIResponseMessage extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseMessageToJson(this);
 }
 
-/// APIResponseMessages is an API response with result type: List<[Message]>
+/// API response with result type: List<[Message]>
 @JsonSerializable()
 class APIResponseMessages extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -301,7 +301,7 @@ class APIResponseMessages extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseMessagesToJson(this);
 }
 
-/// APIResponseUserProfilePhotos is an API response with result type: [UserProfilePhotos]
+/// API response with result type: [UserProfilePhotos]
 @JsonSerializable()
 class APIResponseUserProfilePhotos extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -319,7 +319,7 @@ class APIResponseUserProfilePhotos extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseUserProfilePhotosToJson(this);
 }
 
-/// APIResponseFile is an API response with result type: [FileObject]
+/// API response with result type: [FileObject]
 @JsonSerializable()
 class APIResponseFile extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -337,7 +337,7 @@ class APIResponseFile extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseFileToJson(this);
 }
 
-/// APIResponseUpdates is an API response with result type [Update]
+/// API response with result type: [Update]
 @JsonSerializable()
 class APIResponseUpdates extends APIResponseBase {
 	List<Update> result;	// 'result'
@@ -354,7 +354,7 @@ class APIResponseUpdates extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseUpdatesToJson(this);
 }
 
-/// APIResponseChat is an API response with result type: [Chat]
+/// API response with result type: [Chat]
 @JsonSerializable()
 class APIResponseChat extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -372,7 +372,7 @@ class APIResponseChat extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseChatToJson(this);
 }
 
-/// APIResponseChatAdministrators is an API response with result type: List<[ChatMember]>
+/// API response with result type: List<[ChatMember]>
 @JsonSerializable()
 class APIResponseChatAdministrators extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -390,7 +390,7 @@ class APIResponseChatAdministrators extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseChatAdministratorsToJson(this);
 }
 
-/// APIResponseChatMember is an API response with result type: [ChatMember]
+/// API response with result type: [ChatMember]
 @JsonSerializable()
 class APIResponseChatMember extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -408,7 +408,7 @@ class APIResponseChatMember extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseChatMemberToJson(this);
 }
 
-/// APIResponseInt is an API response with result type: int
+/// API response with result type: int
 @JsonSerializable()
 class APIResponseInt extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -426,7 +426,7 @@ class APIResponseInt extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseIntToJson(this);
 }
 
-/// APIResponseBool is an API response with result type: bool
+/// API response with result type: bool
 @JsonSerializable()
 class APIResponseBool extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -444,7 +444,7 @@ class APIResponseBool extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseBoolToJson(this);
 }
 
-/// APIResponseString is an API response with result type: String
+/// API response with result type: String
 @JsonSerializable()
 class APIResponseString extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -462,7 +462,7 @@ class APIResponseString extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseStringToJson(this);
 }
 
-/// APIResponseGameHighScores is an API response with result type: List<[GameHighScore]>
+/// API response with result type: List<[GameHighScore]>
 @JsonSerializable()
 class APIResponseGameHighScores extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -480,7 +480,7 @@ class APIResponseGameHighScores extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseGameHighScoresToJson(this);
 }
 
-/// APIResponseStickerSet is an API response with result type: [StickerSet]
+/// API response with result type: [StickerSet]
 @JsonSerializable()
 class APIResponseStickerSet extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
@@ -498,7 +498,7 @@ class APIResponseStickerSet extends APIResponseBase {
 	Map<String, dynamic> toJson() => _$APIResponseStickerSetToJson(this);
 }
 
-/// UpdateType is a type of updates (for allowed_updates)
+/// Enumeration for [Update]'s allowed types(for `allowed_updates`).
 ///
 /// https://core.telegram.org/bots/api#setwebhook
 /// https://core.telegram.org/bots/api#update
@@ -525,7 +525,7 @@ enum UpdateType {
 	CallbackQuery,
 }
 
-/// WebhookInfo is a struct of webhook info
+/// Struct for webhook info
 ///
 /// https://core.telegram.org/bots/api#webhookinfo
 @JsonSerializable()
@@ -563,7 +563,7 @@ class WebhookInfo {
 	Map<String, dynamic> toJson() => _$WebhookInfoToJson(this);
 }
 
-/// Update is a struct of an update
+/// Struct of an update
 ///
 /// https://core.telegram.org/bots/api#update
 @JsonSerializable()
@@ -616,7 +616,7 @@ class Update {
 	Map<String, dynamic> toJson() => _$UpdateToJson(this);
 }
 
-/// User is a struct of a user
+/// Struct of a user
 ///
 /// https://core.telegram.org/bots/api#user
 @JsonSerializable()
@@ -655,7 +655,7 @@ class User {
 	Map<String, dynamic> toJson() => _$UserToJson(this);
 }
 
-/// Chat is a struct of a chat
+/// Struct of a chat
 ///
 /// https://core.telegram.org/bots/api#chat
 @JsonSerializable()
@@ -717,7 +717,7 @@ class Chat {
 	Map<String, dynamic> toJson() => _$ChatToJson(this);
 }
 
-/// InputMediaType is a type of InputMedia
+/// Enumeration for [InputMedia]'s type.
 enum InputMediaType {
 	@JsonValue('animation')
 	Animation,
@@ -735,7 +735,7 @@ enum InputMediaType {
 	Video,
 }
 
-/// InputMedia represents the content of a media message to be sent.
+/// Struct for the content of a media message to be sent.
 ///
 /// It is a base struct of [InputMediaAnimation], [InputMediaDocument], [InputMediaAudio], [InputMediaPhoto], and [InputMediaVideo].
 ///
@@ -771,7 +771,7 @@ class InputMedia {
 	Map<String, dynamic> toJson() => _$InputMediaToJson(this);
 }
 
-/// InputMediaAnimation is an animation type of [InputMedia].
+/// Struct for an animation type of [InputMedia].
 ///
 /// https://core.telegram.org/bots/api#inputmediaanimation
 @JsonSerializable()
@@ -801,7 +801,7 @@ class InputMediaAnimation extends InputMedia {
 	Map<String, dynamic> toJson() => _$InputMediaAnimationToJson(this);
 }
 
-/// InputMediaDocument is a document type of [InputMedia].
+/// Struct for a document type of [InputMedia].
 ///
 /// https://core.telegram.org/bots/api#inputmediadocument
 @JsonSerializable()
@@ -837,7 +837,7 @@ class InputMediaDocument extends InputMedia {
 	Map<String, dynamic> toJson() => _$InputMediaDocumentToJson(this);
 }
 
-/// InputMediaAudio is an audio type of [InputMedia].
+/// Struct for an audio type of [InputMedia].
 ///
 /// https://core.telegram.org/bots/api#inputmediaaudio
 @JsonSerializable()
@@ -891,7 +891,7 @@ class InputMediaAudio extends InputMedia {
 	Map<String, dynamic> toJson() => _$InputMediaAudioToJson(this);
 }
 
-/// InputMediaPhoto is a photo type of [InputMedia].
+/// Struct for a photo type of [InputMedia].
 ///
 /// https://core.telegram.org/bots/api#inputmediaphoto
 @JsonSerializable()
@@ -921,7 +921,7 @@ class InputMediaPhoto extends InputMedia {
 	Map<String, dynamic> toJson() => _$InputMediaPhotoToJson(this);
 }
 
-/// InputMediaVideo is a video type of [InputMedia].
+/// Struct for a video type of [InputMedia].
 ///
 /// https://core.telegram.org/bots/api#inputmediavideo
 @JsonSerializable()
@@ -981,7 +981,7 @@ class InputMediaVideo extends InputMedia {
 	Map<String, dynamic> toJson() => _$InputMediaVideoToJson(this);
 }
 
-/// InputFile represents contents of a file to be uploaded.
+/// Struct of a file to be uploaded.
 ///
 /// https://core.telegram.org/bots/api#inputfile
 @JsonSerializable()
@@ -1039,7 +1039,7 @@ class InputFile {
 	Map<String, dynamic> toJson() => _$InputFileToJson(this);
 }
 
-/// Audio is a struct for an audio file
+/// Struct for an audio file
 ///
 /// https://core.telegram.org/bots/api#audio
 @JsonSerializable()
@@ -1078,7 +1078,7 @@ class Audio {
 	Map<String, dynamic> toJson() => _$AudioToJson(this);
 }
 
-/// MessageEntity is a struct of a message entity
+/// Struct of a message entity
 ///
 /// https://core.telegram.org/bots/api#messageentity
 @JsonSerializable()
@@ -1106,7 +1106,7 @@ class MessageEntity {
 	Map<String, dynamic> toJson() => _$MessageEntityToJson(this);
 }
 
-/// PhotoSize is a struct of a photo's size
+/// Struct of a photo's size
 ///
 /// https://core.telegram.org/bots/api#photosize
 @JsonSerializable()
@@ -1131,7 +1131,7 @@ class PhotoSize {
 	Map<String, dynamic> toJson() => _$PhotoSizeToJson(this);
 }
 
-/// Document is a struct for an ordinary file
+/// Struct for an ordinary(document) file
 ///
 /// https://core.telegram.org/bots/api#document
 @JsonSerializable()
@@ -1164,7 +1164,7 @@ class Document {
 	Map<String, dynamic> toJson() => _$DocumentToJson(this);
 }
 
-/// Sticker is a struct of a sticker
+/// Struct of a sticker
 ///
 /// https://core.telegram.org/bots/api#sticker
 @JsonSerializable()
@@ -1205,7 +1205,7 @@ class Sticker {
 	Map<String, dynamic> toJson() => _$StickerToJson(this);
 }
 
-/// StickerSet is a struct of a sticker set
+/// Struct of a sticker set
 ///
 /// https://core.telegram.org/bots/api#stickerset
 @JsonSerializable()
@@ -1227,7 +1227,7 @@ class StickerSet {
 	Map<String, dynamic> toJson() => _$StickerSetToJson(this);
 }
 
-/// MaskPosition is a struct for a mask position
+/// Struct for a mask position
 ///
 /// https://core.telegram.org/bots/api#maskposition
 @JsonSerializable()
@@ -1250,7 +1250,7 @@ class MaskPosition {
 	Map<String, dynamic> toJson() => _$MaskPositionToJson(this);
 }
 
-/// Video is a struct for a video file
+/// Struct for a video file
 ///
 /// https://core.telegram.org/bots/api#video
 @JsonSerializable()
@@ -1285,7 +1285,7 @@ class Video {
 	Map<String, dynamic> toJson() => _$VideoToJson(this);
 }
 
-/// Voice is a struct for a voice file
+/// Struct for a voice file
 ///
 /// https://core.telegram.org/bots/api#voice
 @JsonSerializable()
@@ -1312,7 +1312,7 @@ class Voice {
 	Map<String, dynamic> toJson() => _$VoiceToJson(this);
 }
 
-/// VideoNote is a struct for a video note
+/// Struct for a video note
 ///
 /// https://core.telegram.org/bots/api#videonote
 @JsonSerializable()
@@ -1341,7 +1341,7 @@ class VideoNote {
 	Map<String, dynamic> toJson() => _$VideoNoteToJson(this);
 }
 
-/// Contact is a struct for a contact info
+/// Struct for a contact info
 ///
 /// https://core.telegram.org/bots/api#contact
 @JsonSerializable()
@@ -1373,7 +1373,7 @@ class Contact {
 	Map<String, dynamic> toJson() => _$ContactToJson(this);
 }
 
-/// Location is a struct for a location
+/// Struct for a location
 ///
 /// https://core.telegram.org/bots/api#location
 @JsonSerializable()
@@ -1390,7 +1390,7 @@ class Location {
 	Map<String, dynamic> toJson() => _$LocationToJson(this);
 }
 
-/// Venue is a struct of a venue
+/// Struct of a venue
 ///
 /// https://core.telegram.org/bots/api#venue
 @JsonSerializable()
@@ -1418,7 +1418,7 @@ class Venue {
 	Map<String, dynamic> toJson() => _$VenueToJson(this);
 }
 
-/// UserProfilePhotos is a struct for user profile photos
+/// Struct for user profile photos
 ///
 /// https://core.telegram.org/bots/api#userprofilephotos
 @JsonSerializable()
@@ -1436,7 +1436,7 @@ class UserProfilePhotos {
 	Map<String, dynamic> toJson() => _$UserProfilePhotosToJson(this);
 }
 
-/// FileObject is a struct for a file
+/// Struct for a file
 ///
 /// https://core.telegram.org/bots/api#file
 @JsonSerializable()
@@ -1461,7 +1461,7 @@ class FileObject {
 	Map<String, dynamic> toJson() => _$FileObjectToJson(this);
 }
 
-/// ReplyMarkup is a base struct of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], and [ForceReply].
+/// Base class of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], and [ForceReply].
 @JsonSerializable()
 class ReplyMarkup {
 	// constructor
@@ -1472,7 +1472,7 @@ class ReplyMarkup {
 	Map<String, dynamic> toJson() => _$ReplyMarkupToJson(this);
 }
 
-/// ReplyKeyboardMarkup is a struct for reply keyboard markups
+/// Struct for reply keyboard markups
 ///
 /// https://core.telegram.org/bots/api#replykeyboardmarkup
 @JsonSerializable()
@@ -1500,7 +1500,7 @@ class ReplyKeyboardMarkup extends ReplyMarkup {
 	Map<String, dynamic> toJson() => _$ReplyKeyboardMarkupToJson(this);
 }
 
-/// KeyboardButton is a struct of a keyboard button
+/// Struct of a keyboard button
 ///
 /// https://core.telegram.org/bots/api#keyboardbutton
 @JsonSerializable()
@@ -1533,7 +1533,7 @@ class KeyboardButton {
 	Map<String, dynamic> toJson() => _$KeyboardButtonToJson(this);
 }
 
-/// ReplyKeyboardRemove is a struct for ReplyKeyboardRemove
+/// Struct for removing keyboard buttons
 ///
 /// https://core.telegram.org/bots/api#replykeyboardremove
 @JsonSerializable()
@@ -1554,7 +1554,7 @@ class ReplyKeyboardRemove extends ReplyMarkup {
 	Map<String, dynamic> toJson() => _$ReplyKeyboardRemoveToJson(this);
 }
 
-/// InlineKeyboardMarkup is a struct for InlineKeyboardMarkup
+/// Struct for inline keyboard markup
 ///
 /// https://core.telegram.org/bots/api#inlinekeyboardmarkup
 @JsonSerializable()
@@ -1570,7 +1570,7 @@ class InlineKeyboardMarkup extends ReplyMarkup {
 	Map<String, dynamic> toJson() => _$InlineKeyboardMarkupToJson(this);
 }
 
-/// InlineKeyboardButton is a struct for InlineKeyboardButtons
+/// Struct for inline keyboard buttons
 ///
 /// https://core.telegram.org/bots/api#inlinekeyboardbutton
 @JsonSerializable()
@@ -1605,7 +1605,7 @@ class InlineKeyboardButton {
 		this.pay,
 	});
 
-	// helper function for generating an array of InlineKeyboardButton with urls
+	/// Helper function for generating an array of [InlineKeyboardButton] with urls
 	List<InlineKeyboardButton> createWithUrls(Map<String, String> values) {
 		List<InlineKeyboardButton> buttons = new List<InlineKeyboardButton>();
 		values.forEach((text, url) {
@@ -1614,12 +1614,12 @@ class InlineKeyboardButton {
 		return buttons;
 	}
 
-	// helper function for generating an array of InlineKeyboardButton with callback data
+	/// Helper function for generating an array of [InlineKeyboardButton] with callback data
 	List<InlineKeyboardButton> createWithCallbackData(Map<String, String> values) {
 		return createAsColumnsWithCallbackData(values);
 	}
 
-	// helper function for generating an array of InlineKeyboardButtons (as columns) with callback data
+	/// Helper function for generating an array of [InlineKeyboardButton] (as columns) with callback data
 	List<InlineKeyboardButton> createAsColumnsWithCallbackData(Map<String, String> values) {
 		List<InlineKeyboardButton> buttons = new List<InlineKeyboardButton>();
 		values.forEach((text, callbackData) {
@@ -1628,7 +1628,7 @@ class InlineKeyboardButton {
 		return buttons;
 	}
 
-	// helper function for generating an array of InlineKeyboardButtons (as rows) with callback data
+	/// Helper function for generating an array of [InlineKeyboardButton] (as rows) with callback data
 	List<List<InlineKeyboardButton>> createAsRowsWithCallbackData(Map<String, String> values) {
 		List<List<InlineKeyboardButton>> buttons = new List<List<InlineKeyboardButton>>();
 		values.forEach((text, callbackData) {
@@ -1639,7 +1639,7 @@ class InlineKeyboardButton {
 		return buttons;
 	}
 
-	// helper function for generating an array of InlineKeyboardButton with switch inline query
+	/// Helper function for generating an array of [InlineKeyboardButton] with switch inline query
 	List<InlineKeyboardButton> createWithSwitchInlineQuery(Map<String, String> values) {
 		List<InlineKeyboardButton> buttons = new List<InlineKeyboardButton>();
 		values.forEach((text, swithInlineQuery) {
@@ -1653,7 +1653,7 @@ class InlineKeyboardButton {
 	Map<String, dynamic> toJson() => _$InlineKeyboardButtonToJson(this);
 }
 
-/// CallbackQuery is a struct for a callback query
+/// Struct for a callback query
 ///
 /// https://core.telegram.org/bots/api#callbackquery
 @JsonSerializable()
@@ -1690,7 +1690,7 @@ class CallbackQuery {
 	Map<String, dynamic> toJson() => _$CallbackQueryToJson(this);
 }
 
-/// ShippingQuery is a struct for a shipping query
+/// Struct for a shipping query
 ///
 /// https://core.telegram.org/bots/api#shippingquery
 @JsonSerializable()
@@ -1713,7 +1713,7 @@ class ShippingQuery {
 	Map<String, dynamic> toJson() => _$ShippingQueryToJson(this);
 }
 
-/// PreCheckoutQuery is a struct for a precheckout query
+/// Struct for a precheckout query
 ///
 /// https://core.telegram.org/bots/api#precheckoutquery
 @JsonSerializable()
@@ -1747,7 +1747,7 @@ class PreCheckoutQuery {
 	Map<String, dynamic> toJson() => _$PreCheckoutQueryToJson(this);
 }
 
-/// ForceReply is a struct for force-reply
+/// Struct for force-reply
 ///
 /// https://core.telegram.org/bots/api#forcereply
 @JsonSerializable()
@@ -1766,7 +1766,7 @@ class ForceReply extends ReplyMarkup {
 	Map<String, dynamic> toJson() => _$ForceReplyToJson(this);
 }
 
-/// ChatPhoto is a struct for a chat photo
+/// Struct for a chat photo
 ///
 /// https://core.telegram.org/bots/api#chatphoto
 @JsonSerializable()
@@ -1785,7 +1785,7 @@ class ChatPhoto {
 	Map<String, dynamic> toJson() => _$ChatPhotoToJson(this);
 }
 
-/// ChatMember is a struct of a chat member
+/// Struct of a chat member
 ///
 /// https://core.telegram.org/bots/api#chatmember
 @JsonSerializable()
@@ -1859,7 +1859,7 @@ class ChatMember {
 	Map<String, dynamic> toJson() => _$ChatMemberToJson(this);
 }
 
-/// Message is a struct of a message
+/// Struct of a message
 ///
 /// https://core.telegram.org/bots/api#message
 @JsonSerializable()
@@ -2030,7 +2030,7 @@ class Message {
 		this.connectedWebsite,
 	});
 
-	// return a photo with the largest file size.
+	/// Return a photo with the largest file size.
 	PhotoSize largestPhoto() {
 		if (photo == null) {
 			return null;
@@ -2050,7 +2050,7 @@ class Message {
 	Map<String, dynamic> toJson() => _$MessageToJson(this);
 }
 
-/// InlineQuery is a struct of an inline query
+/// Struct of an inline query
 ///
 /// https://core.telegram.org/bots/api#inlinequery
 @JsonSerializable()
@@ -2076,7 +2076,7 @@ class InlineQuery {
 	Map<String, dynamic> toJson() => _$InlineQueryToJson(this);
 }
 
-/// ChosenInlineResult is a struct for a chosen inline result
+/// Struct of a chosen inline result
 ///
 /// https://core.telegram.org/bots/api#choseninlineresult
 @JsonSerializable()
@@ -2105,7 +2105,7 @@ class ChosenInlineResult {
 	Map<String, dynamic> toJson() => _$ChosenInlineResultToJson(this);
 }
 
-/// VideoMimeType is a video mime type for an inline query
+/// Enumeration of video mime type for an inline query
 enum VideoMimeType {
 	@JsonValue('text/html')
 	TextHtml,	// 'text/html'
@@ -2114,7 +2114,7 @@ enum VideoMimeType {
 	VideoMp4,	// 'video/mp4'
 }
 
-/// DocumentMimeType is a document mime type for an inline query
+/// Enumeration of document mime type for an inline query
 enum DocumentMimeType {
 	@JsonValue('application/pdf')
 	ApplicationPdf,	// 'application/pdf'
@@ -2123,7 +2123,7 @@ enum DocumentMimeType {
 	ApplicationZip,	// 'application/zip'
 }
 
-/// InlineQueryResult is a struct for inline query results
+/// Struct for inline query results
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresult
 @JsonSerializable()
@@ -2147,7 +2147,7 @@ class InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultToJson(this);
 }
 
-/// InlineQueryResultArticle is a struct for InlineQueryResultArticle
+/// Struct for an article type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultarticle
 @JsonSerializable()
@@ -2188,7 +2188,7 @@ class InlineQueryResultArticle extends InlineQueryResult {
 		this.thumbHeight,
 	}) : super(InlineQueryResultType.Article, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultArticle create(String title, String messageText, String description) {
 		InlineQueryResultArticle article = new InlineQueryResultArticle(
 				title,
@@ -2203,7 +2203,7 @@ class InlineQueryResultArticle extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultArticleToJson(this);
 }
 
-/// InlineQueryResultPhoto is a struct for InlineQueryResultPhoto
+/// Struct for a photo type of [InlineQueryResult].
 ///
 /// Photo must be in jpeg format, < 5MB.
 ///
@@ -2252,7 +2252,7 @@ class InlineQueryResultPhoto extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Photo, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultPhoto create(String photoUrl, String thumbUrl) {
 		return new InlineQueryResultPhoto(photoUrl, thumbUrl);
 	}
@@ -2262,7 +2262,7 @@ class InlineQueryResultPhoto extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultPhotoToJson(this);
 }
 
-/// InlineQueryResultGif is a struct for InlineQueryResultGif
+/// Struct for a gif type of [InlineQueryResult].
 ///
 /// Gif must be in gif format, < 1MB.
 ///
@@ -2311,7 +2311,7 @@ class InlineQueryResultGif extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Gif, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultGif create(String gifUrl, String thumbUrl) {
 		return new InlineQueryResultGif(gifUrl, thumbUrl);
 	}
@@ -2321,7 +2321,7 @@ class InlineQueryResultGif extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultGifToJson(this);
 }
 
-/// InlineQueryResultMpeg4Gif is a struct for InlineQueryResultMpeg4Gif
+/// Struct for a mpeg4 gif type of [InlineQueryResult].
 ///
 /// Mpeg4 must be in H.264/MPEG-4 AVC video(wihout sound) format, < 1MB.
 ///
@@ -2370,7 +2370,7 @@ class InlineQueryResultMpeg4Gif extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Mpeg4Gif, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultMpeg4Gif create(String mpeg4Url, String thumbUrl) {
 		return new InlineQueryResultMpeg4Gif(mpeg4Url, thumbUrl);
 	}
@@ -2380,7 +2380,7 @@ class InlineQueryResultMpeg4Gif extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultMpeg4GifToJson(this);
 }
 
-/// InlineQueryResultVideo is a struct of InlineQueryResultVideo
+/// Struct for a video type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultvideo
 @JsonSerializable()
@@ -2432,7 +2432,7 @@ class InlineQueryResultVideo extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Video, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultVideo create(String videoUrl, VideoMimeType mimeType, String thumbUrl, String title) {
 		return new InlineQueryResultVideo(videoUrl, mimeType, thumbUrl, title);
 	}
@@ -2442,7 +2442,7 @@ class InlineQueryResultVideo extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultVideoToJson(this);
 }
 
-/// InlineQueryResultAudio is a struct of InlineQueryResultAudio
+/// Struct for an audio type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultaudio
 @JsonSerializable()
@@ -2480,7 +2480,7 @@ class InlineQueryResultAudio extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Audio, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultAudio create(String audioUrl, String title) {
 		return new InlineQueryResultAudio(audioUrl, title);
 	}
@@ -2490,7 +2490,7 @@ class InlineQueryResultAudio extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultAudioToJson(this);
 }
 
-/// InlineQueryResultVoice is a struct of InlineQueryResultVoice
+/// Struct for a voice type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultvoice
 @JsonSerializable()
@@ -2524,7 +2524,7 @@ class InlineQueryResultVoice extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Voice, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultVoice create(String voiceUrl, String title) {
 		return new InlineQueryResultVoice(voiceUrl, title);
 	}
@@ -2534,7 +2534,7 @@ class InlineQueryResultVoice extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultVoiceToJson(this);
 }
 
-/// InlineQueryResultDocument is a struct of InlineQueryResultDocument
+/// Struct for a document type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultdocument
 @JsonSerializable()
@@ -2583,7 +2583,7 @@ class InlineQueryResultDocument extends InlineQueryResult {
 		this.thumbHeight,
 	}) : super(InlineQueryResultType.Document, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultDocument create(String title, String documentUrl, DocumentMimeType mimeType) {
 		return new InlineQueryResultDocument(title, documentUrl, mimeType);
 	}
@@ -2593,7 +2593,7 @@ class InlineQueryResultDocument extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultDocumentToJson(this);
 }
 
-/// InlineQueryResultLocation is a struct of InlineQueryResultLocation
+/// Struct for a location type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultlocation
 @JsonSerializable()
@@ -2628,7 +2628,7 @@ class InlineQueryResultLocation extends InlineQueryResult {
 		this.thumbHeight,
 	}) : super(InlineQueryResultType.Location, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultLocation create(double latitude, double longitude, String title) {
 		return new InlineQueryResultLocation(latitude, longitude, title);
 	}
@@ -2638,7 +2638,7 @@ class InlineQueryResultLocation extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultLocationToJson(this);
 }
 
-/// InlineQueryResultVenue is a struct of InlineQueryResultVenue
+/// Struct for a venue type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultvenue
 @JsonSerializable()
@@ -2683,7 +2683,7 @@ class InlineQueryResultVenue extends InlineQueryResult {
 		this.thumbHeight,
 	}) : super(InlineQueryResultType.Venue, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultVenue create(double latitude, double longitude, String title, String address) {
 		return new InlineQueryResultVenue(latitude, longitude, title, address);
 	}
@@ -2693,7 +2693,7 @@ class InlineQueryResultVenue extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultVenueToJson(this);
 }
 
-/// InlineQueryResultContact is a struct of InlineQueryResultContact
+/// Struct for a contact type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultcontact
 @JsonSerializable()
@@ -2736,7 +2736,7 @@ class InlineQueryResultContact extends InlineQueryResult {
 		this.thumbHeight,
 	}) : super(InlineQueryResultType.Contact, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultContact create(String phoneNumber, String firstName) {
 		return new InlineQueryResultContact(phoneNumber, firstName);
 	}
@@ -2746,7 +2746,7 @@ class InlineQueryResultContact extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultContactToJson(this);
 }
 
-/// InlineQueryResultGame is a struct of InlineQueryResultGame
+/// Struct for a game type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultgame
 @JsonSerializable()
@@ -2762,7 +2762,7 @@ class InlineQueryResultGame extends InlineQueryResult {
 		this.replyMarkup,
 	}) : super(InlineQueryResultType.Game, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultGame create(String gameShortName) {
 		return new InlineQueryResultGame(gameShortName);
 	}
@@ -2772,7 +2772,7 @@ class InlineQueryResultGame extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultGameToJson(this);
 }
 
-/// InlineQueryResultCachedPhoto is a struct of InlineQueryResultCachedPhoto
+/// Struct for a cached photo type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultcachedphoto
 @JsonSerializable()
@@ -2808,7 +2808,7 @@ class InlineQueryResultCachedPhoto extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Photo, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultCachedPhoto create(String photoFileId) {
 		return new InlineQueryResultCachedPhoto(photoFileId);
 	}
@@ -2818,7 +2818,7 @@ class InlineQueryResultCachedPhoto extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultCachedPhotoToJson(this);
 }
 
-/// InlineQueryResultCachedGif is a struct of InlineQueryResultCachedGif
+/// Struct for a cached gif type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultcachedgif
 @JsonSerializable()
@@ -2850,7 +2850,7 @@ class InlineQueryResultCachedGif extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Gif, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultCachedGif create(String gifFileId) {
 		return new InlineQueryResultCachedGif(gifFileId);
 	}
@@ -2860,7 +2860,7 @@ class InlineQueryResultCachedGif extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultCachedGifToJson(this);
 }
 
-/// InlineQueryResultCachedMpeg4Gif is a struct of InlineQueryResultCachedMpeg4Gif
+/// Struct for a cached mpeg4 gif type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultcachedmpeg4gif
 @JsonSerializable()
@@ -2892,7 +2892,7 @@ class InlineQueryResultCachedMpeg4Gif extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Mpeg4Gif, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultCachedMpeg4Gif create(String mpeg4FileId) {
 		return new InlineQueryResultCachedMpeg4Gif(mpeg4FileId);
 	}
@@ -2902,7 +2902,7 @@ class InlineQueryResultCachedMpeg4Gif extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultCachedMpeg4GifToJson(this);
 }
 
-/// InlineQueryResultCachedSticker is a struct of InlineQueryResultCachedSticker
+/// Struct for a cached sticker type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultcachedsticker
 @JsonSerializable()
@@ -2922,7 +2922,7 @@ class InlineQueryResultCachedSticker extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Sticker, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultCachedSticker create(String stickerFileId) {
 		return new InlineQueryResultCachedSticker(stickerFileId);
 	}
@@ -2932,7 +2932,7 @@ class InlineQueryResultCachedSticker extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultCachedStickerToJson(this);
 }
 
-/// InlineQueryResultCachedDocument is a struct of InlineQueryResultCachedDocument
+/// Struct for a cached document type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultcacheddocument
 @JsonSerializable()
@@ -2966,7 +2966,7 @@ class InlineQueryResultCachedDocument extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Document, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultCachedDocument create(String documentFileId, String title) {
 		return new InlineQueryResultCachedDocument(documentFileId, title);
 	}
@@ -2976,7 +2976,7 @@ class InlineQueryResultCachedDocument extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultCachedDocumentToJson(this);
 }
 
-/// InlineQueryResultCachedVideo is a struct of InlineQueryResultCachedVideo
+/// Struct for a cached video type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultcachedvideo
 @JsonSerializable()
@@ -3010,7 +3010,7 @@ class InlineQueryResultCachedVideo extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Video, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultCachedVideo create(String videoFileId, String title) {
 		return new InlineQueryResultCachedVideo(videoFileId, title);
 	}
@@ -3020,7 +3020,7 @@ class InlineQueryResultCachedVideo extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultCachedVideoToJson(this);
 }
 
-/// InlineQueryResultCachedVoice is a struct of InlineQueryResultCachedVoice
+/// Struct for a cached voice type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultcachedvoice
 @JsonSerializable()
@@ -3050,7 +3050,7 @@ class InlineQueryResultCachedVoice extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Voice, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultCachedVoice create(String voiceFileId, String title) {
 		return new InlineQueryResultCachedVoice(voiceFileId, title);
 	}
@@ -3060,7 +3060,7 @@ class InlineQueryResultCachedVoice extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultCachedVoiceToJson(this);
 }
 
-/// InlineQueryResultCachedAudio is a struct of InlineQueryResultCachedAudio
+/// Struct for a cached audio type of [InlineQueryResult].
 ///
 /// https://core.telegram.org/bots/api#inlinequeryresultcachedaudio
 @JsonSerializable()
@@ -3088,7 +3088,7 @@ class InlineQueryResultCachedAudio extends InlineQueryResult {
 		this.inputMessageContent,
 	}) : super(InlineQueryResultType.Audio, InlineQueryResult.generateUuid());
 
-	// helper function
+	/// Helper function
 	static InlineQueryResultCachedAudio create(String audioFileId) {
 		return new InlineQueryResultCachedAudio(audioFileId);
 	}
@@ -3098,7 +3098,7 @@ class InlineQueryResultCachedAudio extends InlineQueryResult {
 	Map<String, dynamic> toJson() => _$InlineQueryResultCachedAudioToJson(this);
 }
 
-/// InputMessageContent is a generic type of input message content types
+/// Base class of input message content types.
 ///
 /// https://core.telegram.org/bots/api#inputmessagecontent
 @JsonSerializable()
@@ -3110,7 +3110,7 @@ class InputMessageContent {
 	Map<String, dynamic> toJson() => _$InputMessageContentToJson(this);
 }
 
-/// InputTextMessageContent is a struct of InputTextMessageContent
+/// Struct for text type of [InputMessageContent].
 ///
 /// https://core.telegram.org/bots/api#inputtextmessagecontent
 @JsonSerializable()
@@ -3135,7 +3135,7 @@ class InputTextMessageContent extends InputMessageContent {
 	Map<String, dynamic> toJson() => _$InputTextMessageContentToJson(this);
 }
 
-/// InputLocationMessageContent is a struct of InputLocationMessageContent
+/// Struct for location type of [InputMessageContent].
 ///
 /// https://core.telegram.org/bots/api#inputlocationmessagecontent
 @JsonSerializable()
@@ -3152,7 +3152,7 @@ class InputLocationMessageContent extends InputMessageContent {
 	Map<String, dynamic> toJson() => _$InputLocationMessageContentToJson(this);
 }
 
-/// InputVenueMessageContent is a struct of InputVenueMessageContent
+/// Struct for venue type of [InputMessageContent].
 ///
 /// https://core.telegram.org/bots/api#inputvenuemessagecontent
 @JsonSerializable()
@@ -3182,7 +3182,7 @@ class InputVenueMessageContent extends InputMessageContent {
 	Map<String, dynamic> toJson() => _$InputVenueMessageContentToJson(this);
 }
 
-/// InputContactMessageContent is a struct of InputContactMessageContent
+/// Struct for contact type of [InputMessageContent].
 ///
 /// https://core.telegram.org/bots/api#inputcontactmessagecontent
 @JsonSerializable()
@@ -3210,7 +3210,7 @@ class InputContactMessageContent extends InputMessageContent {
 	Map<String, dynamic> toJson() => _$InputContactMessageContentToJson(this);
 }
 
-/// CallbackGame is for callback of games
+/// Struct for a callback of games.
 ///
 /// https://core.telegram.org/bots/api#callbackgame
 @JsonSerializable()
@@ -3223,7 +3223,7 @@ class CallbackGame {
 	Map<String, dynamic> toJson() => _$CallbackGameToJson(this);
 }
 
-/// Game is a struct of Game
+/// Struct for a game.
 ///
 /// https://core.telegram.org/bots/api#game
 @JsonSerializable()
@@ -3255,7 +3255,7 @@ class Game {
 	Map<String, dynamic> toJson() => _$GameToJson(this);
 }
 
-/// Animation is a struct of Animation
+/// Struct for an animation.
 ///
 /// https://core.telegram.org/bots/api#animation
 @JsonSerializable()
@@ -3288,7 +3288,7 @@ class Animation {
 	Map<String, dynamic> toJson() => _$AnimationToJson(this);
 }
 
-/// GameHighScore is a struct of GameHighScore
+/// Struct for a game high score.
 ///
 /// https://core.telegram.org/bots/api#gamehighscore
 @JsonSerializable()
@@ -3307,7 +3307,7 @@ class GameHighScore {
 	Map<String, dynamic> toJson() => _$GameHighScoreToJson(this);
 }
 
-/// Invoice is a struct of Invoice
+/// Struct for an invoice.
 ///
 /// https://core.telegram.org/bots/api#invoice
 @JsonSerializable()
@@ -3332,7 +3332,7 @@ class Invoice {
 	Map<String, dynamic> toJson() => _$InvoiceToJson(this);
 }
 
-/// SuccessfulPayment is a struct of successful payments
+/// Struct for a successful payment.
 ///
 /// https://core.telegram.org/bots/api#successfulpayment
 @JsonSerializable()
@@ -3368,7 +3368,7 @@ class SuccessfulPayment {
 	Map<String, dynamic> toJson() => _$SuccessfulPaymentToJson(this);
 }
 
-/// OrderInfo is a struct of order info
+/// Struct for an order info.
 ///
 /// https://core.telegram.org/bots/api#orderinfo
 @JsonSerializable()
@@ -3398,7 +3398,7 @@ class OrderInfo {
 	Map<String, dynamic> toJson() => _$OrderInfoToJson(this);
 }
 
-/// ShippingOption is a struct of an option of the shipping
+/// Struct for a shipping option.
 ///
 /// https://core.telegram.org/bots/api#shippingoption
 @JsonSerializable()
@@ -3417,7 +3417,7 @@ class ShippingOption {
 	Map<String, dynamic> toJson() => _$ShippingOptionToJson(this);
 }
 
-/// LabeledPrice is a struct of labeled prices
+/// Struct for a labeled price.
 ///
 /// https://core.telegram.org/bots/api#labeledprice
 @JsonSerializable()
@@ -3434,7 +3434,7 @@ class LabeledPrice {
 	Map<String, dynamic> toJson() => _$LabeledPriceToJson(this);
 }
 
-/// ShippingAddress is a struct of shipping address
+/// Struct for a shipping address.
 ///
 /// https://core.telegram.org/bots/api#shippingaddress
 @JsonSerializable()
