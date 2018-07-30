@@ -207,9 +207,9 @@ class APIResponseParameters {
 	Map<String, dynamic> toJson() => _$APIResponseParametersToJson(this);
 }
 
-/// APIResponse is an API response
+/// APIResponseBase is a base class of all API responses
 @JsonSerializable()
-class APIResponse {
+class APIResponseBase {
 	bool ok;	// 'ok'
 
 	@JsonKey(name: 'error_code', includeIfNull: false)
@@ -222,16 +222,16 @@ class APIResponse {
 	APIResponseParameters parameters;	// 'parameters' (optional)
 
 	// constructor
-	APIResponse(this.ok, {this.description, this.parameters});
+	APIResponseBase(this.ok, {this.description, this.parameters});
 
-	factory APIResponse.fromJson(Map<String, dynamic> json) => _$APIResponseFromJson(json);
+	factory APIResponseBase.fromJson(Map<String, dynamic> json) => _$APIResponseBaseFromJson(json);
 
-	Map<String, dynamic> toJson() => _$APIResponseToJson(this);
+	Map<String, dynamic> toJson() => _$APIResponseBaseToJson(this);
 }
 
 /// APIResponseWebhookInfo is an API response with result type: [WebhookInfo]
 @JsonSerializable()
-class APIResponseWebhookInfo extends APIResponse {
+class APIResponseWebhookInfo extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	WebhookInfo result;	// 'result' (optional)
 
@@ -249,7 +249,7 @@ class APIResponseWebhookInfo extends APIResponse {
 
 /// APIResponseUser is an API response with result type: [User]
 @JsonSerializable()
-class APIResponseUser extends APIResponse {
+class APIResponseUser extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	User result;	// 'result' (optional)
 
@@ -267,7 +267,7 @@ class APIResponseUser extends APIResponse {
 
 /// APIResponseMessage is an API response with result type: [Message]
 @JsonSerializable()
-class APIResponseMessage extends APIResponse {
+class APIResponseMessage extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	Message result;	// 'result' (optional)
 
@@ -285,7 +285,7 @@ class APIResponseMessage extends APIResponse {
 
 /// APIResponseMessages is an API response with result type: List<[Message]>
 @JsonSerializable()
-class APIResponseMessages extends APIResponse {
+class APIResponseMessages extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	List<Message> result;	// 'result' (optional)
 
@@ -303,7 +303,7 @@ class APIResponseMessages extends APIResponse {
 
 /// APIResponseUserProfilePhotos is an API response with result type: [UserProfilePhotos]
 @JsonSerializable()
-class APIResponseUserProfilePhotos extends APIResponse {
+class APIResponseUserProfilePhotos extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	UserProfilePhotos result;	// 'result' (optional)
 
@@ -321,7 +321,7 @@ class APIResponseUserProfilePhotos extends APIResponse {
 
 /// APIResponseFile is an API response with result type: [FileObject]
 @JsonSerializable()
-class APIResponseFile extends APIResponse {
+class APIResponseFile extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	FileObject result;	// 'result' (optional)
 
@@ -339,7 +339,7 @@ class APIResponseFile extends APIResponse {
 
 /// APIResponseUpdates is an API response with result type [Update]
 @JsonSerializable()
-class APIResponseUpdates extends APIResponse {
+class APIResponseUpdates extends APIResponseBase {
 	List<Update> result;	// 'result'
 
 	// constructor
@@ -356,7 +356,7 @@ class APIResponseUpdates extends APIResponse {
 
 /// APIResponseChat is an API response with result type: [Chat]
 @JsonSerializable()
-class APIResponseChat extends APIResponse {
+class APIResponseChat extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	Chat result;	// 'result' (optional)
 
@@ -374,7 +374,7 @@ class APIResponseChat extends APIResponse {
 
 /// APIResponseChatAdministrators is an API response with result type: List<[ChatMember]>
 @JsonSerializable()
-class APIResponseChatAdministrators extends APIResponse {
+class APIResponseChatAdministrators extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	List<ChatMember> result;	// 'result' (optional)
 
@@ -392,7 +392,7 @@ class APIResponseChatAdministrators extends APIResponse {
 
 /// APIResponseChatMember is an API response with result type: [ChatMember]
 @JsonSerializable()
-class APIResponseChatMember extends APIResponse {
+class APIResponseChatMember extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	ChatMember result;	// 'result' (optional)
 
@@ -410,7 +410,7 @@ class APIResponseChatMember extends APIResponse {
 
 /// APIResponseInt is an API response with result type: int
 @JsonSerializable()
-class APIResponseInt extends APIResponse {
+class APIResponseInt extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	int result;	// 'result' (optional)
 
@@ -428,7 +428,7 @@ class APIResponseInt extends APIResponse {
 
 /// APIResponseBool is an API response with result type: bool
 @JsonSerializable()
-class APIResponseBool extends APIResponse {
+class APIResponseBool extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	bool result;	// 'result' (optional)
 
@@ -446,7 +446,7 @@ class APIResponseBool extends APIResponse {
 
 /// APIResponseString is an API response with result type: String
 @JsonSerializable()
-class APIResponseString extends APIResponse {
+class APIResponseString extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	String result;	// 'result' (optional)
 
@@ -464,7 +464,7 @@ class APIResponseString extends APIResponse {
 
 /// APIResponseGameHighScores is an API response with result type: List<[GameHighScore]>
 @JsonSerializable()
-class APIResponseGameHighScores extends APIResponse {
+class APIResponseGameHighScores extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	List<GameHighScore> result;	// 'result' (optional)
 
@@ -482,7 +482,7 @@ class APIResponseGameHighScores extends APIResponse {
 
 /// APIResponseStickerSet is an API response with result type: [StickerSet]
 @JsonSerializable()
-class APIResponseStickerSet extends APIResponse {
+class APIResponseStickerSet extends APIResponseBase {
 	@JsonKey(includeIfNull: false)
 	StickerSet result;	// 'result' (optional)
 

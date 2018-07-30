@@ -187,33 +187,13 @@ abstract class HttpClient {
   /// Extract error description from given [HttpResponse].
   String _errorDescriptionFrom(String method, HttpResponse response) {
     try {
-      APIResponse res = APIResponse.fromJson(response.toJson());
+      APIResponseBase res = APIResponseBase.fromJson(response.toJson());
       return "${method} failed with error: ${res.description}";
     } catch(e) {
       logVerbose("failed to extract error description from http response: ${e} | ${response.body}");
 
       return "${method} failed with error: ${response.reason}";
     }
-  }
-
-  /// Send request for [APIResponse] and fetch its result.
-  Future<APIResponse> _fetchResponse(String method, Map<String, dynamic> params) async {
-    String errStr;
-
-    HttpResponse response = await _request(method, params);
-    if (response.statusCode == 200) {
-      try {
-	return APIResponse.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
-      }
-    } else {
-      errStr = _errorDescriptionFrom(method, response);
-    }
-
-    logError(errStr);
-
-    return new APIResponse(false, description: errStr);
   }
 
   /// Send request for [APIResponseWebhookInfo] and fetch its result.
@@ -278,7 +258,7 @@ abstract class HttpClient {
   }
 
   /// Send request for [APIResponseMessage] or [APIResponseBool] and fetch its result.
-  Future<APIResponse> _fetchMessageOrBool(String method, Map<String, dynamic> params) async {
+  Future<APIResponseBase> _fetchMessageOrBool(String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
@@ -463,6 +443,26 @@ abstract class HttpClient {
     return new APIResponseInt(false, description: errStr);
   }
 
+  /// Send request for [APIResponseBool] and fetch its result.
+  Future<APIResponseBool> _fetchBool(String method, Map<String, dynamic> params) async {
+    String errStr;
+
+    HttpResponse response = await _request(method, params);
+    if (response.statusCode == 200) {
+      try {
+	return APIResponseBool.fromJson(response.toJson());
+      } catch(e) {
+	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+      }
+    } else {
+      errStr = _errorDescriptionFrom(method, response);
+    }
+
+    logError(errStr);
+
+    return new APIResponseBool(false, description: errStr);
+  }
+
   /// Send request for [APIResponseString] and fetch its result.
   Future<APIResponseString> _fetchString(String method, Map<String, dynamic> params) async {
     String errStr;
@@ -556,10 +556,10 @@ abstract class HttpClient {
   /// ([getUpdates] will not work if webhook is set, so in that case you'll need to delete it)
   ///
   /// https://core.telegram.org/bots/api#deletewebhook
-  Future<APIResponse> deleteWebhook() {
+  Future<APIResponseBool> deleteWebhook() {
     logVerbose("deleting webhook...");
 
-    return _fetchResponse("deleteWebhook", null);
+    return _fetchBool("deleteWebhook", null);
   }
 
   /// Get [WebhookInfo] of this bot.
@@ -834,7 +834,7 @@ abstract class HttpClient {
   /// Create a new sticker set.
   ///
   /// https://core.telegram.org/bots/api#createnewstickerset
-  Future<APIResponse> createNewStickerSet(int userId, String name, title, InputFile sticker, String emojis, {
+  Future<APIResponseBool> createNewStickerSet(int userId, String name, title, InputFile sticker, String emojis, {
     bool containsMasks,
     MaskPosition maskPosition,
   }) {
@@ -854,13 +854,13 @@ abstract class HttpClient {
       params["mask_position"] = maskPosition;
     }
 
-    return _fetchResponse("createNewStickerSet", params);
+    return _fetchBool("createNewStickerSet", params);
   }
 
   /// Add a sticker to set.
   ///
   /// https://core.telegram.org/bots/api#addstickertoset
-  Future<APIResponse> addStickerToSet(int userId, String name, InputFile sticker, String emojis, {
+  Future<APIResponseBool> addStickerToSet(int userId, String name, InputFile sticker, String emojis, {
     MaskPosition maskPosition,
   }) {
     // essential params
@@ -872,30 +872,30 @@ abstract class HttpClient {
       params["mask_position"] = maskPosition;
     }
 
-    return _fetchResponse("addStickerToSet", params);
+    return _fetchBool("addStickerToSet", params);
   }
 
   /// Set sticker position in set.
   ///
   /// https://core.telegram.org/bots/api#setstickerpositioninset
-  Future<APIResponse> setStickerPositionInSet(String sticker, int position) {
+  Future<APIResponseBool> setStickerPositionInSet(String sticker, int position) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["sticker"] = sticker;
     params["position"] = position;
 
-    return _fetchResponse("setStickerPositionInSet", params);
+    return _fetchBool("setStickerPositionInSet", params);
   }
 
   /// Delete a sticker from set.
   ///
   /// https://core.telegram.org/bots/api#deletestickerfromset
-  Future<APIResponse> deleteStickerFromSet(String sticker) {
+  Future<APIResponseBool> deleteStickerFromSet(String sticker) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["sticker"] = sticker;
 
-    return _fetchResponse("deleteStickerFromSet", params);
+    return _fetchBool("deleteStickerFromSet", params);
   }
 
   /// Send a video file.
@@ -1248,13 +1248,13 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#sendchataction
-  Future<APIResponse> sendChatAction(Object chatId, ChatAction action) {
+  Future<APIResponseBool> sendChatAction(Object chatId, ChatAction action) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["action"] = action;
 
-    return _fetchResponse("sendChatAction", params);
+    return _fetchBool("sendChatAction", params);
   }
 
   /// Get user profile photos.
@@ -1300,7 +1300,7 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#kickchatmember
-  Future<APIResponse> kickChatMember(Object chatId, int userId, {
+  Future<APIResponseBool> kickChatMember(Object chatId, int userId, {
     int untilDate,
   }) {
     // essential params
@@ -1313,7 +1313,7 @@ abstract class HttpClient {
       params["until_date"] = untilDate;
     }
 
-    return _fetchResponse("kickChatMember", params);
+    return _fetchBool("kickChatMember", params);
   }
 
   /// Leave a chat.
@@ -1321,12 +1321,12 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#leavechat
-  Future<APIResponse> leaveChat(Object chatId) {
+  Future<APIResponseBool> leaveChat(Object chatId) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
 
-    return _fetchResponse("leaveChat", params);
+    return _fetchBool("leaveChat", params);
   }
 
   /// Unban a chat member.
@@ -1334,13 +1334,13 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#unbanchatmember
-  Future<APIResponse> unbanChatMember(Object chatId, int userId) {
+  Future<APIResponseBool> unbanChatMember(Object chatId, int userId) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["user_id"] = userId;
 
-    return _fetchResponse("unbanChatMember", params);
+    return _fetchBool("unbanChatMember", params);
   }
 
   /// Restrict a chat member.
@@ -1348,7 +1348,7 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#restrictchatmember
-  Future<APIResponse> restrictChatMember(Object chatId, int userId, {
+  Future<APIResponseBool> restrictChatMember(Object chatId, int userId, {
     int untilDate,
     bool canSendMessages,
     bool canSendMediaMessages,
@@ -1377,7 +1377,7 @@ abstract class HttpClient {
       params["can_send_web_page_previews"] = canSendWebPagePreviews;
     }
 
-    return _fetchResponse("restrictChatMember", params);
+    return _fetchBool("restrictChatMember", params);
   }
 
   /// Promote a chat member.
@@ -1387,7 +1387,7 @@ abstract class HttpClient {
   /// options include: can_change_info, can_post_messages, can_edit_messages, can_delete_messages, can_invite_users, can_restrict_members, can_pin_messages, and can_promote_members
   ///
   /// https://core.telegram.org/bots/api#promotechatmember
-  Future<APIResponse> promoteChatMember(Object chatId, int userId, {
+  Future<APIResponseBool> promoteChatMember(Object chatId, int userId, {
     bool canChangeInfo,
     bool canPostMessages,
     bool canEditMessages,
@@ -1428,7 +1428,7 @@ abstract class HttpClient {
       params["can_promote_members"] = canPromoteMembers;
     }
 
-    return _fetchResponse("promoteChatMember", params);
+    return _fetchBool("promoteChatMember", params);
   }
 
   /// Export a chat invite link.
@@ -1449,13 +1449,13 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#setchatphoto
-  Future<APIResponse> setChatPhoto(Object chatId, InputFile photo) {
+  Future<APIResponseBool> setChatPhoto(Object chatId, InputFile photo) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["photo"] = photo;
 
-    return _fetchResponse("setChatPhoto", params);
+    return _fetchBool("setChatPhoto", params);
   }
 
   /// Delete a chat photo.
@@ -1463,12 +1463,12 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#deletechatphoto
-  Future<APIResponse> deleteChatPhoto(Object chatId) {
+  Future<APIResponseBool> deleteChatPhoto(Object chatId) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
 
-    return _fetchResponse("deleteChatPhoto", params);
+    return _fetchBool("deleteChatPhoto", params);
   }
 
   /// Set a chat title.
@@ -1476,13 +1476,13 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#setchattitle
-  Future<APIResponse> setChatTitle(Object chatId, String title) {
+  Future<APIResponseBool> setChatTitle(Object chatId, String title) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["title"] = title;
 
-    return _fetchResponse("setChatTitle", params);
+    return _fetchBool("setChatTitle", params);
   }
 
   /// Set a chat description.
@@ -1490,13 +1490,13 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#setchatdescription
-  Future<APIResponse> setChatDescription(Object chatId, String description) {
+  Future<APIResponseBool> setChatDescription(Object chatId, String description) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["description"] = description;
 
-    return _fetchResponse("setChatDescription", params);
+    return _fetchBool("setChatDescription", params);
   }
 
   /// PinChatMessage pins a chat message
@@ -1504,7 +1504,7 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#pinchatmessage
-  Future<APIResponse> pinChatMessage(Object chatId, int messageId, {
+  Future<APIResponseBool> pinChatMessage(Object chatId, int messageId, {
     bool disableNotification,
   }) {
     // essential params
@@ -1517,7 +1517,7 @@ abstract class HttpClient {
       params["disable_notification"] = disableNotification;
     }
 
-    return _fetchResponse("pinChatMessage", params);
+    return _fetchBool("pinChatMessage", params);
   }
 
   /// Unpin a chat message.
@@ -1525,12 +1525,12 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#unpinchatmessage
-  Future<APIResponse> unpinChatMessage(Object chatId) {
+  Future<APIResponseBool> unpinChatMessage(Object chatId) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
 
-    return _fetchResponse("unpinChatMessage", params);
+    return _fetchBool("unpinChatMessage", params);
   }
 
   /// Get a chat.
@@ -1591,13 +1591,13 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#setchatstickerset
-  Future<APIResponse> setChatStickerSet(Object chatId, String stickerSetName) {
+  Future<APIResponseBool> setChatStickerSet(Object chatId, String stickerSetName) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["sticker_set_name"] = stickerSetName;
 
-    return _fetchResponse("setChatStickerSet", params);
+    return _fetchBool("setChatStickerSet", params);
   }
 
   /// Delete a chat sticker set.
@@ -1605,18 +1605,18 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#deletechatstickerset
-  Future<APIResponse> deleteChatStickerSet(Object chatId) {
+  Future<APIResponseBool> deleteChatStickerSet(Object chatId) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
 
-    return _fetchResponse("deleteChatStickerSet", params);
+    return _fetchBool("deleteChatStickerSet", params);
   }
 
   /// Answer a callback query.
   ///
   /// https://core.telegram.org/bots/api#answercallbackquery
-  Future<APIResponse> answerCallbackQuery(String callbackQueryId, {
+  Future<APIResponseBool> answerCallbackQuery(String callbackQueryId, {
     String text,
     bool showAlert,
     String url,
@@ -1640,7 +1640,7 @@ abstract class HttpClient {
       params["cache_time"] = cacheTime;
     }
 
-    return _fetchResponse("answerCallbackQuery", params);
+    return _fetchBool("answerCallbackQuery", params);
   }
 
   ////////////////////////////////
@@ -1660,7 +1660,7 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagetext
-  Future<APIResponse> editMessageText(String text, {
+  Future<APIResponseBase> editMessageText(String text, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1707,7 +1707,7 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagecaption
-  Future<APIResponse> editMessageCaption(String caption, {
+  Future<APIResponseBase> editMessageCaption(String caption, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1750,7 +1750,7 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagemedia
-  Future<APIResponse> editMessageMedia(InputMedia media, {
+  Future<APIResponseBase> editMessageMedia(InputMedia media, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1793,7 +1793,7 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagereplymarkup
-  Future<APIResponse> editMessageReplyMarkup({
+  Future<APIResponseBase> editMessageReplyMarkup({
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1829,7 +1829,7 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagelivelocation
-  Future<APIResponse> editMessageLiveLocation(double latitude, longitude, {
+  Future<APIResponseBase> editMessageLiveLocation(double latitude, longitude, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1869,7 +1869,7 @@ abstract class HttpClient {
   ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#stopmessagelivelocation
-  Future<APIResponse> stopMessageLiveLocation({
+  Future<APIResponseBase> stopMessageLiveLocation({
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1898,13 +1898,13 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#deletemessage
-  Future<APIResponse> deleteMessage(Object chatId, int messageId) {
+  Future<APIResponseBool> deleteMessage(Object chatId, int messageId) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["message_id"] = messageId;
 
-    return _fetchResponse("deleteMessage", params);
+    return _fetchBool("deleteMessage", params);
   }
 
   /// Send answers to an inline query.
@@ -1912,7 +1912,7 @@ abstract class HttpClient {
   /// - [results] = [List] of [InlineQueryResultArticle], [InlineQueryResultPhoto], [InlineQueryResultGif], [InlineQueryResultMpeg4Gif], or [InlineQueryResultVideo].
   ///
   /// https://core.telegram.org/bots/api#answerinlinequery
-  Future<APIResponse> answerInlineQuery(String inlineQueryId, List<InlineQueryResult> results, {
+  Future<APIResponseBool> answerInlineQuery(String inlineQueryId, List<InlineQueryResult> results, {
     int cacheTime,
     bool isPersonal,
     String nextOffset,
@@ -1941,7 +1941,7 @@ abstract class HttpClient {
       params["switch_pm_parameter"] = switchPmParameter;
     }
 
-    return _fetchResponse("answerInlineQuery", params);
+    return _fetchBool("answerInlineQuery", params);
   }
 
   /// Send an invoice.
@@ -2024,7 +2024,7 @@ abstract class HttpClient {
   /// NOTE: If [ok] is true, [shippingOptions] should be provided. Otherwise, [errorMessage] should be provided.
   ///
   /// https://core.telegram.org/bots/api#answershippingquery
-  Future<APIResponse> answerShippingQuery(String shippingQueryId, bool ok, {
+  Future<APIResponseBool> answerShippingQuery(String shippingQueryId, bool ok, {
     List<ShippingOption> shippingOptions,
     String errorMessage,
   }) {
@@ -2041,7 +2041,7 @@ abstract class HttpClient {
       params["error_message"] = errorMessage;
     }
 
-    return _fetchResponse("answerShippingQuery", params);
+    return _fetchBool("answerShippingQuery", params);
   }
 
   /// Answer a pre-checkout query.
@@ -2049,7 +2049,7 @@ abstract class HttpClient {
   /// NOTE: If [ok] is false, [errorMessage] should be provided.
   ///
   /// https://core.telegram.org/bots/api#answerprecheckoutquery
-  Future<APIResponse> answerPreCheckoutQuery(String preCheckoutQueryId, bool ok, {
+  Future<APIResponseBool> answerPreCheckoutQuery(String preCheckoutQueryId, bool ok, {
     String errorMessage,
   }) {
     // essential params
@@ -2062,7 +2062,7 @@ abstract class HttpClient {
       params["error_message"] = errorMessage;
     }
 
-    return _fetchResponse("answerPreCheckoutQuery", params);
+    return _fetchBool("answerPreCheckoutQuery", params);
   }
 
   /// Send a game.
@@ -2106,7 +2106,7 @@ abstract class HttpClient {
   /// other options: force, and disable_edit_message
   ///
   /// https://core.telegram.org/bots/api#setgamescore
-  Future<APIResponse> setGameScore(int userId, int score, {
+  Future<APIResponseBase> setGameScore(int userId, int score, {
     Object chatId,
     int messageId,
     int inlineMessageId,

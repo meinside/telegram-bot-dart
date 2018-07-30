@@ -28,8 +28,8 @@ Map<String, dynamic> _$APIResponseParametersToJson(
   return val;
 }
 
-APIResponse _$APIResponseFromJson(Map<String, dynamic> json) {
-  return new APIResponse(json['ok'] as bool,
+APIResponseBase _$APIResponseBaseFromJson(Map<String, dynamic> json) {
+  return new APIResponseBase(json['ok'] as bool,
       description: json['description'] as String,
       parameters: json['parameters'] == null
           ? null
@@ -38,7 +38,7 @@ APIResponse _$APIResponseFromJson(Map<String, dynamic> json) {
     ..errorCode = json['error_code'] as int;
 }
 
-Map<String, dynamic> _$APIResponseToJson(APIResponse instance) {
+Map<String, dynamic> _$APIResponseBaseToJson(APIResponseBase instance) {
   var val = <String, dynamic>{
     'ok': instance.ok,
   };
