@@ -529,9 +529,9 @@ abstract class HttpClient {
   //
   // https://core.telegram.org/bots/api#available-methods
 
-  // Retrieve updates.
-  //
-  // https://core.telegram.org/bots/api#getupdates
+  /// Retrieve updates.
+  ///
+  /// https://core.telegram.org/bots/api#getupdates
   Future<APIResponseUpdates> getUpdates({int offset, int limit, int timeout, List<String> allowedUpdates}) async {
     // optional params
     var params = Map<String, dynamic>();
@@ -1643,10 +1643,10 @@ abstract class HttpClient {
     return _fetchBool("answerCallbackQuery", params);
   }
 
-  ////////////////////////////////
-  /// Methods for updating messages
-  ///
-  /// https://core.telegram.org/bots/api#updating-messages
+  ///////////////////////////////
+  // Methods for updating messages
+  //
+  // https://core.telegram.org/bots/api#updating-messages
 
   /// Edit text of a message.
   ///

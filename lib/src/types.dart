@@ -108,7 +108,7 @@ enum InlineQueryResultType {
 }
 
 /// MessageEntityType is a type of MessageEntity
-//
+///
 /// https://core.telegram.org/bots/api#messageentity
 enum MessageEntityType {
 	@JsonValue('mention')
