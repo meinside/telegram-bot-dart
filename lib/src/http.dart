@@ -1657,7 +1657,7 @@ abstract class HttpClient {
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
-  ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
+  ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagetext
   Future<APIResponseBase> editMessageText(String text, {
@@ -1704,7 +1704,7 @@ abstract class HttpClient {
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
-  ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
+  ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagecaption
   Future<APIResponseBase> editMessageCaption(String caption, {
@@ -1747,7 +1747,7 @@ abstract class HttpClient {
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
-  ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
+  ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagemedia
   Future<APIResponseBase> editMessageMedia(InputMedia media, {
@@ -1790,7 +1790,7 @@ abstract class HttpClient {
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
-  ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
+  ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagereplymarkup
   Future<APIResponseBase> editMessageReplyMarkup({
@@ -1826,7 +1826,7 @@ abstract class HttpClient {
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
-  ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
+  ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagelivelocation
   Future<APIResponseBase> editMessageLiveLocation(double latitude, longitude, {
@@ -1866,7 +1866,7 @@ abstract class HttpClient {
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
-  ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
+  ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#stopmessagelivelocation
   Future<APIResponseBase> stopMessageLiveLocation({
@@ -2101,7 +2101,7 @@ abstract class HttpClient {
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
-  ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
+  ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// other options: force, and disable_edit_message
   ///
@@ -2142,7 +2142,7 @@ abstract class HttpClient {
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
-  ///                 or [InlineMessageId] (when [chatId] & [messageId] is not given)
+  ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#getgamehighscores
   Future<APIResponseGameHighScores> getGameHighScores(int userId, {
