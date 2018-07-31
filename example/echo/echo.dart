@@ -22,26 +22,25 @@ main() async {
 
     // polling updates
     await for (Update update in bot.monitorUpdates(interval: 3)) {
-      print(
-          "> @${update.message.from.username}"
+      print("> @${update.message.from.username}"
           " sent a message: '${update.message.toJson()}'");
 
       // NOTE: functions are called synchronously here for responding messages in order.
       var message = update.message;
-      if (message.text != null) { // text message
+      if (message.text != null) {
+        // text message
         print(">> received text: '${message.text}'");
 
         try {
           // send 'typing...'
-          var actRes = await bot.sendChatAction(message.chat.id, ChatAction.Typing);
+          var actRes =
+              await bot.sendChatAction(message.chat.id, ChatAction.Typing);
           if (!actRes.ok) {
             print("** sendChatAction failed: ${actRes.description}");
           }
 
           // echo received message back (synchronously)
-          var msgRes = await bot.sendMessage(
-              message.chat.id,
-              message.text,
+          var msgRes = await bot.sendMessage(message.chat.id, message.text,
               replyToMessageId: message.messageId);
 
           if (msgRes.ok) {
@@ -52,19 +51,20 @@ main() async {
         } catch (e, stackTrace) {
           print("** exception while sendMessage: ${e}\n${stackTrace}");
         }
-      } else if (message.photo != null) { // photo
+      } else if (message.photo != null) {
+        // photo
         print(">> received photo: ${message.photo}");
 
         try {
           // send 'uploading photo...'
-          var actRes = await bot.sendChatAction(message.chat.id, ChatAction.UploadPhoto);
+          var actRes =
+              await bot.sendChatAction(message.chat.id, ChatAction.UploadPhoto);
           if (!actRes.ok) {
             print("** sendChatAction failed: ${actRes.description}");
           }
 
           // echo received photo back
-          var photoRes = await bot.sendPhoto(
-              message.chat.id,
+          var photoRes = await bot.sendPhoto(message.chat.id,
               InputFile.fromFileId(message.largestPhoto().fileId),
               replyToMessageId: message.messageId);
 
@@ -74,21 +74,22 @@ main() async {
             print("** sendPhoto failed: ${photoRes.description}");
           }
         } catch (e, stackTrace) {
-          print("** exception while sendPhoto with fileId: ${e}\n${stackTrace}");
+          print(
+              "** exception while sendPhoto with fileId: ${e}\n${stackTrace}");
         }
       } else {
         print(">> TODO: implement more cases");
 
         try {
           // send 'uploading photo...'
-          var actRes = await bot.sendChatAction(message.chat.id, ChatAction.UploadPhoto);
+          var actRes =
+              await bot.sendChatAction(message.chat.id, ChatAction.UploadPhoto);
           if (!actRes.ok) {
             print("** sendChatAction failed: ${actRes.description}");
           }
 
           var photoRes = await bot.sendPhoto(
-              message.chat.id,
-              InputFile.fromFilepath(_imageFilepath),
+              message.chat.id, InputFile.fromFilepath(_imageFilepath),
               replyToMessageId: message.messageId,
               caption: "Not implemented for this kind of file or message yet.");
 
@@ -98,7 +99,8 @@ main() async {
             print("** sendPhoto failed: ${photoRes.description}");
           }
         } catch (e, stackTrace) {
-          print("** exception while sendPhoto with filepath: ${e}\n${stackTrace}");
+          print(
+              "** exception while sendPhoto with filepath: ${e}\n${stackTrace}");
         }
       }
     }

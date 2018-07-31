@@ -30,62 +30,65 @@ abstract class HttpClient {
   static const String _fileBaseUrl = "https://api.telegram.org/file/bot";
 
   // functions to implement
-  String botToken();  // return the bot's token
-  void logVerbose(String message);  // log verbose message
-  void logError(String message);  // log error message
+  String botToken(); // return the bot's token
+  void logVerbose(String message); // log verbose message
+  void logError(String message); // log error message
 
   /// Send request to API server and return the response.
-  Future<HttpResponse> _request(String method, Map<String, dynamic> params) async {
+  Future<HttpResponse> _request(
+      String method, Map<String, dynamic> params) async {
     String apiUrl = "${_apiBaseUrl}${botToken()}/${method}";
 
-    params ??= new Map<String, dynamic>();
+    params ??= Map<String, dynamic>();
 
     String body, reason;
     int statusCode;
 
-    if (_checkIfFileParamExists(params)) {  // multipart form data
-      logVerbose("sending multipart form data request to api url: ${apiUrl}, params: ${params}");
+    if (_checkIfFileParamExists(params)) {
+      // multipart form data
+      logVerbose(
+          "sending multipart form data request to api url: ${apiUrl}, params: ${params}");
 
       try {
-	var response = await _newMultipartRequest(apiUrl, params).send();
-	statusCode = response.statusCode;
-	body = await response.stream.bytesToString();
-	reason = response.reasonPhrase;
+        var response = await _newMultipartRequest(apiUrl, params).send();
+        statusCode = response.statusCode;
+        body = await response.stream.bytesToString();
+        reason = response.reasonPhrase;
 
-	logVerbose("multipart form data response: ${statusCode} ${reason} | ${body}");
+        logVerbose(
+            "multipart form data response: ${statusCode} ${reason} | ${body}");
       } catch (e) {
-	body = "failed to send multipart form data request";
-	reason = e.toString();
+        body = "failed to send multipart form data request";
+        reason = e.toString();
 
-	logError("failed to send multipart form data request: ${e}");
+        logError("failed to send multipart form data request: ${e}");
       }
-    } else {  // www-form urlencoded
+    } else {
+      // www-form urlencoded
       Map<String, String> convertedParams = _convertParams(params);
 
-      logVerbose("sending www-form urlencoded data request to api url: ${apiUrl}, params: ${convertedParams}");
+      logVerbose(
+          "sending www-form urlencoded data request to api url: ${apiUrl}, params: ${convertedParams}");
 
-      await http
-	.post(apiUrl, body: convertedParams)
-	.then((response) {
-	  statusCode = response.statusCode;
-	  body = response.body;
-	  reason = response.reasonPhrase;
+      await http.post(apiUrl, body: convertedParams).then((response) {
+        statusCode = response.statusCode;
+        body = response.body;
+        reason = response.reasonPhrase;
 
-	  logVerbose("www-form response: ${statusCode} ${reason} | ${body}");
-	})
-	.catchError((e) {
-	  body = "failed to send www-form request";
-	  reason = e.toString();
+        logVerbose("www-form response: ${statusCode} ${reason} | ${body}");
+      }).catchError((e) {
+        body = "failed to send www-form request";
+        reason = e.toString();
 
-	  logError("failed to send www-form request: ${e}");
-	});
+        logError("failed to send www-form request: ${e}");
+      });
     }
 
     statusCode ??= 500;
     body ??= "HTTP ${statusCode}";
     reason ??= "unknown/internal error";
 
-    return new HttpResponse(statusCode, body, reason);
+    return HttpResponse(statusCode, body, reason);
   }
 
   /// Check if given http params contain file or not.
@@ -93,13 +96,13 @@ abstract class HttpClient {
     for (String key in params.keys) {
       // if it is a file, or a bytes array,
       if (params[key] is File || params[key] is List<int>) {
-	return true;
+        return true;
       } else if (params[key] is InputFile) {
-	// if it is an InputFile of filepath or bytes array,
-	if (params[key].filepath != null ||
-	    (params[key].bytes != null && params[key].bytes.length > 0)) {
-	  return true;
-	}
+        // if it is an InputFile of filepath or bytes array,
+        if (params[key].filepath != null ||
+            (params[key].bytes != null && params[key].bytes.length > 0)) {
+          return true;
+        }
       }
     }
 
@@ -107,31 +110,36 @@ abstract class HttpClient {
   }
 
   /// Generate a http request for sending multipart form data.
-  http.MultipartRequest _newMultipartRequest(String url, Map<String, dynamic> params) {
-    http.MultipartRequest req = new http.MultipartRequest("POST", Uri.parse(url));
+  http.MultipartRequest _newMultipartRequest(
+      String url, Map<String, dynamic> params) {
+    http.MultipartRequest req = http.MultipartRequest("POST", Uri.parse(url));
 
     params.forEach((key, value) {
-      if (value is File) {	// file
-	req.files.add(
-	    new http.MultipartFile.fromBytes(key, value.readAsBytesSync(), filename: value.uri.pathSegments.last));
-      } else if (value is List<int>) {	// bytes array
-	req.files.add(
-	    new http.MultipartFile.fromBytes(key, value, filename: "${key}.file"));
-      } else if (value is InputFile) {	// InputFile
-	if (value.filepath != null) {
-	  // read from filepath
-	  File file = new File(value.filepath);
-	  req.files.add(
-	      new http.MultipartFile.fromBytes(key, file.readAsBytesSync(), filename: file.uri.pathSegments.last));
-	} else if (value.bytes != null && value.bytes.length > 0) {
-	  // read from bytes
-	  req.files.add(
-	    new http.MultipartFile.fromBytes(key, value.bytes, filename: "${key}.file"));
-	} else {
-	  req.fields[key] = value.toString();
-	}
+      if (value is File) {
+        // file
+        req.files.add(http.MultipartFile.fromBytes(key, value.readAsBytesSync(),
+            filename: value.uri.pathSegments.last));
+      } else if (value is List<int>) {
+        // bytes array
+        req.files.add(
+            http.MultipartFile.fromBytes(key, value, filename: "${key}.file"));
+      } else if (value is InputFile) {
+        // InputFile
+        if (value.filepath != null) {
+          // read from filepath
+          File file = File(value.filepath);
+          req.files.add(http.MultipartFile.fromBytes(
+              key, file.readAsBytesSync(),
+              filename: file.uri.pathSegments.last));
+        } else if (value.bytes != null && value.bytes.length > 0) {
+          // read from bytes
+          req.files.add(http.MultipartFile.fromBytes(key, value.bytes,
+              filename: "${key}.file"));
+        } else {
+          req.fields[key] = value.toString();
+        }
       } else {
-	req.fields[key] = value.toString();
+        req.fields[key] = value.toString();
       }
     });
 
@@ -140,41 +148,45 @@ abstract class HttpClient {
 
   /// Convert given Map<String, dynamic> [params] to Map<String, String> type for www-form data.
   Map<String, String> _convertParams(Map<String, dynamic> params) {
-    Map<String, String> converted = new Map<String, String>();
+    Map<String, String> converted = Map<String, String>();
     params?.forEach((key, value) {
       String paramVal = null;
 
       // check given parameter's value:
       if (value is InputFile) {
-	converted[key] = value.toString();
+        converted[key] = value.toString();
       } else {
-	try {
-	  InstanceMirror mirror = reflect(value);
+        try {
+          InstanceMirror mirror = reflect(value);
 
-	  // if it has `toJson()`, apply it
-	  if (mirror.type.declarations.values.map((DeclarationMirror declaration) =>
-		MirrorSystem.getName(declaration.simpleName)).contains("toJson")) {
-	    paramVal = jsonEncode(value.toJson());
-	  } else {
-	    // if it is an enum which has @JsonValue, use it
-	    ClassMirror classMirror = reflectClass(value.runtimeType);
-	    if (classMirror.isEnum) {
-	      DeclarationMirror declaration = classMirror.declarations.values
-		.firstWhere((DeclarationMirror declaration) =>
-		    MirrorSystem.getName(declaration.simpleName) == value.toString().split(".").last);
-	      if (declaration != null) {
-		for (InstanceMirror meta in declaration.metadata) {
-		  if (meta.hasReflectee && meta.reflectee.runtimeType == JsonValue) {
-		    paramVal = (meta.reflectee as JsonValue).value.toString();
-		    break;
-		  }
-		}
-	      }
-	    }
-	  }
-	} catch (e) {
-	  print ("_convertParams exception: ${e}");
-	}
+          // if it has `toJson()`, apply it
+          if (mirror.type.declarations.values
+              .map((DeclarationMirror declaration) =>
+                  MirrorSystem.getName(declaration.simpleName))
+              .contains("toJson")) {
+            paramVal = jsonEncode(value.toJson());
+          } else {
+            // if it is an enum which has @JsonValue, use it
+            ClassMirror classMirror = reflectClass(value.runtimeType);
+            if (classMirror.isEnum) {
+              DeclarationMirror declaration = classMirror.declarations.values
+                  .firstWhere((DeclarationMirror declaration) =>
+                      MirrorSystem.getName(declaration.simpleName) ==
+                      value.toString().split(".").last);
+              if (declaration != null) {
+                for (InstanceMirror meta in declaration.metadata) {
+                  if (meta.hasReflectee &&
+                      meta.reflectee.runtimeType == JsonValue) {
+                    paramVal = (meta.reflectee as JsonValue).value.toString();
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        } catch (e) {
+          print("_convertParams exception: ${e}");
+        }
       }
 
       // otherwise, fallback to the string value of it
@@ -189,8 +201,9 @@ abstract class HttpClient {
     try {
       APIResponseBase res = APIResponseBase.fromJson(response.toJson());
       return "${method} failed with error: ${res.description}";
-    } catch(e) {
-      logVerbose("failed to extract error description from http response: ${e} | ${response.body}");
+    } catch (e) {
+      logVerbose(
+          "failed to extract error description from http response: ${e} | ${response.body}");
 
       return "${method} failed with error: ${response.reason}";
     }
@@ -204,9 +217,10 @@ abstract class HttpClient {
     HttpResponse response = await _request(method, null);
     if (response.statusCode == 200) {
       try {
-	return APIResponseWebhookInfo.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseWebhookInfo.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -214,39 +228,44 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseWebhookInfo(false, description: errStr);
+    return APIResponseWebhookInfo(false, description: errStr);
   }
 
   /// Send request for [APIResponseUser] and fetch its result.
-  Future<APIResponseUser> _fetchUser(String method, Map<String, dynamic> params) async {
+  Future<APIResponseUser> _fetchUser(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseUser.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseUser.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
-      errStr = "${method} failed with HTTP ${response.statusCode}: ${response.reason}";
+      errStr =
+          "${method} failed with HTTP ${response.statusCode}: ${response.reason}";
     }
 
     logError(errStr);
 
-    return new APIResponseUser(false, description: errStr);
+    return APIResponseUser(false, description: errStr);
   }
 
   /// Send request for [APIResponseMessage] and fetch its result.
-  Future<APIResponseMessage> _fetchMessage(String method, Map<String, dynamic> params) async {
+  Future<APIResponseMessage> _fetchMessage(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseMessage.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseMessage.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -254,25 +273,27 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseMessage(false, description: errStr);
+    return APIResponseMessage(false, description: errStr);
   }
 
   /// Send request for [APIResponseMessage] or [APIResponseBool] and fetch its result.
-  Future<APIResponseBase> _fetchMessageOrBool(String method, Map<String, dynamic> params) async {
+  Future<APIResponseBase> _fetchMessageOrBool(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	// try APIResponseMessage
-	return APIResponseMessage.fromJson(response.toJson());
-      } catch(e) {
-	try {
-	  // try APIResponseBool
-	  return APIResponseBool.fromJson(response.toJson());
-	} catch(e) {
-	  errStr = "${method} failed with json parse error: ${e} (${response.body})";
-	}
+        // try APIResponseMessage
+        return APIResponseMessage.fromJson(response.toJson());
+      } catch (e) {
+        try {
+          // try APIResponseBool
+          return APIResponseBool.fromJson(response.toJson());
+        } catch (e) {
+          errStr =
+              "${method} failed with json parse error: ${e} (${response.body})";
+        }
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -280,19 +301,21 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseMessage(false, description: errStr);
+    return APIResponseMessage(false, description: errStr);
   }
 
   /// Send request for [APIResponseMessages] and fetch its result.
-  Future<APIResponseMessages> _fetchMessages(String method, Map<String, dynamic> params) async {
+  Future<APIResponseMessages> _fetchMessages(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseMessages.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseMessages.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -300,19 +323,21 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseMessages(false, description: errStr);
+    return APIResponseMessages(false, description: errStr);
   }
 
   /// Send request for [APIResponseUserProfilePhotos] and fetch its result.
-  Future<APIResponseUserProfilePhotos> _fetchUserProfilePhotos(String method, Map<String, dynamic> params) async {
+  Future<APIResponseUserProfilePhotos> _fetchUserProfilePhotos(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseUserProfilePhotos.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseUserProfilePhotos.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -320,19 +345,21 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseUserProfilePhotos(false, description: errStr);
+    return APIResponseUserProfilePhotos(false, description: errStr);
   }
 
   /// Send request for [APIResponseUpdates] and fetch its result.
-  Future<APIResponseUpdates> _fetchUpdates(String method, Map<String, dynamic> params) async {
+  Future<APIResponseUpdates> _fetchUpdates(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseUpdates.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseUpdates.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -340,19 +367,21 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseUpdates(false, description: errStr);
+    return APIResponseUpdates(false, description: errStr);
   }
 
   /// Send request for [APIResponseFile] and fetch its result.
-  Future<APIResponseFile> _fetchFile(String method, Map<String, dynamic> params) async {
+  Future<APIResponseFile> _fetchFile(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseFile.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseFile.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -360,19 +389,21 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseFile(false, description: errStr);
+    return APIResponseFile(false, description: errStr);
   }
 
   /// Send request for [APIResponseChat] and fetch its result.
-  Future<APIResponseChat> _fetchChat(String method, Map<String, dynamic> params) async {
+  Future<APIResponseChat> _fetchChat(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseChat.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseChat.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -380,19 +411,21 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseChat(false, description: errStr);
+    return APIResponseChat(false, description: errStr);
   }
 
   /// Send request for [APIResponseChatAdministrators] and fetch its result.
-  Future<APIResponseChatAdministrators> _fetchChatAdministrators(String method, Map<String, dynamic> params) async {
+  Future<APIResponseChatAdministrators> _fetchChatAdministrators(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseChatAdministrators.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseChatAdministrators.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -400,19 +433,21 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseChatAdministrators(false, description: errStr);
+    return APIResponseChatAdministrators(false, description: errStr);
   }
 
   /// Send request for [APIResponseChatMember] and fetch its result.
-  Future<APIResponseChatMember> _fetchChatMember(String method, Map<String, dynamic> params) async {
+  Future<APIResponseChatMember> _fetchChatMember(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseChatMember.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseChatMember.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -420,19 +455,21 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseChatMember(false, description: errStr);
+    return APIResponseChatMember(false, description: errStr);
   }
 
   /// Send request for [APIResponseInt] and fetch its result.
-  Future<APIResponseInt> _fetchInt(String method, Map<String, dynamic> params) async {
+  Future<APIResponseInt> _fetchInt(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseInt.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseInt.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -440,19 +477,21 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseInt(false, description: errStr);
+    return APIResponseInt(false, description: errStr);
   }
 
   /// Send request for [APIResponseBool] and fetch its result.
-  Future<APIResponseBool> _fetchBool(String method, Map<String, dynamic> params) async {
+  Future<APIResponseBool> _fetchBool(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseBool.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseBool.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -460,19 +499,21 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseBool(false, description: errStr);
+    return APIResponseBool(false, description: errStr);
   }
 
   /// Send request for [APIResponseString] and fetch its result.
-  Future<APIResponseString> _fetchString(String method, Map<String, dynamic> params) async {
+  Future<APIResponseString> _fetchString(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseString.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseString.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -480,19 +521,21 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseString(false, description: errStr);
+    return APIResponseString(false, description: errStr);
   }
 
   /// Send request for [APIResponseGameHighScores] and fetch its result.
-  Future<APIResponseGameHighScores> _fetchGameHighScores(String method, Map<String, dynamic> params) async {
+  Future<APIResponseGameHighScores> _fetchGameHighScores(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseGameHighScores.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseGameHighScores.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -500,19 +543,21 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseGameHighScores(false, description: errStr);
+    return APIResponseGameHighScores(false, description: errStr);
   }
 
   /// Send request for [APIResponseStickerSet] and fetch its result.
-  Future<APIResponseStickerSet> _fetchStickerSet(String method, Map<String, dynamic> params) async {
+  Future<APIResponseStickerSet> _fetchStickerSet(
+      String method, Map<String, dynamic> params) async {
     String errStr;
 
     HttpResponse response = await _request(method, params);
     if (response.statusCode == 200) {
       try {
-	return APIResponseStickerSet.fromJson(response.toJson());
-      } catch(e) {
-	errStr = "${method} failed with json parse error: ${e} (${response.body})";
+        return APIResponseStickerSet.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
       }
     } else {
       errStr = _errorDescriptionFrom(method, response);
@@ -520,7 +565,7 @@ abstract class HttpClient {
 
     logError(errStr);
 
-    return new APIResponseStickerSet(false, description: errStr);
+    return APIResponseStickerSet(false, description: errStr);
   }
 
   //////////////////////////////////////////////////
@@ -532,7 +577,8 @@ abstract class HttpClient {
   /// Retrieve updates.
   ///
   /// https://core.telegram.org/bots/api#getupdates
-  Future<APIResponseUpdates> getUpdates({int offset, int limit, int timeout, List<String> allowedUpdates}) async {
+  Future<APIResponseUpdates> getUpdates(
+      {int offset, int limit, int timeout, List<String> allowedUpdates}) async {
     // optional params
     var params = Map<String, dynamic>();
     if (offset != null) {
@@ -582,14 +628,16 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendmessage
-  Future<APIResponseMessage> sendMessage(Object chatId, String text, {
+  Future<APIResponseMessage> sendMessage(
+    Object chatId,
+    String text, {
     ParseMode parseMode,
     bool disableWebPagePreview,
     bool disableNotification,
     int replyToMessageId,
     ReplyMarkup replyMarkup,
   }) {
-    Map<String, dynamic> params = new Map<String, dynamic>();
+    Map<String, dynamic> params = Map<String, dynamic>();
 
     // essential params
     params["chat_id"] = chatId;
@@ -621,11 +669,14 @@ abstract class HttpClient {
   /// - [fromChatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#forwardmessage
-  Future<APIResponseMessage> forwardMessage(Object chatId, fromChatId, int messageId, {
+  Future<APIResponseMessage> forwardMessage(
+    Object chatId,
+    fromChatId,
+    int messageId, {
     bool disableNotification,
   }) {
     // essential params
-    Map<String, dynamic> params = new Map<String, dynamic>();
+    Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["from_chat_id"] = fromChatId;
     params["message_id"] = messageId;
@@ -644,7 +695,9 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendphoto
-  Future<APIResponseMessage> sendPhoto(Object chatId, InputFile photo, {
+  Future<APIResponseMessage> sendPhoto(
+    Object chatId,
+    InputFile photo, {
     String caption,
     ParseMode parseMode,
     bool disableNotification,
@@ -652,7 +705,7 @@ abstract class HttpClient {
     ReplyMarkup replyMarkup,
   }) {
     // essential params
-    Map<String, dynamic> params = new Map<String, dynamic>();
+    Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["photo"] = photo;
 
@@ -682,7 +735,9 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendaudio
-  Future<APIResponseMessage> sendAudio(Object chatId, InputFile audio, {
+  Future<APIResponseMessage> sendAudio(
+    Object chatId,
+    InputFile audio, {
     String caption,
     ParseMode parseMode,
     int duration,
@@ -694,7 +749,7 @@ abstract class HttpClient {
     ReplyMarkup replyMarkup,
   }) {
     // essential params
-    Map<String, dynamic> params = new Map<String, dynamic>();
+    Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["audio"] = audio;
 
@@ -739,7 +794,10 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#senddocument
-  Future<APIResponseMessage> sendDocument(Object chatId, InputFile document, Map<String, dynamic> params, {
+  Future<APIResponseMessage> sendDocument(
+    Object chatId,
+    InputFile document,
+    Map<String, dynamic> params, {
     InputFile thumb,
     String caption,
     ParseMode parseMode,
@@ -748,7 +806,7 @@ abstract class HttpClient {
     ReplyMarkup replyMarkup,
   }) {
     // essential params
-    params ??= new Map<String, dynamic>();
+    params ??= Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["document"] = document;
 
@@ -784,13 +842,15 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendsticker
-  Future<APIResponseMessage> sendSticker(Object chatId, InputFile sticker, {
+  Future<APIResponseMessage> sendSticker(
+    Object chatId,
+    InputFile sticker, {
     bool disableNotification,
     int replyToMessageId,
     ReplyMarkup replyMarkup,
   }) {
     // essential params
-    Map<String, dynamic> params = new Map<String, dynamic>();
+    Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["sticker"] = sticker;
 
@@ -834,7 +894,12 @@ abstract class HttpClient {
   /// Create a new sticker set.
   ///
   /// https://core.telegram.org/bots/api#createnewstickerset
-  Future<APIResponseBool> createNewStickerSet(int userId, String name, title, InputFile sticker, String emojis, {
+  Future<APIResponseBool> createNewStickerSet(
+    int userId,
+    String name,
+    title,
+    InputFile sticker,
+    String emojis, {
     bool containsMasks,
     MaskPosition maskPosition,
   }) {
@@ -860,7 +925,11 @@ abstract class HttpClient {
   /// Add a sticker to set.
   ///
   /// https://core.telegram.org/bots/api#addstickertoset
-  Future<APIResponseBool> addStickerToSet(int userId, String name, InputFile sticker, String emojis, {
+  Future<APIResponseBool> addStickerToSet(
+    int userId,
+    String name,
+    InputFile sticker,
+    String emojis, {
     MaskPosition maskPosition,
   }) {
     // essential params
@@ -878,7 +947,8 @@ abstract class HttpClient {
   /// Set sticker position in set.
   ///
   /// https://core.telegram.org/bots/api#setstickerpositioninset
-  Future<APIResponseBool> setStickerPositionInSet(String sticker, int position) {
+  Future<APIResponseBool> setStickerPositionInSet(
+      String sticker, int position) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["sticker"] = sticker;
@@ -904,7 +974,9 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendvideo
-  Future<APIResponseMessage> sendVideo(Object chatId, InputFile video, {
+  Future<APIResponseMessage> sendVideo(
+    Object chatId,
+    InputFile video, {
     int duration,
     int width,
     int height,
@@ -965,7 +1037,9 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendanimation
-  Future<APIResponseMessage> sendAnimation(Object chatId, InputFile animation, {
+  Future<APIResponseMessage> sendAnimation(
+    Object chatId,
+    InputFile animation, {
     int duration,
     int width,
     int height,
@@ -1022,7 +1096,10 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendvoice
-  Future<APIResponseMessage> sendVoice(Object chatId, InputFile voice, Map<String, dynamic> params, {
+  Future<APIResponseMessage> sendVoice(
+    Object chatId,
+    InputFile voice,
+    Map<String, dynamic> params, {
     String caption,
     ParseMode parseMode,
     int duration,
@@ -1031,7 +1108,7 @@ abstract class HttpClient {
     ReplyMarkup replyMarkup,
   }) {
     // essential params
-    params ??= new Map<String, dynamic>();
+    params ??= Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["voice"] = voice;
 
@@ -1068,7 +1145,9 @@ abstract class HttpClient {
   /// NOTE: API returns 'Bad Request: wrong video note length' when length is not given / 2017.05.19.
   ///
   /// https://core.telegram.org/bots/api#sendvideonote
-  Future<APIResponseMessage> sendVideoNote(Object chatId, InputFile videoNote, {
+  Future<APIResponseMessage> sendVideoNote(
+    Object chatId,
+    InputFile videoNote, {
     int duration,
     int length,
     InputFile thumb,
@@ -1112,7 +1191,9 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#sendmediagroup
-  Future<APIResponseMessages> sendMediaGroup(Object chatId, List<InputMedia> media, {
+  Future<APIResponseMessages> sendMediaGroup(
+    Object chatId,
+    List<InputMedia> media, {
     bool disableNotification,
     int replyToMessageId,
   }) {
@@ -1138,7 +1219,10 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendlocation
-  Future<APIResponseMessage> sendLocation(Object chatId, double latitude, longitude, {
+  Future<APIResponseMessage> sendLocation(
+    Object chatId,
+    double latitude,
+    longitude, {
     bool disableNotification,
     int replyToMessageId,
     ReplyMarkup replyMarkup,
@@ -1169,7 +1253,12 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendvenue
-  Future<APIResponseMessage> sendVenue(Object chatId, double latitude, longitude, String title, address, {
+  Future<APIResponseMessage> sendVenue(
+    Object chatId,
+    double latitude,
+    longitude,
+    String title,
+    address, {
     String foursquareId,
     String foursquareType,
     bool disableNotification,
@@ -1210,7 +1299,10 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendcontact
-  Future<APIResponseMessage> sendContact(Object chatId, String phoneNumber, firstName, {
+  Future<APIResponseMessage> sendContact(
+    Object chatId,
+    String phoneNumber,
+    firstName, {
     String lastName,
     String vCard,
     bool disableNotification,
@@ -1260,7 +1352,8 @@ abstract class HttpClient {
   /// Get user profile photos.
   ///
   /// https://core.telegram.org/bots/api#getuserprofilephotos
-  Future<APIResponseUserProfilePhotos> getUserProfilePhotos(int userId, {
+  Future<APIResponseUserProfilePhotos> getUserProfilePhotos(
+    int userId, {
     int offset,
     int limit,
   }) {
@@ -1300,7 +1393,9 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#kickchatmember
-  Future<APIResponseBool> kickChatMember(Object chatId, int userId, {
+  Future<APIResponseBool> kickChatMember(
+    Object chatId,
+    int userId, {
     int untilDate,
   }) {
     // essential params
@@ -1348,7 +1443,9 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#restrictchatmember
-  Future<APIResponseBool> restrictChatMember(Object chatId, int userId, {
+  Future<APIResponseBool> restrictChatMember(
+    Object chatId,
+    int userId, {
     int untilDate,
     bool canSendMessages,
     bool canSendMediaMessages,
@@ -1387,7 +1484,9 @@ abstract class HttpClient {
   /// options include: can_change_info, can_post_messages, can_edit_messages, can_delete_messages, can_invite_users, can_restrict_members, can_pin_messages, and can_promote_members
   ///
   /// https://core.telegram.org/bots/api#promotechatmember
-  Future<APIResponseBool> promoteChatMember(Object chatId, int userId, {
+  Future<APIResponseBool> promoteChatMember(
+    Object chatId,
+    int userId, {
     bool canChangeInfo,
     bool canPostMessages,
     bool canEditMessages,
@@ -1490,7 +1589,8 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#setchatdescription
-  Future<APIResponseBool> setChatDescription(Object chatId, String description) {
+  Future<APIResponseBool> setChatDescription(
+      Object chatId, String description) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
@@ -1504,7 +1604,9 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#pinchatmessage
-  Future<APIResponseBool> pinChatMessage(Object chatId, int messageId, {
+  Future<APIResponseBool> pinChatMessage(
+    Object chatId,
+    int messageId, {
     bool disableNotification,
   }) {
     // essential params
@@ -1591,7 +1693,8 @@ abstract class HttpClient {
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#setchatstickerset
-  Future<APIResponseBool> setChatStickerSet(Object chatId, String stickerSetName) {
+  Future<APIResponseBool> setChatStickerSet(
+      Object chatId, String stickerSetName) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
@@ -1616,7 +1719,8 @@ abstract class HttpClient {
   /// Answer a callback query.
   ///
   /// https://core.telegram.org/bots/api#answercallbackquery
-  Future<APIResponseBool> answerCallbackQuery(String callbackQueryId, {
+  Future<APIResponseBool> answerCallbackQuery(
+    String callbackQueryId, {
     String text,
     bool showAlert,
     String url,
@@ -1660,7 +1764,8 @@ abstract class HttpClient {
   ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagetext
-  Future<APIResponseBase> editMessageText(String text, {
+  Future<APIResponseBase> editMessageText(
+    String text, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1707,7 +1812,8 @@ abstract class HttpClient {
   ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagecaption
-  Future<APIResponseBase> editMessageCaption(String caption, {
+  Future<APIResponseBase> editMessageCaption(
+    String caption, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1750,7 +1856,8 @@ abstract class HttpClient {
   ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagemedia
-  Future<APIResponseBase> editMessageMedia(InputMedia media, {
+  Future<APIResponseBase> editMessageMedia(
+    InputMedia media, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1829,7 +1936,9 @@ abstract class HttpClient {
   ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#editmessagelivelocation
-  Future<APIResponseBase> editMessageLiveLocation(double latitude, longitude, {
+  Future<APIResponseBase> editMessageLiveLocation(
+    double latitude,
+    longitude, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -1912,7 +2021,9 @@ abstract class HttpClient {
   /// - [results] = [List] of [InlineQueryResultArticle], [InlineQueryResultPhoto], [InlineQueryResultGif], [InlineQueryResultMpeg4Gif], or [InlineQueryResultVideo].
   ///
   /// https://core.telegram.org/bots/api#answerinlinequery
-  Future<APIResponseBool> answerInlineQuery(String inlineQueryId, List<InlineQueryResult> results, {
+  Future<APIResponseBool> answerInlineQuery(
+    String inlineQueryId,
+    List<InlineQueryResult> results, {
     int cacheTime,
     bool isPersonal,
     String nextOffset,
@@ -1949,7 +2060,15 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendinvoice
-  Future<APIResponseMessage> sendInvoice(int chatId, String title, description, payload, providerToken, startParameter, currency, List<LabeledPrice> prices, {
+  Future<APIResponseMessage> sendInvoice(
+    int chatId,
+    String title,
+    description,
+    payload,
+    providerToken,
+    startParameter,
+    currency,
+    List<LabeledPrice> prices, {
     String providerData,
     String photoUrl,
     int photoSize,
@@ -2024,7 +2143,9 @@ abstract class HttpClient {
   /// NOTE: If [ok] is true, [shippingOptions] should be provided. Otherwise, [errorMessage] should be provided.
   ///
   /// https://core.telegram.org/bots/api#answershippingquery
-  Future<APIResponseBool> answerShippingQuery(String shippingQueryId, bool ok, {
+  Future<APIResponseBool> answerShippingQuery(
+    String shippingQueryId,
+    bool ok, {
     List<ShippingOption> shippingOptions,
     String errorMessage,
   }) {
@@ -2049,7 +2170,9 @@ abstract class HttpClient {
   /// NOTE: If [ok] is false, [errorMessage] should be provided.
   ///
   /// https://core.telegram.org/bots/api#answerprecheckoutquery
-  Future<APIResponseBool> answerPreCheckoutQuery(String preCheckoutQueryId, bool ok, {
+  Future<APIResponseBool> answerPreCheckoutQuery(
+    String preCheckoutQueryId,
+    bool ok, {
     String errorMessage,
   }) {
     // essential params
@@ -2071,13 +2194,15 @@ abstract class HttpClient {
   /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendgame
-  Future<APIResponseMessage> sendGame(Object chatId, String gameShortName, {
+  Future<APIResponseMessage> sendGame(
+    Object chatId,
+    String gameShortName, {
     bool disableNotification,
     int replyToMessageId,
     ReplyMarkup replyMarkup,
   }) {
     // essential params
-    Map<String, dynamic> params = new Map<String, dynamic>();
+    Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["game_short_name"] = gameShortName;
 
@@ -2106,7 +2231,9 @@ abstract class HttpClient {
   /// other options: force, and disable_edit_message
   ///
   /// https://core.telegram.org/bots/api#setgamescore
-  Future<APIResponseBase> setGameScore(int userId, int score, {
+  Future<APIResponseBase> setGameScore(
+    int userId,
+    int score, {
     Object chatId,
     int messageId,
     int inlineMessageId,
@@ -2114,7 +2241,7 @@ abstract class HttpClient {
     bool disableEditMessage,
   }) {
     // essential params
-    Map<String, dynamic> params = new Map<String, dynamic>();
+    Map<String, dynamic> params = Map<String, dynamic>();
     params["user_id"] = userId;
     params["score"] = score;
 
@@ -2145,13 +2272,14 @@ abstract class HttpClient {
   ///                 or [inlineMessageId] (when [chatId] & [messageId] is not given)
   ///
   /// https://core.telegram.org/bots/api#getgamehighscores
-  Future<APIResponseGameHighScores> getGameHighScores(int userId, {
+  Future<APIResponseGameHighScores> getGameHighScores(
+    int userId, {
     Object chatId,
     int messageId,
     int inlineMessageId,
   }) {
     // essential params
-    Map<String, dynamic> params = new Map<String, dynamic>();
+    Map<String, dynamic> params = Map<String, dynamic>();
     params["user_id"] = userId;
 
     // optional params
