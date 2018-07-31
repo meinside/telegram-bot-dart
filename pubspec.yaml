@@ -1,5 +1,5 @@
 name: "telegram"
-version: "0.0.1"
+version: "0.0.4"
 description: "Telegram Bot API wrapper for Dart"
 author: "Sungjin Han <meinside@gmail.com>"
 dependencies:
