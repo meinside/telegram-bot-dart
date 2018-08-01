@@ -16,6 +16,16 @@ dependencies:
     git: https://github.com/meinside/telegram-bot-dart.git
 ```
 
+or
+
+```yaml
+dependencies:
+  telegram:
+    git:
+      url: https://github.com/meinside/telegram-bot-dart.git
+      ref: 0.0.4
+```
+
 ## usage
 
 ```dart
@@ -28,7 +38,7 @@ import 'package:telegram/telegram.dart';
 
 ## samples/examples
 
-See the files in [./example/](https://github.com/meinside/telegram-bot-dart/tree/master/example).
+See the files in [example/](https://github.com/meinside/telegram-bot-dart/tree/master/example).
 
 ## LICENSE
 
