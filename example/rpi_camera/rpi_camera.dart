@@ -106,5 +106,11 @@ Future<List<int>> _photoBytesFromCamera() async {
 // custom exception for Raspberry Pi Camera
 class _rpiCameraException implements Exception {
   String cause;
+
   _rpiCameraException(this.cause);
+
+  @override
+  String toString() {
+    return "RPiCameraException: ${cause}";
+  }
 }
