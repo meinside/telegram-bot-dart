@@ -51,15 +51,16 @@ main() async {
       if (message.text != null) {
         switch (message.text) {
           case _cmdCapture:
+            // 'uploading photo...'
             bot.sendChatAction(message.chat.id, ChatAction.UploadPhoto);
 
             // will take some time here...
             _photoBytesFromCamera().then((bytes) {
               bot.sendPhoto(message.chat.id, InputFile.fromBytes(bytes),
                   replyMarkup: _keyboards);
-            }).catchError((e, stackTrace) {
+            }).catchError((e) {
               String errMessage = "Error while reading taken photo: ${e}";
-              bot.logError("${errMessage}\n${stackTrace}");
+              bot.logError(errMessage);
 
               bot.sendMessage(message.chat.id, errMessage,
                   replyMarkup: _keyboards);
