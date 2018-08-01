@@ -1,0 +1,6 @@
+name: example_rpi_camera
+author: Sungjin Han <meinside@gmail.com>
+
+dependencies:
+  telegram:
+    path: ../../
