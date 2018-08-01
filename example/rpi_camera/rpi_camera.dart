@@ -91,7 +91,7 @@ Future<List<int>> _photoBytesFromCamera() async {
   const String _raspiStillBin = "/usr/bin/raspistill";
 
   ProcessResult result = await Process.run(_raspiStillBin, ['-o', '-'],
-      stderrEncoding: utf8); // capture and print bytes to stdout
+      stdoutEncoding: null); // capture and print bytes to stdout
 
   int exitCode = await result.exitCode;
   if (exitCode == 0) {
