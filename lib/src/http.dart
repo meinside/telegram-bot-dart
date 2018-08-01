@@ -139,7 +139,37 @@ abstract class HttpClient {
           req.fields[key] = value.toString();
         }
       } else {
-        req.fields[key] = value.toString();
+        String paramVal = null;
+
+        InstanceMirror mirror = reflect(value);
+
+        // if it has `toJson()`, apply it
+        if (mirror.type.declarations.values
+            .map((DeclarationMirror declaration) =>
+                MirrorSystem.getName(declaration.simpleName))
+            .contains("toJson")) {
+          paramVal = jsonEncode(value.toJson());
+        } else {
+          // if it is an enum which has @JsonValue, use it
+          ClassMirror classMirror = reflectClass(value.runtimeType);
+          if (classMirror.isEnum) {
+            DeclarationMirror declaration = classMirror.declarations.values
+                .firstWhere((DeclarationMirror declaration) =>
+                    MirrorSystem.getName(declaration.simpleName) ==
+                    value.toString().split(".").last);
+            if (declaration != null) {
+              for (InstanceMirror meta in declaration.metadata) {
+                if (meta.hasReflectee &&
+                    meta.reflectee.runtimeType == JsonValue) {
+                  paramVal = (meta.reflectee as JsonValue).value.toString();
+                  break;
+                }
+              }
+            }
+          }
+        }
+
+        req.fields[key] = paramVal ?? value.toString();
       }
     });
 
