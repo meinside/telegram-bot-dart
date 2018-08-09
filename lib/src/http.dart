@@ -3,10 +3,8 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
-import 'dart:mirrors';
 
 import 'package:http/http.dart' as http;
-import 'package:json_annotation/json_annotation.dart';
 
 import './types.dart';
 
@@ -141,34 +139,15 @@ abstract class HttpClient {
       } else {
         String paramVal = null;
 
-        InstanceMirror mirror = reflect(value);
-
-        // if it has `toJson()`, apply it
-        if (mirror.type.declarations.values
-            .map((DeclarationMirror declaration) =>
-                MirrorSystem.getName(declaration.simpleName))
-            .contains("toJson")) {
+        try {
+          // first try with .toJson(),
           paramVal = jsonEncode(value.toJson());
-        } else {
-          // if it is an enum which has @JsonValue, use it
-          ClassMirror classMirror = reflectClass(value.runtimeType);
-          if (classMirror.isEnum) {
-            DeclarationMirror declaration = classMirror.declarations.values
-                .firstWhere((DeclarationMirror declaration) =>
-                    MirrorSystem.getName(declaration.simpleName) ==
-                    value.toString().split(".").last);
-            if (declaration != null) {
-              for (InstanceMirror meta in declaration.metadata) {
-                if (meta.hasReflectee &&
-                    meta.reflectee.runtimeType == JsonValue) {
-                  paramVal = (meta.reflectee as JsonValue).value.toString();
-                  break;
-                }
-              }
-            }
-          }
+        } catch(_) {
+          // and retry with enumToString()
+          paramVal = enumToString(value);
         }
 
+        // otherwise, fallback to the string value of it
         req.fields[key] = paramVal ?? value.toString();
       }
     });
@@ -187,35 +166,11 @@ abstract class HttpClient {
         converted[key] = value.toString();
       } else {
         try {
-          InstanceMirror mirror = reflect(value);
-
-          // if it has `toJson()`, apply it
-          if (mirror.type.declarations.values
-              .map((DeclarationMirror declaration) =>
-                  MirrorSystem.getName(declaration.simpleName))
-              .contains("toJson")) {
-            paramVal = jsonEncode(value.toJson());
-          } else {
-            // if it is an enum which has @JsonValue, use it
-            ClassMirror classMirror = reflectClass(value.runtimeType);
-            if (classMirror.isEnum) {
-              DeclarationMirror declaration = classMirror.declarations.values
-                  .firstWhere((DeclarationMirror declaration) =>
-                      MirrorSystem.getName(declaration.simpleName) ==
-                      value.toString().split(".").last);
-              if (declaration != null) {
-                for (InstanceMirror meta in declaration.metadata) {
-                  if (meta.hasReflectee &&
-                      meta.reflectee.runtimeType == JsonValue) {
-                    paramVal = (meta.reflectee as JsonValue).value.toString();
-                    break;
-                  }
-                }
-              }
-            }
-          }
-        } catch (e) {
-          print("_convertParams exception: ${e}");
+          // first try with .toJson(),
+          paramVal = jsonEncode(value.toJson());
+        } catch (_) {
+          // and retry with enumToString()
+          paramVal = enumToString(value);
         }
       }
 

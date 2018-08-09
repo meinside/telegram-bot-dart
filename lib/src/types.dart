@@ -11,6 +11,43 @@ import 'package:json_annotation/json_annotation.dart';
 // $ pub run build_runner build
 part 'types.g.dart';
 
+///////////////////////////////////////
+//
+// Enum types and helper functions
+//
+
+/// Convert given enum value to String.
+///
+/// NOTE: Add newly added enums here.
+String enumToString(dynamic value) {
+  if (value is ChatType) {
+    return _$ChatTypeEnumMap[value];
+  } else if (value is ParseMode) {
+    return _$ParseModeEnumMap[value];
+  } else if (value is ChatAction) {
+    return _$ChatActionEnumMap[value];
+  } else if (value is InlineQueryResultType) {
+    return _$InlineQueryResultTypeEnumMap[value];
+  } else if (value is MessageEntityType) {
+    return _$MessageEntityTypeEnumMap[value];
+  } else if (value is ChatMemberStatus) {
+    return _$ChatMemberStatusEnumMap[value];
+  } else if (value is MaskPositionPoint) {
+    return _$MaskPositionPointEnumMap[value];
+  } else if (value is UpdateType) {
+    return _$UpdateTypeEnumMap[value];
+  } else if (value is InputMediaType) {
+    return _$InputMediaTypeEnumMap[value];
+  } else if (value is VideoMimeType) {
+    return _$VideoMimeTypeEnumMap[value];
+  } else if (value is DocumentMimeType) {
+    return _$DocumentMimeTypeEnumMap[value];
+  }
+
+  // no matching enum, or is not an enum
+  return null;
+}
+
 /// Enumeration for [Chat]'s type.
 enum ChatType {
   @JsonValue('private')
@@ -64,6 +101,22 @@ enum ChatAction {
   @JsonValue('upload_video_note')
   UploadVideoNote, // 'upload_video_note'
 }
+
+// Helper function for [ChatAction].
+//
+// `json_serializable` doesn't generates this, so made it by hand.
+const _$ChatActionEnumMap = <ChatAction, dynamic>{
+  ChatAction.Typing: 'typing',
+  ChatAction.UploadPhoto: 'upload_photo',
+  ChatAction.RecordVideo: 'record_video',
+  ChatAction.UploadVideo: 'upload_video',
+  ChatAction.RecordAudio: 'record_audio',
+  ChatAction.UploadAudio: 'upload_audio',
+  ChatAction.UploadDocument: 'upload_document',
+  ChatAction.FindLocation: 'find_location',
+  ChatAction.RecordVideoNote: 'record_video_note',
+  ChatAction.UploadVideoNote: 'upload_video_note',
+};
 
 /// Enumeration for [InlineQueryResult]'s type.
 enum InlineQueryResultType {
@@ -187,6 +240,74 @@ enum MaskPositionPoint {
   @JsonValue('chin')
   Chin, // 'chin'
 }
+
+/// Enumeration for [Update]'s allowed types(for `allowed_updates`).
+///
+/// https://core.telegram.org/bots/api#setwebhook
+/// https://core.telegram.org/bots/api#update
+enum UpdateType {
+  @JsonValue('message')
+  Message,
+
+  @JsonValue('edited_message')
+  EditedMessage,
+
+  @JsonValue('channel_post')
+  ChannelPost,
+
+  @JsonValue('edited_channel_post')
+  EditedChannelPost,
+
+  @JsonValue('inline_query')
+  InlineQuery,
+
+  @JsonValue('chosen_inline_result')
+  ChosenInlineResult,
+
+  @JsonValue('callback_query')
+  CallbackQuery,
+}
+
+/// Enumeration for [InputMedia]'s type.
+enum InputMediaType {
+  @JsonValue('animation')
+  Animation,
+
+  @JsonValue('document')
+  Document,
+
+  @JsonValue('audio')
+  Audio,
+
+  @JsonValue('photo')
+  Photo,
+
+  @JsonValue('video')
+  Video,
+}
+
+/// Enumeration of video mime type for an inline query
+enum VideoMimeType {
+  @JsonValue('text/html')
+  TextHtml, // 'text/html'
+
+  @JsonValue('video/mp4')
+  VideoMp4, // 'video/mp4'
+}
+
+/// Enumeration of document mime type for an inline query
+enum DocumentMimeType {
+  @JsonValue('application/pdf')
+  ApplicationPdf, // 'application/pdf'
+
+  @JsonValue('application/zip')
+  ApplicationZip, // 'application/zip'
+}
+
+///////////////////////////////////////
+//
+// Other types
+//
 
 /// Parameters for [APIResponseBase].
 ///
@@ -530,33 +651,6 @@ class APIResponseStickerSet extends APIResponseBase {
   Map<String, dynamic> toJson() => _$APIResponseStickerSetToJson(this);
 }
 
-/// Enumeration for [Update]'s allowed types(for `allowed_updates`).
-///
-/// https://core.telegram.org/bots/api#setwebhook
-/// https://core.telegram.org/bots/api#update
-enum UpdateType {
-  @JsonValue('message')
-  Message,
-
-  @JsonValue('edited_message')
-  EditedMessage,
-
-  @JsonValue('channel_post')
-  ChannelPost,
-
-  @JsonValue('edited_channel_post')
-  EditedChannelPost,
-
-  @JsonValue('inline_query')
-  InlineQuery,
-
-  @JsonValue('chosen_inline_result')
-  ChosenInlineResult,
-
-  @JsonValue('callback_query')
-  CallbackQuery,
-}
-
 /// Struct for webhook info
 ///
 /// https://core.telegram.org/bots/api#webhookinfo
@@ -758,24 +852,6 @@ class Chat {
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChatToJson(this);
-}
-
-/// Enumeration for [InputMedia]'s type.
-enum InputMediaType {
-  @JsonValue('animation')
-  Animation,
-
-  @JsonValue('document')
-  Document,
-
-  @JsonValue('audio')
-  Audio,
-
-  @JsonValue('photo')
-  Photo,
-
-  @JsonValue('video')
-  Video,
 }
 
 /// Struct for the content of a media message to be sent.
@@ -2250,24 +2326,6 @@ class ChosenInlineResult {
       _$ChosenInlineResultFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChosenInlineResultToJson(this);
-}
-
-/// Enumeration of video mime type for an inline query
-enum VideoMimeType {
-  @JsonValue('text/html')
-  TextHtml, // 'text/html'
-
-  @JsonValue('video/mp4')
-  VideoMp4, // 'video/mp4'
-}
-
-/// Enumeration of document mime type for an inline query
-enum DocumentMimeType {
-  @JsonValue('application/pdf')
-  ApplicationPdf, // 'application/pdf'
-
-  @JsonValue('application/zip')
-  ApplicationZip, // 'application/zip'
 }
 
 /// Struct for inline query results
