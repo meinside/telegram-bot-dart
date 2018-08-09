@@ -1,9 +1,11 @@
-// rpi_camera.dart
+// example/rpi_camera/main.dart
 //
 // A sample bot which sends photos back.
 // (will work only on Raspberry Pi + Raspberry Pi Camera)
 
 import '../../lib/telegram.dart';
+
+import 'dart:convert';
 
 import 'dart:async';
 import 'dart:io';
@@ -26,6 +28,10 @@ const String _helpMessage = """*Supported commands:*
 *${_cmdHelp}* : Show this help message.
 """;
 
+String _jsonToString(Object json) {
+  return jsonEncode(json);
+}
+
 main() async {
   Bot bot = Bot.create(_tokenForTesting);
   bot.verbose = _isVerbose;
@@ -45,7 +51,7 @@ main() async {
     // polling updates
     await for (Update update in bot.monitorUpdates(interval: 3)) {
       print("> @${update.message.from.username}"
-          " sent a message: '${update.message.toJson()}'");
+          " sent a message: '${_jsonToString(update.message)}'");
 
       var message = update.message;
       if (message.text != null) {

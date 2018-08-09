@@ -1,8 +1,10 @@
-// echo.dart
+// example/echo/main.dart
 //
 // A sample bot which echoes back all received messages.
 
 import '../../lib/telegram.dart';
+
+import 'dart:convert';
 
 // NOTE: Edit this value to yours.
 const String _tokenForTesting = "1234567890:put_your_token_here";
@@ -11,6 +13,10 @@ const String _tokenForTesting = "1234567890:put_your_token_here";
 const bool _isVerbose = false;
 
 const String _imageFilepath = "./we_will_be_back_soon.png";
+
+String _jsonToString(Object json) {
+  return jsonEncode(json);
+}
 
 main() async {
   Bot bot = Bot.create(_tokenForTesting);
@@ -23,7 +29,7 @@ main() async {
     // polling updates
     await for (Update update in bot.monitorUpdates(interval: 3)) {
       print("> @${update.message.from.username}"
-          " sent a message: '${update.message.toJson()}'");
+          " sent a message: '${_jsonToString(update.message)}'");
 
       // NOTE: functions are called synchronously here for responding messages in order.
       var message = update.message;
@@ -53,7 +59,7 @@ main() async {
         }
       } else if (message.photo != null) {
         // photo
-        print(">> received photo: ${message.photo}");
+        print(">> received photo: ${_jsonToString(message.photo)}");
 
         try {
           // send 'uploading photo...'

@@ -104,7 +104,8 @@ enum ChatAction {
 
 // Helper function for [ChatAction].
 //
-// `json_serializable` doesn't generates this, so made it by hand.
+// `pub run build_runner build` doesn't generate this map automatically,
+// so made it by hand.
 const _$ChatActionEnumMap = <ChatAction, dynamic>{
   ChatAction.Typing: 'typing',
   ChatAction.UploadPhoto: 'upload_photo',
