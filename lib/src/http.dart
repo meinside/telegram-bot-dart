@@ -142,7 +142,7 @@ abstract class HttpClient {
         try {
           // first try with .toJson(),
           paramVal = jsonEncode(value.toJson());
-        } catch(_) {
+        } catch (_) {
           // and retry with enumToString()
           paramVal = enumToString(value);
         }
