@@ -16,7 +16,7 @@ export 'src/types.dart';
 export 'src/http.dart';
 
 /// Bot client class
-class Bot extends HttpClient {
+class Bot extends BotHttpClient {
   // Default interval seconds for polling (= 1 second)
   static const int _defaultIntervalSeconds = 1;
 

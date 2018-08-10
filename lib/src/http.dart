@@ -22,8 +22,8 @@ class HttpResponse {
   }
 }
 
-/// http client class
-abstract class HttpClient {
+/// Bot's http client class
+abstract class BotHttpClient {
   static const String _apiBaseUrl = "https://api.telegram.org/bot";
   static const String _fileBaseUrl = "https://api.telegram.org/file/bot";
 
