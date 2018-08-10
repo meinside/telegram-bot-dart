@@ -39,14 +39,18 @@ main() async {
 
         try {
           // send 'typing...'
-          bot.sendChatAction(message.chat.id, ChatAction.Typing).then((APIResponseBool response) {
+          bot
+              .sendChatAction(message.chat.id, ChatAction.Typing)
+              .then((APIResponseBool response) {
             if (!response.ok) {
               print("** sendChatAction failed: ${response.description}");
             }
 
             // echo received message back (synchronously)
-            bot.sendMessage(message.chat.id, message.text,
-                replyToMessageId: message.messageId).then((APIResponseMessage response) {
+            bot
+                .sendMessage(message.chat.id, message.text,
+                    replyToMessageId: message.messageId)
+                .then((APIResponseMessage response) {
               if (response.ok) {
                 print("<< echoed back: '${message.text}'");
               } else {
@@ -63,15 +67,19 @@ main() async {
 
         try {
           // send 'uploading photo...'
-          bot.sendChatAction(message.chat.id, ChatAction.UploadPhoto).then((APIResponseBool response) {
+          bot
+              .sendChatAction(message.chat.id, ChatAction.UploadPhoto)
+              .then((APIResponseBool response) {
             if (!response.ok) {
               print("** sendChatAction failed: ${response.description}");
             }
 
             // echo received photo back
-            bot.sendPhoto(message.chat.id,
-                InputFile.fromFileId(message.largestPhoto().fileId),
-                replyToMessageId: message.messageId).then((APIResponseMessage response) {
+            bot
+                .sendPhoto(message.chat.id,
+                    InputFile.fromFileId(message.largestPhoto().fileId),
+                    replyToMessageId: message.messageId)
+                .then((APIResponseMessage response) {
               if (response.ok) {
                 print("<< echoed back: '${message.photo}'");
               } else {
@@ -88,22 +96,26 @@ main() async {
 
         try {
           // send 'uploading photo...'
-          bot.sendChatAction(message.chat.id, ChatAction.UploadPhoto).then((APIResponseBool response) {
+          bot
+              .sendChatAction(message.chat.id, ChatAction.UploadPhoto)
+              .then((APIResponseBool response) {
             if (!response.ok) {
               print("** sendChatAction failed: ${response.description}");
             }
 
-            bot.sendPhoto(
-                message.chat.id, InputFile.fromFilepath(_imageFilepath),
-                replyToMessageId: message.messageId,
-                caption: "Not implemented for this kind of file or message yet.")
-              .then((APIResponseMessage response) {
-                if (response.ok) {
-                  print("<< echoed back: '${_imageFilepath}'");
-                } else {
-                  print("** sendPhoto failed: ${response.description}");
-                }
-              });
+            bot
+                .sendPhoto(
+                    message.chat.id, InputFile.fromFilepath(_imageFilepath),
+                    replyToMessageId: message.messageId,
+                    caption:
+                        "Not implemented for this kind of file or message yet.")
+                .then((APIResponseMessage response) {
+              if (response.ok) {
+                print("<< echoed back: '${_imageFilepath}'");
+              } else {
+                print("** sendPhoto failed: ${response.description}");
+              }
+            });
           });
         } catch (e, stackTrace) {
           print(
