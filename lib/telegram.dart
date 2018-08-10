@@ -88,7 +88,7 @@ class Bot extends HttpClient {
     }
 
     logVerbose(
-        "polling updates... (offset: ${updateOffset}, interval: ${interval} sec");
+        "polling updates... (offset: ${updateOffset}, interval: ${interval} sec)");
 
     APIResponseUpdates updates;
     try {
