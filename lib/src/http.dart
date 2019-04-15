@@ -553,6 +553,28 @@ abstract class BotHttpClient {
     return APIResponseStickerSet(false, description: errStr);
   }
 
+  /// Send request for [APIResponsePoll] and fetch its result.
+  Future<APIResponsePoll> _fetchPoll(
+      String method, Map<String, dynamic> params) async {
+    String errStr;
+
+    HttpResponse response = await _request(method, params);
+    if (response.statusCode == 200) {
+      try {
+        return APIResponsePoll.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
+      }
+    } else {
+      errStr = _errorDescriptionFrom(method, response);
+    }
+
+    logError(errStr);
+
+    return APIResponsePoll(false, description: errStr);
+  }
+
   //////////////////////////////////////////////////
   //
   // Telegram API methods
@@ -1320,6 +1342,40 @@ abstract class BotHttpClient {
     return _fetchMessage("sendContact", params);
   }
 
+  /// Send poll.
+  ///
+  /// - [chatId] can be one of [int](chat id) or [String](channel name).
+  /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
+  ///
+  /// https://core.telegram.org/bots/api#sendpoll
+  Future<APIResponseMessage> sendPoll(
+    Object chatId,
+    String question,
+    List<String> pollOptions, {
+    bool disableNotification,
+    int replyToMessageId,
+    ReplyMarkup replyMarkup,
+  }) {
+    // essential params
+    Map<String, dynamic> params = Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["question"] = question;
+    params["options"] = pollOptions;
+
+    // optional params
+    if (disableNotification != null) {
+      params["disable_notification"] = disableNotification;
+    }
+    if (replyToMessageId != null) {
+      params["reply_to_message_id"] = replyToMessageId;
+    }
+    if (replyMarkup != null) {
+      params["reply_markup"] = replyMarkup;
+    }
+
+    return _fetchMessage("sendPoll", params);
+  }
+
   /// Send chat actions.
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
@@ -1985,6 +2041,24 @@ abstract class BotHttpClient {
     }
 
     return _fetchMessageOrBool("stopMessageLiveLocation", params);
+  }
+
+  /// Stop poll.
+  ///
+  /// - [chatId] can be one of [int](chat id) or [String](channel name).
+  ///
+  /// https://core.telegram.org/bots/api#stoppoll
+  Future<APIResponsePoll> stopPoll(Object chatId, int messageId,
+      {InlineKeyboardMarkup replyMarkup}) {
+    // optional params
+    Map<String, dynamic> params = Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["message_id"] = messageId;
+    if (replyMarkup != null) {
+      params["reply_markup"] = replyMarkup;
+    }
+
+    return _fetchPoll("stopPoll", params);
   }
 
   /// Delete a message.

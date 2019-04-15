@@ -652,6 +652,26 @@ class APIResponseStickerSet extends APIResponseBase {
   Map<String, dynamic> toJson() => _$APIResponseStickerSetToJson(this);
 }
 
+/// API response with result type: [Poll]
+@JsonSerializable()
+class APIResponsePoll extends APIResponseBase {
+  @JsonKey(includeIfNull: false)
+  Poll result; // 'result' (optional)
+
+  // constructor
+  APIResponsePoll(
+    bool ok, {
+    String description,
+    APIResponseParameters parameters,
+    this.result,
+  }) : super(ok, description: description, parameters: parameters);
+
+  factory APIResponsePoll.fromJson(Map<String, dynamic> json) =>
+      _$APIResponsePollFromJson(json);
+
+  Map<String, dynamic> toJson() => _$APIResponsePollToJson(this);
+}
+
 /// Struct for webhook info
 ///
 /// https://core.telegram.org/bots/api#webhookinfo

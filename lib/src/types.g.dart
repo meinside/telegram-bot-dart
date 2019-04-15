@@ -531,6 +531,37 @@ Map<String, dynamic> _$APIResponseStickerSetToJson(
   return val;
 }
 
+APIResponsePoll _$APIResponsePollFromJson(Map<String, dynamic> json) {
+  return APIResponsePoll(json['ok'] as bool,
+      description: json['description'] as String,
+      parameters: json['parameters'] == null
+          ? null
+          : APIResponseParameters.fromJson(
+              json['parameters'] as Map<String, dynamic>),
+      result: json['result'] == null
+          ? null
+          : Poll.fromJson(json['result'] as Map<String, dynamic>))
+    ..errorCode = json['error_code'] as int;
+}
+
+Map<String, dynamic> _$APIResponsePollToJson(APIResponsePoll instance) {
+  final val = <String, dynamic>{
+    'ok': instance.ok,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('error_code', instance.errorCode);
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
+}
+
 WebhookInfo _$WebhookInfoFromJson(Map<String, dynamic> json) {
   return WebhookInfo(
       json['url'] as String,
