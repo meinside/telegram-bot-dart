@@ -598,7 +598,7 @@ abstract class BotHttpClient {
       params["timeout"] = timeout;
     }
     if (allowedUpdates != null) {
-      params["allowedUpdates"] = allowedUpdates;
+      params["allowed_updates"] = allowedUpdates;
     }
 
     return _fetchUpdates("getUpdates", params);

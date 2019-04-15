@@ -82,6 +82,7 @@ class Bot extends BotHttpClient {
     int updateOffset = 0,
     int interval = _defaultIntervalSeconds,
     int timeout = _defaultTimeoutSeconds,
+    List<String> allowedUpdates,
   }) async* {
     // check params
     updateOffset ??= 0;
@@ -97,7 +98,10 @@ class Bot extends BotHttpClient {
 
     APIResponseUpdates updates;
     try {
-      updates = await getUpdates(offset: updateOffset, timeout: timeout);
+      updates = await getUpdates(
+          offset: updateOffset,
+          timeout: timeout,
+          allowedUpdates: allowedUpdates);
 
       if (updates.ok) {
         if (updates.result != null) {
@@ -119,7 +123,11 @@ class Bot extends BotHttpClient {
       // delay
       await Future.delayed(Duration(seconds: interval));
 
-      yield* monitorUpdates(updateOffset: updateOffset, interval: interval);
+      yield* monitorUpdates(
+          updateOffset: updateOffset,
+          interval: interval,
+          timeout: timeout,
+          allowedUpdates: allowedUpdates);
     }
   }
 }
