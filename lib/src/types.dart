@@ -2144,6 +2144,9 @@ class Message {
   @JsonKey(name: 'forward_signature', includeIfNull: false)
   String forwardSignature; // 'forward_signature' (optional)
 
+  @JsonKey(name: 'forward_sender_name', includeIfNull: false)
+  String forwardSenderName; // 'forward_sender_name' (optional)
+
   @JsonKey(name: 'forward_date', includeIfNull: false)
   int forwardDate; // 'forward_date' (optional)
 

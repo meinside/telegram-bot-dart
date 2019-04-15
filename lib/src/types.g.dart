@@ -1722,6 +1722,7 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
       invoice: json['invoice'] == null ? null : Invoice.fromJson(json['invoice'] as Map<String, dynamic>),
       successfulPayment: json['successful_payment'] == null ? null : SuccessfulPayment.fromJson(json['successful_payment'] as Map<String, dynamic>),
       connectedWebsite: json['connected_website'] as String)
+    ..forwardSenderName = json['forward_sender_name'] as String
     ..animation = json['animation'] == null ? null : Animation.fromJson(json['animation'] as Map<String, dynamic>)
     ..poll = json['poll'] == null ? null : Poll.fromJson(json['poll'] as Map<String, dynamic>);
 }
@@ -1744,6 +1745,7 @@ Map<String, dynamic> _$MessageToJson(Message instance) {
   writeNotNull('forward_from_chat', instance.forwardFromChat);
   writeNotNull('forward_from_message_id', instance.forwardFromMessageId);
   writeNotNull('forward_signature', instance.forwardSignature);
+  writeNotNull('forward_sender_name', instance.forwardSenderName);
   writeNotNull('forward_date', instance.forwardDate);
   writeNotNull('reply_to_message', instance.replyToMessage);
   writeNotNull('edit_date', instance.editDate);
