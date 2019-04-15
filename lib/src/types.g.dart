@@ -1611,7 +1611,8 @@ ChatMember _$ChatMemberFromJson(Map<String, dynamic> json) {
       canSendMessages: json['can_send_messages'] as bool,
       canSendMediaMessages: json['can_send_media_messages'] as bool,
       canSendOtherMessages: json['can_send_other_messages'] as bool,
-      canAddWebPagePreviews: json['can_add_web_page_previews'] as bool);
+      canAddWebPagePreviews: json['can_add_web_page_previews'] as bool)
+    ..isMember = json['is_member'] as bool;
 }
 
 Map<String, dynamic> _$ChatMemberToJson(ChatMember instance) {
@@ -1636,6 +1637,7 @@ Map<String, dynamic> _$ChatMemberToJson(ChatMember instance) {
   writeNotNull('can_restrict_members', instance.canRestrictMembers);
   writeNotNull('can_pin_messages', instance.canPinMessages);
   writeNotNull('can_promote_members', instance.canPromoteMembers);
+  writeNotNull('is_member', instance.isMember);
   writeNotNull('can_send_messages', instance.canSendMessages);
   writeNotNull('can_send_media_messages', instance.canSendMediaMessages);
   writeNotNull('can_send_other_messages', instance.canSendOtherMessages);

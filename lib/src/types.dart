@@ -2076,6 +2076,9 @@ class ChatMember {
   @JsonKey(name: 'can_promote_members', includeIfNull: false)
   bool canPromoteMembers; // 'can_promote_members' (optional)
 
+  @JsonKey(name: 'is_member', includeIfNull: false)
+  bool isMember; // 'is_member' (optional)
+
   @JsonKey(name: 'can_send_messages', includeIfNull: false)
   bool canSendMessages; // 'can_send_messages' (optional)
 
