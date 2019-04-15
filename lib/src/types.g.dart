@@ -15,7 +15,7 @@ APIResponseParameters _$APIResponseParametersFromJson(
 
 Map<String, dynamic> _$APIResponseParametersToJson(
     APIResponseParameters instance) {
-  var val = <String, dynamic>{};
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -39,7 +39,7 @@ APIResponseBase _$APIResponseBaseFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$APIResponseBaseToJson(APIResponseBase instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -71,7 +71,7 @@ APIResponseWebhookInfo _$APIResponseWebhookInfoFromJson(
 
 Map<String, dynamic> _$APIResponseWebhookInfoToJson(
     APIResponseWebhookInfo instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -102,7 +102,7 @@ APIResponseUser _$APIResponseUserFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$APIResponseUserToJson(APIResponseUser instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -133,7 +133,7 @@ APIResponseMessage _$APIResponseMessageFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$APIResponseMessageToJson(APIResponseMessage instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -165,7 +165,7 @@ APIResponseMessages _$APIResponseMessagesFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$APIResponseMessagesToJson(APIResponseMessages instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -198,7 +198,7 @@ APIResponseUserProfilePhotos _$APIResponseUserProfilePhotosFromJson(
 
 Map<String, dynamic> _$APIResponseUserProfilePhotosToJson(
     APIResponseUserProfilePhotos instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -229,7 +229,7 @@ APIResponseFile _$APIResponseFileFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$APIResponseFileToJson(APIResponseFile instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -261,7 +261,7 @@ APIResponseUpdates _$APIResponseUpdatesFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$APIResponseUpdatesToJson(APIResponseUpdates instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -292,7 +292,7 @@ APIResponseChat _$APIResponseChatFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$APIResponseChatToJson(APIResponseChat instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -326,7 +326,7 @@ APIResponseChatAdministrators _$APIResponseChatAdministratorsFromJson(
 
 Map<String, dynamic> _$APIResponseChatAdministratorsToJson(
     APIResponseChatAdministrators instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -359,7 +359,7 @@ APIResponseChatMember _$APIResponseChatMemberFromJson(
 
 Map<String, dynamic> _$APIResponseChatMemberToJson(
     APIResponseChatMember instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -388,7 +388,7 @@ APIResponseInt _$APIResponseIntFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$APIResponseIntToJson(APIResponseInt instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -417,7 +417,7 @@ APIResponseBool _$APIResponseBoolFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$APIResponseBoolToJson(APIResponseBool instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -446,7 +446,7 @@ APIResponseString _$APIResponseStringFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$APIResponseStringToJson(APIResponseString instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -481,7 +481,7 @@ APIResponseGameHighScores _$APIResponseGameHighScoresFromJson(
 
 Map<String, dynamic> _$APIResponseGameHighScoresToJson(
     APIResponseGameHighScores instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -514,7 +514,38 @@ APIResponseStickerSet _$APIResponseStickerSetFromJson(
 
 Map<String, dynamic> _$APIResponseStickerSetToJson(
     APIResponseStickerSet instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
+    'ok': instance.ok,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('error_code', instance.errorCode);
+  writeNotNull('description', instance.description);
+  writeNotNull('parameters', instance.parameters);
+  writeNotNull('result', instance.result);
+  return val;
+}
+
+APIResponsePoll _$APIResponsePollFromJson(Map<String, dynamic> json) {
+  return APIResponsePoll(json['ok'] as bool,
+      description: json['description'] as String,
+      parameters: json['parameters'] == null
+          ? null
+          : APIResponseParameters.fromJson(
+              json['parameters'] as Map<String, dynamic>),
+      result: json['result'] == null
+          ? null
+          : Poll.fromJson(json['result'] as Map<String, dynamic>))
+    ..errorCode = json['error_code'] as int;
+}
+
+Map<String, dynamic> _$APIResponsePollToJson(APIResponsePoll instance) {
+  final val = <String, dynamic>{
     'ok': instance.ok,
   };
 
@@ -545,7 +576,7 @@ WebhookInfo _$WebhookInfoFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$WebhookInfoToJson(WebhookInfo instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'url': instance.url,
     'has_custom_certificate': instance.hasCustomCertificate,
     'pending_update_count': instance.pendingUpdateCount,
@@ -628,11 +659,14 @@ Update _$UpdateFromJson(Map<String, dynamic> json) {
       preCheckoutQuery: json['pre_checkout_query'] == null
           ? null
           : PreCheckoutQuery.fromJson(
-              json['pre_checkout_query'] as Map<String, dynamic>));
+              json['pre_checkout_query'] as Map<String, dynamic>))
+    ..poll = json['poll'] == null
+        ? null
+        : Poll.fromJson(json['poll'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$UpdateToJson(Update instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'update_id': instance.updateId,
   };
 
@@ -651,6 +685,7 @@ Map<String, dynamic> _$UpdateToJson(Update instance) {
   writeNotNull('callback_query', instance.callbackQuery);
   writeNotNull('shipping_query', instance.shippingQuery);
   writeNotNull('pre_checkout_query', instance.preCheckoutQuery);
+  writeNotNull('poll', instance.poll);
   return val;
 }
 
@@ -663,7 +698,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$UserToJson(User instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'id': instance.id,
     'is_bot': instance.isBot,
     'first_name': instance.firstName,
@@ -703,7 +738,7 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$ChatToJson(Chat instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'id': instance.id,
     'type': _$ChatTypeEnumMap[instance.type],
   };
@@ -762,7 +797,7 @@ InputMediaAnimation _$InputMediaAnimationFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$InputMediaAnimationToJson(InputMediaAnimation instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InputMediaTypeEnumMap[instance.type],
     'media': instance.media,
   };
@@ -794,7 +829,7 @@ InputMediaDocument _$InputMediaDocumentFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$InputMediaDocumentToJson(InputMediaDocument instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InputMediaTypeEnumMap[instance.type],
     'media': instance.media,
   };
@@ -825,7 +860,7 @@ InputMediaAudio _$InputMediaAudioFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$InputMediaAudioToJson(InputMediaAudio instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InputMediaTypeEnumMap[instance.type],
     'media': instance.media,
   };
@@ -853,7 +888,7 @@ InputMediaPhoto _$InputMediaPhotoFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$InputMediaPhotoToJson(InputMediaPhoto instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InputMediaTypeEnumMap[instance.type],
     'media': instance.media,
   };
@@ -884,7 +919,7 @@ InputMediaVideo _$InputMediaVideoFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$InputMediaVideoToJson(InputMediaVideo instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InputMediaTypeEnumMap[instance.type],
     'media': instance.media,
   };
@@ -932,7 +967,7 @@ Audio _$AudioFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$AudioToJson(Audio instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'file_id': instance.fileId,
     'duration': instance.duration,
   };
@@ -963,7 +998,7 @@ MessageEntity _$MessageEntityFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$MessageEntityToJson(MessageEntity instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$MessageEntityTypeEnumMap[instance.type],
     'offset': instance.offset,
     'length': instance.length,
@@ -1003,7 +1038,7 @@ PhotoSize _$PhotoSizeFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$PhotoSizeToJson(PhotoSize instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'file_id': instance.fileId,
     'width': instance.width,
     'height': instance.height,
@@ -1030,7 +1065,7 @@ Document _$DocumentFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$DocumentToJson(Document instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'file_id': instance.fileId,
   };
 
@@ -1063,7 +1098,7 @@ Sticker _$StickerFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$StickerToJson(Sticker instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'file_id': instance.fileId,
     'width': instance.width,
     'height': instance.height,
@@ -1136,7 +1171,7 @@ Video _$VideoFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$VideoToJson(Video instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'file_id': instance.fileId,
     'width': instance.width,
     'height': instance.height,
@@ -1162,7 +1197,7 @@ Voice _$VoiceFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$VoiceToJson(Voice instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'file_id': instance.fileId,
     'duration': instance.duration,
   };
@@ -1188,7 +1223,7 @@ VideoNote _$VideoNoteFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$VideoNoteToJson(VideoNote instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'file_id': instance.fileId,
     'length': instance.length,
     'duration': instance.duration,
@@ -1213,7 +1248,7 @@ Contact _$ContactFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$ContactToJson(Contact instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'phone_number': instance.phoneNumber,
     'first_name': instance.firstName,
   };
@@ -1252,7 +1287,7 @@ Venue _$VenueFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$VenueToJson(Venue instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'location': instance.location,
     'title': instance.title,
     'address': instance.address,
@@ -1268,6 +1303,34 @@ Map<String, dynamic> _$VenueToJson(Venue instance) {
   writeNotNull('foursquare_type', instance.foursquareType);
   return val;
 }
+
+Poll _$PollFromJson(Map<String, dynamic> json) {
+  return Poll(
+      json['id'] as String,
+      json['question'] as String,
+      (json['options'] as List)
+          ?.map((e) =>
+              e == null ? null : PollOption.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      json['is_closed'] as bool);
+}
+
+Map<String, dynamic> _$PollToJson(Poll instance) => <String, dynamic>{
+      'id': instance.id,
+      'question': instance.question,
+      'options': instance.options,
+      'is_closed': instance.isClosed
+    };
+
+PollOption _$PollOptionFromJson(Map<String, dynamic> json) {
+  return PollOption(json['text'] as String, json['voter_count'] as int);
+}
+
+Map<String, dynamic> _$PollOptionToJson(PollOption instance) =>
+    <String, dynamic>{
+      'text': instance.text,
+      'voter_count': instance.voterCount
+    };
 
 UserProfilePhotos _$UserProfilePhotosFromJson(Map<String, dynamic> json) {
   return UserProfilePhotos(
@@ -1294,7 +1357,7 @@ FileObject _$FileObjectFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$FileObjectToJson(FileObject instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'file_id': instance.fileId,
   };
 
@@ -1331,7 +1394,7 @@ ReplyKeyboardMarkup _$ReplyKeyboardMarkupFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$ReplyKeyboardMarkupToJson(ReplyKeyboardMarkup instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'keyboard': instance.keyboard,
   };
 
@@ -1354,7 +1417,7 @@ KeyboardButton _$KeyboardButtonFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$KeyboardButtonToJson(KeyboardButton instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'text': instance.text,
   };
 
@@ -1375,7 +1438,7 @@ ReplyKeyboardRemove _$ReplyKeyboardRemoveFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$ReplyKeyboardRemoveToJson(ReplyKeyboardRemove instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'remove_keyboard': instance.removeKeyboard,
   };
 
@@ -1419,7 +1482,7 @@ InlineKeyboardButton _$InlineKeyboardButtonFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$InlineKeyboardButtonToJson(
     InlineKeyboardButton instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'text': instance.text,
   };
 
@@ -1455,7 +1518,7 @@ CallbackQuery _$CallbackQueryFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$CallbackQueryToJson(CallbackQuery instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'id': instance.id,
     'from': instance.from,
   };
@@ -1511,7 +1574,7 @@ PreCheckoutQuery _$PreCheckoutQueryFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$PreCheckoutQueryToJson(PreCheckoutQuery instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'id': instance.id,
     'from': instance.from,
     'currency': instance.currency,
@@ -1536,7 +1599,7 @@ ForceReply _$ForceReplyFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$ForceReplyToJson(ForceReply instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'force_reply': instance.forceReply,
   };
 
@@ -1579,11 +1642,12 @@ ChatMember _$ChatMemberFromJson(Map<String, dynamic> json) {
       canSendMessages: json['can_send_messages'] as bool,
       canSendMediaMessages: json['can_send_media_messages'] as bool,
       canSendOtherMessages: json['can_send_other_messages'] as bool,
-      canAddWebPagePreviews: json['can_add_web_page_previews'] as bool);
+      canAddWebPagePreviews: json['can_add_web_page_previews'] as bool)
+    ..isMember = json['is_member'] as bool;
 }
 
 Map<String, dynamic> _$ChatMemberToJson(ChatMember instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'user': instance.user,
     'status': _$ChatMemberStatusEnumMap[instance.status],
   };
@@ -1604,6 +1668,7 @@ Map<String, dynamic> _$ChatMemberToJson(ChatMember instance) {
   writeNotNull('can_restrict_members', instance.canRestrictMembers);
   writeNotNull('can_pin_messages', instance.canPinMessages);
   writeNotNull('can_promote_members', instance.canPromoteMembers);
+  writeNotNull('is_member', instance.isMember);
   writeNotNull('can_send_messages', instance.canSendMessages);
   writeNotNull('can_send_media_messages', instance.canSendMediaMessages);
   writeNotNull('can_send_other_messages', instance.canSendOtherMessages);
@@ -1688,11 +1753,13 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
       invoice: json['invoice'] == null ? null : Invoice.fromJson(json['invoice'] as Map<String, dynamic>),
       successfulPayment: json['successful_payment'] == null ? null : SuccessfulPayment.fromJson(json['successful_payment'] as Map<String, dynamic>),
       connectedWebsite: json['connected_website'] as String)
-    ..animation = json['animation'] == null ? null : Animation.fromJson(json['animation'] as Map<String, dynamic>);
+    ..forwardSenderName = json['forward_sender_name'] as String
+    ..animation = json['animation'] == null ? null : Animation.fromJson(json['animation'] as Map<String, dynamic>)
+    ..poll = json['poll'] == null ? null : Poll.fromJson(json['poll'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$MessageToJson(Message instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'message_id': instance.messageId,
   };
 
@@ -1709,6 +1776,7 @@ Map<String, dynamic> _$MessageToJson(Message instance) {
   writeNotNull('forward_from_chat', instance.forwardFromChat);
   writeNotNull('forward_from_message_id', instance.forwardFromMessageId);
   writeNotNull('forward_signature', instance.forwardSignature);
+  writeNotNull('forward_sender_name', instance.forwardSenderName);
   writeNotNull('forward_date', instance.forwardDate);
   writeNotNull('reply_to_message', instance.replyToMessage);
   writeNotNull('edit_date', instance.editDate);
@@ -1729,6 +1797,7 @@ Map<String, dynamic> _$MessageToJson(Message instance) {
   writeNotNull('contact', instance.contact);
   writeNotNull('location', instance.location);
   writeNotNull('venue', instance.venue);
+  writeNotNull('poll', instance.poll);
   writeNotNull('new_chat_members', instance.newChatMembers);
   writeNotNull('left_chat_member', instance.leftChatMember);
   writeNotNull('new_chat_title', instance.newChatTitle);
@@ -1760,7 +1829,7 @@ InlineQuery _$InlineQueryFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$InlineQueryToJson(InlineQuery instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'id': instance.id,
     'from': instance.from,
   };
@@ -1791,7 +1860,7 @@ ChosenInlineResult _$ChosenInlineResultFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$ChosenInlineResultToJson(ChosenInlineResult instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'result_id': instance.resultId,
     'from': instance.from,
   };
@@ -1860,7 +1929,7 @@ InlineQueryResultArticle _$InlineQueryResultArticleFromJson(
 
 Map<String, dynamic> _$InlineQueryResultArticleToJson(
     InlineQueryResultArticle instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'title': instance.title,
@@ -1907,7 +1976,7 @@ InlineQueryResultPhoto _$InlineQueryResultPhotoFromJson(
 
 Map<String, dynamic> _$InlineQueryResultPhotoToJson(
     InlineQueryResultPhoto instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'photo_url': instance.photoUrl,
@@ -1954,7 +2023,7 @@ InlineQueryResultGif _$InlineQueryResultGifFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$InlineQueryResultGifToJson(
     InlineQueryResultGif instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'gif_url': instance.gifUrl,
@@ -2002,7 +2071,7 @@ InlineQueryResultMpeg4Gif _$InlineQueryResultMpeg4GifFromJson(
 
 Map<String, dynamic> _$InlineQueryResultMpeg4GifToJson(
     InlineQueryResultMpeg4Gif instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'mpeg4_url': instance.mpeg4Url,
@@ -2053,7 +2122,7 @@ InlineQueryResultVideo _$InlineQueryResultVideoFromJson(
 
 Map<String, dynamic> _$InlineQueryResultVideoToJson(
     InlineQueryResultVideo instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'video_url': instance.videoUrl,
@@ -2106,7 +2175,7 @@ InlineQueryResultAudio _$InlineQueryResultAudioFromJson(
 
 Map<String, dynamic> _$InlineQueryResultAudioToJson(
     InlineQueryResultAudio instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'audio_url': instance.audioUrl,
@@ -2149,7 +2218,7 @@ InlineQueryResultVoice _$InlineQueryResultVoiceFromJson(
 
 Map<String, dynamic> _$InlineQueryResultVoiceToJson(
     InlineQueryResultVoice instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'voice_url': instance.voiceUrl,
@@ -2196,7 +2265,7 @@ InlineQueryResultDocument _$InlineQueryResultDocumentFromJson(
 
 Map<String, dynamic> _$InlineQueryResultDocumentToJson(
     InlineQueryResultDocument instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'title': instance.title,
@@ -2247,7 +2316,7 @@ InlineQueryResultLocation _$InlineQueryResultLocationFromJson(
 
 Map<String, dynamic> _$InlineQueryResultLocationToJson(
     InlineQueryResultLocation instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'latitude': instance.latitude,
@@ -2295,7 +2364,7 @@ InlineQueryResultVenue _$InlineQueryResultVenueFromJson(
 
 Map<String, dynamic> _$InlineQueryResultVenueToJson(
     InlineQueryResultVenue instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'latitude': instance.latitude,
@@ -2343,7 +2412,7 @@ InlineQueryResultContact _$InlineQueryResultContactFromJson(
 
 Map<String, dynamic> _$InlineQueryResultContactToJson(
     InlineQueryResultContact instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'phone_number': instance.phoneNumber,
@@ -2379,7 +2448,7 @@ InlineQueryResultGame _$InlineQueryResultGameFromJson(
 
 Map<String, dynamic> _$InlineQueryResultGameToJson(
     InlineQueryResultGame instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'game_short_name': instance.gameShortName,
@@ -2416,7 +2485,7 @@ InlineQueryResultCachedPhoto _$InlineQueryResultCachedPhotoFromJson(
 
 Map<String, dynamic> _$InlineQueryResultCachedPhotoToJson(
     InlineQueryResultCachedPhoto instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'photo_file_id': instance.photoFileId,
@@ -2457,7 +2526,7 @@ InlineQueryResultCachedGif _$InlineQueryResultCachedGifFromJson(
 
 Map<String, dynamic> _$InlineQueryResultCachedGifToJson(
     InlineQueryResultCachedGif instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'gif_file_id': instance.gifFileId,
@@ -2497,7 +2566,7 @@ InlineQueryResultCachedMpeg4Gif _$InlineQueryResultCachedMpeg4GifFromJson(
 
 Map<String, dynamic> _$InlineQueryResultCachedMpeg4GifToJson(
     InlineQueryResultCachedMpeg4Gif instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'mpeg4_file_id': instance.mpeg4FileId,
@@ -2534,7 +2603,7 @@ InlineQueryResultCachedSticker _$InlineQueryResultCachedStickerFromJson(
 
 Map<String, dynamic> _$InlineQueryResultCachedStickerToJson(
     InlineQueryResultCachedSticker instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'sticker_file_id': instance.stickerFileId,
@@ -2572,7 +2641,7 @@ InlineQueryResultCachedDocument _$InlineQueryResultCachedDocumentFromJson(
 
 Map<String, dynamic> _$InlineQueryResultCachedDocumentToJson(
     InlineQueryResultCachedDocument instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'document_file_id': instance.documentFileId,
@@ -2614,7 +2683,7 @@ InlineQueryResultCachedVideo _$InlineQueryResultCachedVideoFromJson(
 
 Map<String, dynamic> _$InlineQueryResultCachedVideoToJson(
     InlineQueryResultCachedVideo instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'video_file_id': instance.videoFileId,
@@ -2655,7 +2724,7 @@ InlineQueryResultCachedVoice _$InlineQueryResultCachedVoiceFromJson(
 
 Map<String, dynamic> _$InlineQueryResultCachedVoiceToJson(
     InlineQueryResultCachedVoice instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'voice_file_id': instance.voiceFileId,
@@ -2694,7 +2763,7 @@ InlineQueryResultCachedAudio _$InlineQueryResultCachedAudioFromJson(
 
 Map<String, dynamic> _$InlineQueryResultCachedAudioToJson(
     InlineQueryResultCachedAudio instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'type': _$InlineQueryResultTypeEnumMap[instance.type],
     'id': instance.id,
     'audio_file_id': instance.audioFileId,
@@ -2730,7 +2799,7 @@ InputTextMessageContent _$InputTextMessageContentFromJson(
 
 Map<String, dynamic> _$InputTextMessageContentToJson(
     InputTextMessageContent instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'message_text': instance.messageText,
   };
 
@@ -2771,7 +2840,7 @@ InputVenueMessageContent _$InputVenueMessageContentFromJson(
 
 Map<String, dynamic> _$InputVenueMessageContentToJson(
     InputVenueMessageContent instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'latitude': instance.latitude,
     'longitude': instance.longitude,
     'title': instance.title,
@@ -2798,7 +2867,7 @@ InputContactMessageContent _$InputContactMessageContentFromJson(
 
 Map<String, dynamic> _$InputContactMessageContentToJson(
     InputContactMessageContent instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'phone_number': instance.phoneNumber,
     'first_name': instance.firstName,
   };
@@ -2841,7 +2910,7 @@ Game _$GameFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$GameToJson(Game instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'title': instance.title,
     'description': instance.description,
     'photo': instance.photo,
@@ -2870,7 +2939,7 @@ Animation _$AnimationFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$AnimationToJson(Animation instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'file_id': instance.fileId,
   };
 
@@ -2934,7 +3003,7 @@ SuccessfulPayment _$SuccessfulPaymentFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$SuccessfulPaymentToJson(SuccessfulPayment instance) {
-  var val = <String, dynamic>{
+  final val = <String, dynamic>{
     'currency': instance.currency,
     'total_amount': instance.totalAmount,
     'invoice_payload': instance.invoicePayload,
@@ -2965,7 +3034,7 @@ OrderInfo _$OrderInfoFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$OrderInfoToJson(OrderInfo instance) {
-  var val = <String, dynamic>{};
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {

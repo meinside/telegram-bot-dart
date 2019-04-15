@@ -652,6 +652,26 @@ class APIResponseStickerSet extends APIResponseBase {
   Map<String, dynamic> toJson() => _$APIResponseStickerSetToJson(this);
 }
 
+/// API response with result type: [Poll]
+@JsonSerializable()
+class APIResponsePoll extends APIResponseBase {
+  @JsonKey(includeIfNull: false)
+  Poll result; // 'result' (optional)
+
+  // constructor
+  APIResponsePoll(
+    bool ok, {
+    String description,
+    APIResponseParameters parameters,
+    this.result,
+  }) : super(ok, description: description, parameters: parameters);
+
+  factory APIResponsePoll.fromJson(Map<String, dynamic> json) =>
+      _$APIResponsePollFromJson(json);
+
+  Map<String, dynamic> toJson() => _$APIResponsePollToJson(this);
+}
+
 /// Struct for webhook info
 ///
 /// https://core.telegram.org/bots/api#webhookinfo
@@ -728,6 +748,9 @@ class Update {
 
   @JsonKey(name: 'pre_checkout_query', includeIfNull: false)
   PreCheckoutQuery preCheckoutQuery; // 'pre_checkout_query' (optional)
+
+  @JsonKey(includeIfNull: false)
+  Poll poll; // 'poll' (optional)
 
   // constructor
   Update(
@@ -1595,6 +1618,47 @@ class Venue {
   Map<String, dynamic> toJson() => _$VenueToJson(this);
 }
 
+/// Struct for poll
+///
+/// https://core.telegram.org/bots/api#poll
+@JsonSerializable()
+class Poll {
+  String id; // 'id'
+
+  String question; // 'question'
+
+  List<PollOption> options; // 'options'
+
+  @JsonKey(name: 'is_closed')
+  bool isClosed; // 'is_closed'
+
+  // constructor
+  Poll(this.id, this.question, this.options, this.isClosed);
+
+  factory Poll.fromJson(Map<String, dynamic> json) => _$PollFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PollToJson(this);
+}
+
+/// Struct for poll option
+///
+/// https://core.telegram.org/bots/api#polloption
+@JsonSerializable()
+class PollOption {
+  String text; // 'text'
+
+  @JsonKey(name: 'voter_count')
+  int voterCount; // 'voter_count'
+
+  // constructor
+  PollOption(this.text, this.voterCount);
+
+  factory PollOption.fromJson(Map<String, dynamic> json) =>
+      _$PollOptionFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PollOptionToJson(this);
+}
+
 /// Struct for user profile photos
 ///
 /// https://core.telegram.org/bots/api#userprofilephotos
@@ -2032,6 +2096,9 @@ class ChatMember {
   @JsonKey(name: 'can_promote_members', includeIfNull: false)
   bool canPromoteMembers; // 'can_promote_members' (optional)
 
+  @JsonKey(name: 'is_member', includeIfNull: false)
+  bool isMember; // 'is_member' (optional)
+
   @JsonKey(name: 'can_send_messages', includeIfNull: false)
   bool canSendMessages; // 'can_send_messages' (optional)
 
@@ -2097,6 +2164,9 @@ class Message {
   @JsonKey(name: 'forward_signature', includeIfNull: false)
   String forwardSignature; // 'forward_signature' (optional)
 
+  @JsonKey(name: 'forward_sender_name', includeIfNull: false)
+  String forwardSenderName; // 'forward_sender_name' (optional)
+
   @JsonKey(name: 'forward_date', includeIfNull: false)
   int forwardDate; // 'forward_date' (optional)
 
@@ -2156,6 +2226,9 @@ class Message {
 
   @JsonKey(includeIfNull: false)
   Venue venue; // 'venue' (optional)
+
+  @JsonKey(includeIfNull: false)
+  Poll poll; // 'poll' (optional)
 
   @JsonKey(name: 'new_chat_members', includeIfNull: false)
   List<User> newChatMembers; // 'new_chat_members' (optional)

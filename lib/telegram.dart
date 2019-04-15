@@ -17,8 +17,9 @@ export 'src/http.dart';
 
 /// Bot client class
 class Bot extends BotHttpClient {
-  // Default interval seconds for polling (= 1 second)
+  // Default interval/timeout seconds for polling (= 1 second)
   static const int _defaultIntervalSeconds = 1;
+  static const int _defaultTimeoutSeconds = 1;
 
   // Confidential info in the log strings will be replaced with this.
   static const String _redactedString = "<REDACTED>";
@@ -80,19 +81,27 @@ class Bot extends BotHttpClient {
   Stream<Update> monitorUpdates({
     int updateOffset = 0,
     int interval = _defaultIntervalSeconds,
+    int timeout = _defaultTimeoutSeconds,
+    List<String> allowedUpdates = null,
   }) async* {
     // check params
     updateOffset ??= 0;
     if (interval == null || interval <= 0) {
       interval = 1;
     }
+    if (timeout == null || timeout <= 0) {
+      timeout = 1;
+    }
 
     logVerbose(
-        "polling updates... (offset: ${updateOffset}, interval: ${interval} sec)");
+        "polling updates... (offset: ${updateOffset}, interval: ${interval} sec, timeout: ${timeout} sec)");
 
     APIResponseUpdates updates;
     try {
-      updates = await getUpdates(offset: updateOffset);
+      updates = await getUpdates(
+          offset: updateOffset,
+          timeout: timeout,
+          allowedUpdates: allowedUpdates);
 
       if (updates.ok) {
         if (updates.result != null) {
@@ -114,7 +123,11 @@ class Bot extends BotHttpClient {
       // delay
       await Future.delayed(Duration(seconds: interval));
 
-      yield* monitorUpdates(updateOffset: updateOffset, interval: interval);
+      yield* monitorUpdates(
+          updateOffset: updateOffset,
+          interval: interval,
+          timeout: timeout,
+          allowedUpdates: allowedUpdates);
     }
   }
 }

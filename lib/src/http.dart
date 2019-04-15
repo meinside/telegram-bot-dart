@@ -163,7 +163,7 @@ abstract class BotHttpClient {
 
       // check given parameter's value:
       if (value is InputFile) {
-        converted[key] = value.toString();
+        paramVal = value.toString();
       } else {
         try {
           // first try with .toJson(),
@@ -172,6 +172,11 @@ abstract class BotHttpClient {
           // and retry with enumToString()
           paramVal = enumToString(value);
         }
+      }
+
+      // if .toJson() and enumToString() both failed,
+      if (paramVal == null) {
+        paramVal = jsonEncode(value);
       }
 
       // otherwise, fallback to the string value of it
@@ -553,6 +558,28 @@ abstract class BotHttpClient {
     return APIResponseStickerSet(false, description: errStr);
   }
 
+  /// Send request for [APIResponsePoll] and fetch its result.
+  Future<APIResponsePoll> _fetchPoll(
+      String method, Map<String, dynamic> params) async {
+    String errStr;
+
+    HttpResponse response = await _request(method, params);
+    if (response.statusCode == 200) {
+      try {
+        return APIResponsePoll.fromJson(response.toJson());
+      } catch (e) {
+        errStr =
+            "${method} failed with json parse error: ${e} (${response.body})";
+      }
+    } else {
+      errStr = _errorDescriptionFrom(method, response);
+    }
+
+    logError(errStr);
+
+    return APIResponsePoll(false, description: errStr);
+  }
+
   //////////////////////////////////////////////////
   //
   // Telegram API methods
@@ -561,6 +588,19 @@ abstract class BotHttpClient {
 
   /// Retrieve updates.
   ///
+  /// - [allowedUpdates] can include:
+  ///   'message'
+  ///   'edited_message'
+  ///   'channel_post'
+  ///   'edited_channel_post'
+  ///   'inline_query'
+  ///   'chosen_inline_query'
+  ///   'callback_query'
+  ///   'shipping_query'
+  ///   'pre_checkout_query'
+  ///   'poll'
+  ///
+  /// https://core.telegram.org/bots/api#update
   /// https://core.telegram.org/bots/api#getupdates
   Future<APIResponseUpdates> getUpdates(
       {int offset, int limit, int timeout, List<String> allowedUpdates}) async {
@@ -576,7 +616,10 @@ abstract class BotHttpClient {
       params["timeout"] = timeout;
     }
     if (allowedUpdates != null) {
-      params["allowedUpdates"] = allowedUpdates;
+      params["allowed_updates"] = allowedUpdates;
+    } else {
+      // null for all updates
+      params["allowed_updates"] = [];
     }
 
     return _fetchUpdates("getUpdates", params);
@@ -1320,6 +1363,40 @@ abstract class BotHttpClient {
     return _fetchMessage("sendContact", params);
   }
 
+  /// Send poll.
+  ///
+  /// - [chatId] can be one of [int](chat id) or [String](channel name).
+  /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
+  ///
+  /// https://core.telegram.org/bots/api#sendpoll
+  Future<APIResponseMessage> sendPoll(
+    Object chatId,
+    String question,
+    List<String> pollOptions, {
+    bool disableNotification,
+    int replyToMessageId,
+    ReplyMarkup replyMarkup,
+  }) {
+    // essential params
+    Map<String, dynamic> params = Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["question"] = question;
+    params["options"] = pollOptions;
+
+    // optional params
+    if (disableNotification != null) {
+      params["disable_notification"] = disableNotification;
+    }
+    if (replyToMessageId != null) {
+      params["reply_to_message_id"] = replyToMessageId;
+    }
+    if (replyMarkup != null) {
+      params["reply_markup"] = replyMarkup;
+    }
+
+    return _fetchMessage("sendPoll", params);
+  }
+
   /// Send chat actions.
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
@@ -1742,7 +1819,6 @@ abstract class BotHttpClient {
   /// Returned type is [APIResponseMessage] or [APIResponseBool].
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
-  /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
@@ -1756,7 +1832,7 @@ abstract class BotHttpClient {
     int inlineMessageId,
     ParseMode parseMode,
     bool disableWebPagePreview,
-    ReplyMarkup replyMarkup,
+    InlineKeyboardMarkup replyMarkup,
   }) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
@@ -1790,7 +1866,6 @@ abstract class BotHttpClient {
   /// Returned type is [APIResponseMessage] or [APIResponseBool].
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
-  /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
@@ -1803,7 +1878,7 @@ abstract class BotHttpClient {
     int messageId,
     int inlineMessageId,
     ParseMode parseMode,
-    ReplyMarkup replyMarkup,
+    InlineKeyboardMarkup replyMarkup,
   }) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
@@ -1834,7 +1909,6 @@ abstract class BotHttpClient {
   /// Returned type is [APIResponseMessage] or [APIResponseBool].
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
-  /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
@@ -1846,7 +1920,7 @@ abstract class BotHttpClient {
     Object chatId,
     int messageId,
     int inlineMessageId,
-    ReplyMarkup replyMarkup,
+    InlineKeyboardMarkup replyMarkup,
   }) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
@@ -1878,7 +1952,6 @@ abstract class BotHttpClient {
   /// Returned type is [APIResponseMessage] or [APIResponseBool].
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
-  /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
@@ -1889,7 +1962,7 @@ abstract class BotHttpClient {
     Object chatId,
     int messageId,
     int inlineMessageId,
-    ReplyMarkup replyMarkup,
+    InlineKeyboardMarkup replyMarkup,
   }) {
     // optional params
     Map<String, dynamic> params = Map<String, dynamic>();
@@ -1914,7 +1987,6 @@ abstract class BotHttpClient {
   /// Returned type is [APIResponseMessage] or [APIResponseBool].
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
-  /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
@@ -1927,7 +1999,7 @@ abstract class BotHttpClient {
     Object chatId,
     int messageId,
     int inlineMessageId,
-    ReplyMarkup replyMarkup,
+    InlineKeyboardMarkup replyMarkup,
   }) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
@@ -1956,7 +2028,6 @@ abstract class BotHttpClient {
   /// Returned type is [APIResponseMessage] or [APIResponseBool].
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
-  /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// NOTE:
   ///   required params: [chatId] + [messageId] (when [inlineMessageId] is not given)
@@ -1967,7 +2038,7 @@ abstract class BotHttpClient {
     Object chatId,
     int messageId,
     int inlineMessageId,
-    ReplyMarkup replyMarkup,
+    InlineKeyboardMarkup replyMarkup,
   }) {
     // optional params
     Map<String, dynamic> params = Map<String, dynamic>();
@@ -1985,6 +2056,24 @@ abstract class BotHttpClient {
     }
 
     return _fetchMessageOrBool("stopMessageLiveLocation", params);
+  }
+
+  /// Stop poll.
+  ///
+  /// - [chatId] can be one of [int](chat id) or [String](channel name).
+  ///
+  /// https://core.telegram.org/bots/api#stoppoll
+  Future<APIResponsePoll> stopPoll(Object chatId, int messageId,
+      {InlineKeyboardMarkup replyMarkup}) {
+    // optional params
+    Map<String, dynamic> params = Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["message_id"] = messageId;
+    if (replyMarkup != null) {
+      params["reply_markup"] = replyMarkup;
+    }
+
+    return _fetchPoll("stopPoll", params);
   }
 
   /// Delete a message.
@@ -2042,8 +2131,6 @@ abstract class BotHttpClient {
 
   /// Send an invoice.
   ///
-  /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
-  ///
   /// https://core.telegram.org/bots/api#sendinvoice
   Future<APIResponseMessage> sendInvoice(
     int chatId,
@@ -2066,7 +2153,7 @@ abstract class BotHttpClient {
     bool isFlexible,
     bool disableNotification,
     int replyToMessageId,
-    ReplyMarkup replyMarkup,
+    InlineKeyboardMarkup replyMarkup,
   }) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
@@ -2176,7 +2263,6 @@ abstract class BotHttpClient {
   /// Send a game.
   ///
   /// - [chatId] can be one of [int](chat id) or [String](channel name).
-  /// - [replyMarkup] can be one of [InlineKeyboardMarkup], [ReplyKeyboardMarkup], [ReplyKeyboardRemove], or [ForceReply].
   ///
   /// https://core.telegram.org/bots/api#sendgame
   Future<APIResponseMessage> sendGame(
@@ -2184,7 +2270,7 @@ abstract class BotHttpClient {
     String gameShortName, {
     bool disableNotification,
     int replyToMessageId,
-    ReplyMarkup replyMarkup,
+    InlineKeyboardMarkup replyMarkup,
   }) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
