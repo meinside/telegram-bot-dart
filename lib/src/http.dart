@@ -163,7 +163,7 @@ abstract class BotHttpClient {
 
       // check given parameter's value:
       if (value is InputFile) {
-        converted[key] = value.toString();
+        paramVal = value.toString();
       } else {
         try {
           // first try with .toJson(),
@@ -172,6 +172,11 @@ abstract class BotHttpClient {
           // and retry with enumToString()
           paramVal = enumToString(value);
         }
+      }
+
+      // if .toJson() and enumToString() both failed,
+      if (paramVal == null) {
+        paramVal = jsonEncode(value);
       }
 
       // otherwise, fallback to the string value of it
@@ -583,6 +588,19 @@ abstract class BotHttpClient {
 
   /// Retrieve updates.
   ///
+  /// - [allowedUpdates] can include:
+  ///   'message'
+  ///   'edited_message'
+  ///   'channel_post'
+  ///   'edited_channel_post'
+  ///   'inline_query'
+  ///   'chosen_inline_query'
+  ///   'callback_query'
+  ///   'shipping_query'
+  ///   'pre_checkout_query'
+  ///   'poll'
+  ///
+  /// https://core.telegram.org/bots/api#update
   /// https://core.telegram.org/bots/api#getupdates
   Future<APIResponseUpdates> getUpdates(
       {int offset, int limit, int timeout, List<String> allowedUpdates}) async {
@@ -599,6 +617,9 @@ abstract class BotHttpClient {
     }
     if (allowedUpdates != null) {
       params["allowed_updates"] = allowedUpdates;
+    } else {
+      // null for all updates
+      params["allowed_updates"] = [];
     }
 
     return _fetchUpdates("getUpdates", params);

@@ -82,7 +82,7 @@ class Bot extends BotHttpClient {
     int updateOffset = 0,
     int interval = _defaultIntervalSeconds,
     int timeout = _defaultTimeoutSeconds,
-    List<String> allowedUpdates,
+    List<String> allowedUpdates = null,
   }) async* {
     // check params
     updateOffset ??= 0;
