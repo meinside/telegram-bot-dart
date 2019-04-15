@@ -47,7 +47,7 @@ main() async {
     print("Starting bot: @${me.result.username} ...");
 
     // polling updates
-    await for (Update update in bot.monitorUpdates(interval: 3)) {
+    await for (Update update in bot.monitorUpdates()) {
       print("> @${update.message.from.username}"
           " sent a message: '${_jsonToString(update.message)}'");
 
