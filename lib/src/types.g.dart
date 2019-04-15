@@ -628,7 +628,10 @@ Update _$UpdateFromJson(Map<String, dynamic> json) {
       preCheckoutQuery: json['pre_checkout_query'] == null
           ? null
           : PreCheckoutQuery.fromJson(
-              json['pre_checkout_query'] as Map<String, dynamic>));
+              json['pre_checkout_query'] as Map<String, dynamic>))
+    ..poll = json['poll'] == null
+        ? null
+        : Poll.fromJson(json['poll'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$UpdateToJson(Update instance) {
@@ -651,6 +654,7 @@ Map<String, dynamic> _$UpdateToJson(Update instance) {
   writeNotNull('callback_query', instance.callbackQuery);
   writeNotNull('shipping_query', instance.shippingQuery);
   writeNotNull('pre_checkout_query', instance.preCheckoutQuery);
+  writeNotNull('poll', instance.poll);
   return val;
 }
 
@@ -1269,6 +1273,34 @@ Map<String, dynamic> _$VenueToJson(Venue instance) {
   return val;
 }
 
+Poll _$PollFromJson(Map<String, dynamic> json) {
+  return Poll(
+      json['id'] as String,
+      json['question'] as String,
+      (json['options'] as List)
+          ?.map((e) =>
+              e == null ? null : PollOption.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      json['is_closed'] as bool);
+}
+
+Map<String, dynamic> _$PollToJson(Poll instance) => <String, dynamic>{
+      'id': instance.id,
+      'question': instance.question,
+      'options': instance.options,
+      'is_closed': instance.isClosed
+    };
+
+PollOption _$PollOptionFromJson(Map<String, dynamic> json) {
+  return PollOption(json['text'] as String, json['voter_count'] as int);
+}
+
+Map<String, dynamic> _$PollOptionToJson(PollOption instance) =>
+    <String, dynamic>{
+      'text': instance.text,
+      'voter_count': instance.voterCount
+    };
+
 UserProfilePhotos _$UserProfilePhotosFromJson(Map<String, dynamic> json) {
   return UserProfilePhotos(
       json['total_count'] as int,
@@ -1688,7 +1720,8 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
       invoice: json['invoice'] == null ? null : Invoice.fromJson(json['invoice'] as Map<String, dynamic>),
       successfulPayment: json['successful_payment'] == null ? null : SuccessfulPayment.fromJson(json['successful_payment'] as Map<String, dynamic>),
       connectedWebsite: json['connected_website'] as String)
-    ..animation = json['animation'] == null ? null : Animation.fromJson(json['animation'] as Map<String, dynamic>);
+    ..animation = json['animation'] == null ? null : Animation.fromJson(json['animation'] as Map<String, dynamic>)
+    ..poll = json['poll'] == null ? null : Poll.fromJson(json['poll'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$MessageToJson(Message instance) {
@@ -1729,6 +1762,7 @@ Map<String, dynamic> _$MessageToJson(Message instance) {
   writeNotNull('contact', instance.contact);
   writeNotNull('location', instance.location);
   writeNotNull('venue', instance.venue);
+  writeNotNull('poll', instance.poll);
   writeNotNull('new_chat_members', instance.newChatMembers);
   writeNotNull('left_chat_member', instance.leftChatMember);
   writeNotNull('new_chat_title', instance.newChatTitle);

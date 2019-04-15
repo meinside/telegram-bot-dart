@@ -729,6 +729,9 @@ class Update {
   @JsonKey(name: 'pre_checkout_query', includeIfNull: false)
   PreCheckoutQuery preCheckoutQuery; // 'pre_checkout_query' (optional)
 
+  @JsonKey(includeIfNull: false)
+  Poll poll; // 'poll' (optional)
+
   // constructor
   Update(
     this.updateId, {
@@ -1595,6 +1598,47 @@ class Venue {
   Map<String, dynamic> toJson() => _$VenueToJson(this);
 }
 
+/// Struct for poll
+///
+/// https://core.telegram.org/bots/api#poll
+@JsonSerializable()
+class Poll {
+  String id; // 'id'
+
+  String question; // 'question'
+
+  List<PollOption> options; // 'options'
+
+  @JsonKey(name: 'is_closed')
+  bool isClosed; // 'is_closed'
+
+  // constructor
+  Poll(this.id, this.question, this.options, this.isClosed);
+
+  factory Poll.fromJson(Map<String, dynamic> json) => _$PollFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PollToJson(this);
+}
+
+/// Struct for poll option
+///
+/// https://core.telegram.org/bots/api#polloption
+@JsonSerializable()
+class PollOption {
+  String text; // 'text'
+
+  @JsonKey(name: 'voter_count')
+  int voterCount; // 'voter_count'
+
+  // constructor
+  PollOption(this.text, this.voterCount);
+
+  factory PollOption.fromJson(Map<String, dynamic> json) =>
+      _$PollOptionFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PollOptionToJson(this);
+}
+
 /// Struct for user profile photos
 ///
 /// https://core.telegram.org/bots/api#userprofilephotos
@@ -2156,6 +2200,9 @@ class Message {
 
   @JsonKey(includeIfNull: false)
   Venue venue; // 'venue' (optional)
+
+  @JsonKey(includeIfNull: false)
+  Poll poll; // 'poll' (optional)
 
   @JsonKey(name: 'new_chat_members', includeIfNull: false)
   List<User> newChatMembers; // 'new_chat_members' (optional)
