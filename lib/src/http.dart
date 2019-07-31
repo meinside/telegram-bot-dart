@@ -1507,33 +1507,19 @@ abstract class BotHttpClient {
   /// https://core.telegram.org/bots/api#restrictchatmember
   Future<APIResponseBool> restrictChatMember(
     Object chatId,
-    int userId, {
+    int userId,
+    ChatPermissions permissions, {
     int untilDate,
-    bool canSendMessages,
-    bool canSendMediaMessages,
-    bool canSendOtherMessages,
-    bool canSendWebPagePreviews,
   }) {
     // essential params
     Map<String, dynamic> params = Map<String, dynamic>();
     params["chat_id"] = chatId;
     params["user_id"] = userId;
+    params["permissions"] = permissions;
 
     // optional params
     if (untilDate != null) {
       params["until_date"] = untilDate;
-    }
-    if (canSendMessages != null) {
-      params["can_send_messages"] = canSendMessages;
-    }
-    if (canSendMediaMessages != null) {
-      params["can_send_media_messages"] = canSendMediaMessages;
-    }
-    if (canSendOtherMessages != null) {
-      params["can_send_other_messages"] = canSendOtherMessages;
-    }
-    if (canSendWebPagePreviews != null) {
-      params["can_send_web_page_previews"] = canSendWebPagePreviews;
     }
 
     return _fetchBool("restrictChatMember", params);
@@ -1592,9 +1578,22 @@ abstract class BotHttpClient {
     return _fetchBool("promoteChatMember", params);
   }
 
+  /// Set chat permissions.
+  ///
+  /// https://core.telegram.org/bots/api#setchatpermissions
+  Future<APIResponseBool> setChatPermissions(
+      Object chatId, ChatPermissions permissions) {
+    // essential params
+    Map<String, dynamic> params = Map<String, dynamic>();
+    params["chat_id"] = chatId;
+    params["permissions"] = permissions;
+
+    return _fetchBool("setChatPermissions", params);
+  }
+
   /// Export a chat invite link.
   ///
-  /// - [chatId] can be one of [int](chat id) or [String](channel name).
+  /// - [chatId] can be one of [int](chat id / group's chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#exportchatinvitelink
   Future<APIResponseString> exportChatInviteLink(Object chatId) {
@@ -1648,7 +1647,7 @@ abstract class BotHttpClient {
 
   /// Set a chat description.
   ///
-  /// - [chatId] can be one of [int](chat id) or [String](channel name).
+  /// - [chatId] can be one of [int](chat id / group's chat id) or [String](channel name).
   ///
   /// https://core.telegram.org/bots/api#setchatdescription
   Future<APIResponseBool> setChatDescription(
