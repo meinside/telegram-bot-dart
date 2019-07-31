@@ -834,10 +834,6 @@ class Chat {
   @JsonKey(name: 'last_name', includeIfNull: false)
   String lastName; // 'last_name' (optional)
 
-  @JsonKey(name: 'all_members_are_administrators', includeIfNull: false)
-  bool
-      allMembersAreAdministrators; // 'all_members_are_administrators' (optional)
-
   @JsonKey(includeIfNull: false)
   ChatPhoto photo; // 'photo' (optional)
 
@@ -849,6 +845,9 @@ class Chat {
 
   @JsonKey(name: 'pinned_message', includeIfNull: false)
   Message pinnedMessage; // 'pinned_message' (optional)
+
+  @JsonKey(name: 'permissions', includeIfNull: false)
+  ChatPermissions permissions; // 'permissions' (optional)
 
   @JsonKey(name: 'sticker_set_name', includeIfNull: false)
   String stickerSetName; // 'sticker_set_name' (optional)
@@ -864,11 +863,11 @@ class Chat {
     this.username,
     this.firstName,
     this.lastName,
-    this.allMembersAreAdministrators,
     this.photo,
     this.description,
     this.inviteLink,
     this.pinnedMessage,
+    this.permissions,
     this.stickerSetName,
     this.canSetStickerSet,
   });
@@ -1353,6 +1352,9 @@ class Sticker {
 
   int height; // 'height'
 
+  @JsonKey(name: 'is_animated')
+  bool isAnimated; // 'is_animated'
+
   @JsonKey(includeIfNull: false)
   PhotoSize thumb; // 'thumb' (optional)
 
@@ -1372,7 +1374,8 @@ class Sticker {
   Sticker(
     this.fileId,
     this.width,
-    this.height, {
+    this.height,
+    this.isAnimated, {
     this.thumb,
     this.emoji,
     this.setName,
@@ -1395,13 +1398,17 @@ class StickerSet {
 
   String title; // 'title'
 
+  @JsonKey(name: 'is_animated')
+  bool isAnimated; // 'is_animated'
+
   @JsonKey(name: 'contains_masks')
   bool containsMasks; // 'contains_masks'
 
   List<Sticker> stickers; // 'stickers'
 
   // constructor
-  StickerSet(this.name, this.title, this.containsMasks, this.stickers);
+  StickerSet(this.name, this.title, this.isAnimated, this.containsMasks,
+      this.stickers);
 
   factory StickerSet.fromJson(Map<String, dynamic> json) =>
       _$StickerSetFromJson(json);
@@ -2072,9 +2079,6 @@ class ChatMember {
   @JsonKey(name: 'can_be_edited', includeIfNull: false)
   bool canBeEdited; // 'can_be_edited' (optional)
 
-  @JsonKey(name: 'can_change_info', includeIfNull: false)
-  bool canChangeInfo; // 'can_change_info' (optional)
-
   @JsonKey(name: 'can_post_messages', includeIfNull: false)
   bool canPostMessages; // 'can_post_messages' (optional)
 
@@ -2084,17 +2088,20 @@ class ChatMember {
   @JsonKey(name: 'can_delete_messages', includeIfNull: false)
   bool canDeleteMessages; // 'can_delete_messages' (optional)
 
-  @JsonKey(name: 'can_invite_users', includeIfNull: false)
-  bool canInviteUsers; // 'can_invite_users' (optional)
-
   @JsonKey(name: 'can_restrict_members', includeIfNull: false)
   bool canRestrictMembers; // 'can_restrict_members' (optional)
 
-  @JsonKey(name: 'can_pin_messages', includeIfNull: false)
-  bool canPinMessages; // 'can_pin_messages' (optional)
-
   @JsonKey(name: 'can_promote_members', includeIfNull: false)
   bool canPromoteMembers; // 'can_promote_members' (optional)
+
+  @JsonKey(name: 'can_change_info', includeIfNull: false)
+  bool canChangeInfo; // 'can_change_info' (optional)
+
+  @JsonKey(name: 'can_invite_users', includeIfNull: false)
+  bool canInviteUsers; // 'can_invite_users' (optional)
+
+  @JsonKey(name: 'can_pin_messages', includeIfNull: false)
+  bool canPinMessages; // 'can_pin_messages' (optional)
 
   @JsonKey(name: 'is_member', includeIfNull: false)
   bool isMember; // 'is_member' (optional)
@@ -2104,6 +2111,9 @@ class ChatMember {
 
   @JsonKey(name: 'can_send_media_messages', includeIfNull: false)
   bool canSendMediaMessages; // 'can_send_media_messages' (optional)
+
+  @JsonKey(name: 'can_send_polls', includeIfNull: false)
+  bool canSendPolls; // 'can_send_polls' (optional)
 
   @JsonKey(name: 'can_send_other_messages', includeIfNull: false)
   bool canSendOtherMessages; // 'can_send_other_messages' (optional)
@@ -2117,16 +2127,18 @@ class ChatMember {
     this.status, {
     this.untilDate,
     this.canBeEdited,
-    this.canChangeInfo,
     this.canPostMessages,
     this.canEditMessages,
     this.canDeleteMessages,
-    this.canInviteUsers,
     this.canRestrictMembers,
-    this.canPinMessages,
     this.canPromoteMembers,
+    this.canChangeInfo,
+    this.canInviteUsers,
+    this.canPinMessages,
+    this.isMember,
     this.canSendMessages,
     this.canSendMediaMessages,
+    this.canSendPolls,
     this.canSendOtherMessages,
     this.canAddWebPagePreviews,
   });
@@ -2135,6 +2147,53 @@ class ChatMember {
       _$ChatMemberFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChatMemberToJson(this);
+}
+
+/// Struct of chat permissions
+///
+/// https://core.telegram.org/bots/api#chatpermissions
+@JsonSerializable()
+class ChatPermissions {
+  @JsonKey(name: 'can_send_messages', includeIfNull: false)
+  bool canSendMessages; // 'can_send_messages' (optional)
+
+  @JsonKey(name: 'can_send_media_messages', includeIfNull: false)
+  bool canSendMediaMessages; // 'can_send_media_messages' (optional)
+
+  @JsonKey(name: 'can_send_polls', includeIfNull: false)
+  bool canSendPolls; // 'can_send_polls' (optional)
+
+  @JsonKey(name: 'can_send_other_messages', includeIfNull: false)
+  bool canSendOtherMessages; // 'can_send_other_messages' (optional)
+
+  @JsonKey(name: 'can_add_web_page_previews', includeIfNull: false)
+  bool canAddWebPagePreviews; // 'can_add_web_page_previews' (optional)
+
+  @JsonKey(name: 'can_change_info', includeIfNull: false)
+  bool canChangeInfo; // 'can_change_info' (optional)
+
+  @JsonKey(name: 'can_invite_users', includeIfNull: false)
+  bool canInviteUsers; // 'can_invite_users' (optional)
+
+  @JsonKey(name: 'can_pin_messages', includeIfNull: false)
+  bool canPinMessages; // 'can_pin_messages' (optional)
+
+  // constructor
+  ChatPermissions({
+    this.canSendMessages,
+    this.canSendMediaMessages,
+    this.canSendPolls,
+    this.canSendOtherMessages,
+    this.canAddWebPagePreviews,
+    this.canChangeInfo,
+    this.canInviteUsers,
+    this.canPinMessages,
+  });
+
+  factory ChatPermissions.fromJson(Map<String, dynamic> json) =>
+      _$ChatPermissionsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ChatPermissionsToJson(this);
 }
 
 /// Struct of a message
