@@ -1,5 +1,7 @@
 # telegram-bot-dart
 
+:warning: **Not Maintained** :warning:
+
 Telegram Bot API wrapper for [Dart](https://www.dartlang.org/).
 
 Ported from [this Go version of Telegram Bot API](https://github.com/meinside/telegram-bot-go).
